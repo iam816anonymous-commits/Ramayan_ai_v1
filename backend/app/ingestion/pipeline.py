@@ -19,6 +19,14 @@ class IngestionPipeline:
         )
 
     def load_json_data(self, filepath):
+        if not os.path.exists(filepath):
+            # Try alternative path
+            alt_path = os.path.join("backend", "data", os.path.basename(filepath))
+            if os.path.exists(alt_path):
+                filepath = alt_path
+            else:
+                raise FileNotFoundError(f"Data file not found: {filepath}")
+
         with open(filepath, 'r') as f:
             return json.load(f)
 
@@ -50,10 +58,7 @@ class IngestionPipeline:
 
     def run_ingestion(self):
         print("Starting ingestion...")
-        # For V1 we can start with a subset or one main file to keep it lightweight
         data = self.load_json_data("Valmiki_Ramayan_Shlokas.json")
-        # To speed up during development/testing in this environment, maybe limit?
-        # But let's try a good chunk.
         self.process_valmiki_shlokas(data[:1000])
         print(f"Ingested 1000 records into {self.collection_name}")
 
@@ -61,6 +66,5 @@ if __name__ == "__main__":
     pipeline = IngestionPipeline()
     pipeline.run_ingestion()
 
-    # Simple verification
     count = pipeline.client.get_collection(collection_name="ramayana_v1").points_count
     print(f"Total points in collection: {count}")
