@@ -7,6 +7,7 @@ from typing import List, Dict
 from .shloka_loader import ShlokaLoader
 from .csv_loader import CSVLoader
 from .kanda_loader import KandaLoader
+from .txt_loader import TXTLoader
 from .metadata_builder import MetadataBuilder
 
 class IngestionPipeline:
@@ -35,6 +36,7 @@ class IngestionPipeline:
             "KishkindhaKanda.json": KandaLoader(),
             "SundaraKanda.json": KandaLoader(),
             "YuddhaKanda.json": KandaLoader(),
+            "ramayan.txt": TXTLoader(),
         }
 
         all_normalized_data = []
@@ -42,9 +44,19 @@ class IngestionPipeline:
 
         for filename, loader in loaders.items():
             filepath = os.path.join(data_dir, filename)
+            if not os.path.exists(filepath):
+                print(f"Warning: {filename} not found in {data_dir}. Skipping.")
+                continue
+
             print(f"Loading {filename}...")
             data = loader.load(filepath)
-            limit = 200 # Increased limit for V1 demo
+
+            # Dynamic limits for V1 final
+            if filename.endswith(".txt"):
+                limit = 1000 # Higher limit for text chunks
+            else:
+                limit = 500 # Balanced limit for structured data
+
             all_normalized_data.extend(data[:limit])
             print(f"Loaded {len(data[:limit])} records from {filename}")
 
