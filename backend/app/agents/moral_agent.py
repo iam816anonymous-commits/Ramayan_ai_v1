@@ -18,6 +18,7 @@ class MoralAgent:
         primary = context[0] if context else {}
         text = primary.get("text", "The path of Dharma is subtle.")
         kanda = primary.get("kanda", "Ramayana")
+        chars = primary.get("entities", {}).get("characters", [])
 
         # Try to find a relevant lesson
         matched_lesson = None
@@ -40,18 +41,30 @@ class MoralAgent:
         if matched_lesson:
             reflection = f"Regarding {matched_lesson['theme']}, the Ramayana offers deep insight through {matched_lesson['context']}."
             takeaway = matched_lesson["teaching"]
+        elif chars:
+            reflection = f"The life of {chars[0]} serves as a beacon of Dharma. Every trial faced by the souls in the {kanda} is a lesson in righteousness."
+
+        # Synthesize a more grounded meaning
+        meaning = f"The sacred text reveals: '{text[:250]}...' "
+        if chars:
+            meaning += f"In the conduct of {chars[0]}, we witness the living embodiment of these principles as they navigate the trials of the {kanda}."
+
+        # Ground the takeaway in the specific character context
+        grounded_takeaway = takeaway
+        if chars and "Dharma" in takeaway:
+            grounded_takeaway = takeaway.replace("one's", f"{chars[0]}'s")
 
         return {
             "reflection": reflection,
-            "meaning": f"The moral teaching revealed here is: {text[:300]}...",
-            "context": f"In the sacred {kanda}, we observe the choices of the great souls and the consequences that ripple through time.",
-            "takeaway": takeaway,
+            "meaning": meaning,
+            "context": f"In the sacred {kanda}, we observe the choices of the great souls and the consequences that ripple through time. This specific passage is found in Chapter {primary.get('chapter', 'unknown')}.",
+            "takeaway": grounded_takeaway,
             "source_verse": primary.get("shloka_text") or text,
             "meta": {
                 "chunks_used": len(context),
                 "kanda": kanda,
-                "entities": primary.get("entities", {}),
-                "verses": [primary.get("verse")],
-                "sources": [primary.get("source")]
+                "entities": primary.get("entities", {"characters": [], "locations": [], "events": []}),
+                "verses": [str(primary.get("verse", "various"))],
+                "sources": [primary.get("source", "Scriptures")]
             }
         }

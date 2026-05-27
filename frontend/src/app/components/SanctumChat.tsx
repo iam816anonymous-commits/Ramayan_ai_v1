@@ -37,11 +37,41 @@ interface EntityKnowledge {
   relations: Array<{source: string, type: string, target: string}>;
 }
 
+const WhisperParticles = () => {
+  const particles = Array.from({ length: 20 });
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {particles.map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{
+            x: Math.random() * 100 + "%",
+            y: Math.random() * 100 + "%",
+            opacity: 0
+          }}
+          animate={{
+            y: [null, "-100%"],
+            opacity: [0, 0.4, 0],
+            scale: [0, 1.5, 0]
+          }}
+          transition={{
+            duration: Math.random() * 20 + 10,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 10
+          }}
+          className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[1px]"
+        />
+      ))}
+    </div>
+  );
+};
+
 const SanctumChat = () => {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [sageState, setSageState] = useState<'idle' | 'thinking' | 'revealing'>('idle');
+  const [sageState, setSageState] = useState<'idle' | 'thinking' | 'revealing' | 'speaking'>('idle');
   const [activeKanda, setActiveKanda] = useState<string | null>(null);
   const [selectedEntity, setSelectedEntity] = useState<EntityKnowledge | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -81,14 +111,18 @@ const SanctumChat = () => {
         meta: data.meta,
         agent: data.agent
       }]);
+
+      // Keep state as revealing for the duration of the animations (approx 8.5s)
+      setTimeout(() => setSageState('speaking'), 8500);
+      setTimeout(() => setSageState('idle'), 15000);
     } catch (_err) {
       setMessages(prev => [...prev, {
         role: 'sage',
         content: "The connection to the Sanctum has been interrupted. The silence remains unbroken."
       }]);
+      setSageState('idle');
     } finally {
       setLoading(false);
-      setTimeout(() => setSageState('idle'), 2000);
     }
   };
 
@@ -104,9 +138,26 @@ const SanctumChat = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0a0a0a] text-[#d4af37] font-serif overflow-x-hidden">
+      <WhisperParticles />
+
       {/* Sage Aura Background Effect */}
-      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-3000 z-0 ${sageState === 'thinking' ? 'opacity-30' : sageState === 'revealing' ? 'opacity-40' : 'opacity-15'}`}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#d4af37] rounded-full blur-[150px] mix-blend-screen animate-pulse duration-[4000ms]" />
+      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-3000 z-0 ${
+        sageState === 'thinking' ? 'opacity-30' :
+        sageState === 'revealing' ? 'opacity-40' :
+        sageState === 'speaking' ? 'opacity-25' : 'opacity-15'
+      }`}>
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.7, 1, 0.7]
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#d4af37] rounded-full blur-[150px] mix-blend-screen"
+        />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#d4af37]/5 rounded-full animate-ping opacity-20" />
       </div>
 

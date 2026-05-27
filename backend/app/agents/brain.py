@@ -63,7 +63,7 @@ class BrainAgent:
                 "context": "The vastness of the Ramayana contains infinite wisdom.",
                 "takeaway": "Patience and faith are the keys to understanding.",
                 "source_verse": "N/A",
-                "meta": {"chunks_used": 0, "entities": {}, "verses": [], "sources": []}
+                "meta": {"chunks_used": 0, "entities": {"characters": [], "locations": [], "events": []}, "verses": [], "sources": []}
             }
 
         if intent == "moral":
@@ -75,25 +75,59 @@ class BrainAgent:
         primary = context[0]
         entities_found = self.entity_extractor.extract_entities(query)
 
-        # Thread of Fate logic
-        reflection = f"You seek knowledge of {', '.join(entities_found['characters']) or 'the events'} that transpired."
+        # Thread of Fate logic - Improved pathfinding presentation
         chars = entities_found["characters"]
         if len(chars) >= 2:
             path = self.entity_extractor.find_path(chars[0], chars[1])
             if path:
-                reflection = f"The Thread of Fate connects them: {' and '.join(path)}. Your inquiry touches upon this divine bond."
+                fate_desc = " → ".join([p.split(" → ")[1] for p in path])
+                reflection = f"The Thread of Fate reveals a connection between {chars[0]} and {chars[1]} through {fate_desc}. Their destinies are eternally entwined."
+            else:
+                reflection = f"You seek to understand the roles of {', '.join(chars)}. Each stands as a pillar of the great epic."
+        elif chars:
+            reflection = f"Your focus rests upon {chars[0]}. The Sage observes the echoes of their journey through the Kandas."
+        else:
+            reflection = "You inquire about the sacred events that shaped the world's first epic."
+
+        # Synthesize meaning from multiple context chunks with poetic transitions
+        synthesized_meaning = primary.get('text', '')
+        if len(context) > 1:
+            additional_context = context[1].get('text', '')
+            if additional_context and additional_context != synthesized_meaning:
+                synthesized_meaning += f" In the depths of the sacred verses, we find further truth: {additional_context}"
+
+        # Collect all entities and sources
+        all_chars = set()
+        all_locs = set()
+        all_events = set()
+        all_verses = []
+        all_sources = []
+        kandas = set()
+
+        for c in context:
+            ents = c.get("entities", {})
+            all_chars.update(ents.get("characters", []))
+            all_locs.update(ents.get("locations", []))
+            all_events.update(ents.get("events", []))
+            if c.get("verse"): all_verses.append(str(c.get("verse")))
+            if c.get("source"): all_sources.append(c.get("source"))
+            if c.get("kanda"): kandas.add(c.get("kanda"))
 
         return {
             "reflection": reflection,
-            "meaning": f"The essence of this moment is: {primary.get('text')}",
-            "context": f"This took place in the {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}.",
-            "takeaway": "Knowledge of the past illuminates the path to the future.",
+            "meaning": synthesized_meaning,
+            "context": f"This wisdom is preserved across {', '.join(list(kandas) or ['the Kandas'])}. Specifically in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}.",
+            "takeaway": f"Witnessing {primary.get('event') or 'the events'} teaches us that every moment is a step in the divine plan.",
             "source_verse": primary.get("shloka_text") or primary.get("text"),
             "meta": {
                 "chunks_used": len(context),
                 "kanda": primary.get("kanda"),
-                "entities": primary.get("entities"),
-                "verses": [primary.get("verse")],
-                "sources": [primary.get("source")]
+                "entities": {
+                    "characters": list(all_chars),
+                    "locations": list(all_locs),
+                    "events": list(all_events)
+                },
+                "verses": list(set(all_verses)),
+                "sources": list(set(all_sources))
             }
         }
