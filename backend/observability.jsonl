@@ -1,0 +1,2 @@
+{"timestamp": 1779893862.9998863, "query": "How are Rama and Hanuman connected?", "intent": "factual", "agent": "Factual Agent", "latency": 0.17893028259277344, "entities": {"characters": ["Rama"], "locations": [], "events": []}, "sources": ["Valmiki_Ramayan_Shlokas.json"]}
+{"timestamp": 1779893965.1603503, "query": "How are Rama and Hanuman connected?", "intent": "factual", "agent": "Factual Agent", "latency": 0.7855815887451172, "entities": {"characters": ["Rama"], "locations": [], "events": []}, "sources": ["Valmiki_Ramayan_Shlokas.json"]}

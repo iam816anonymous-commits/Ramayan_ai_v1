@@ -69,6 +69,9 @@ class QueryResponse(BaseModel):
 
 @app.post("/api/sanctum", response_model=QueryResponse)
 async def sanctum_query(request: QueryRequest):
+    if brain is None:
+        raise HTTPException(status_code=503, detail="Knowledge Brain is still initializing. Please wait.")
+
     start_time = time.time()
     try:
         intent = orchestrator.route_query(request.query)

@@ -2,7 +2,6 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 from sentence_transformers import SentenceTransformer
 from typing import List, Dict, Any
-import numpy as np
 from backend.app.ingestion.entity_extractor import EntityExtractor
 from .moral_agent import MoralAgent
 from .personal_agent import PersonalAgent
