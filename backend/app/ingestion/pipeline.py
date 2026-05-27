@@ -1,15 +1,20 @@
-import json
-import pandas as pd
+import os
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from sentence_transformers import SentenceTransformer
-import os
+from typing import List, Dict
+
+from .shloka_loader import ShlokaLoader
+from .csv_loader import CSVLoader
+from .kanda_loader import KandaLoader
+from .metadata_builder import MetadataBuilder
 
 class IngestionPipeline:
     def __init__(self, collection_name="ramayana_v1"):
         self.client = QdrantClient(":memory:")
         self.collection_name = collection_name
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.metadata_builder = MetadataBuilder()
         self._setup_collection()
 
     def _setup_collection(self):
@@ -18,36 +23,41 @@ class IngestionPipeline:
             vectors_config=VectorParams(size=384, distance=Distance.COSINE),
         )
 
-    def load_json_data(self, filepath):
-        if not os.path.exists(filepath):
-            # Try alternative path
-            alt_path = os.path.join("backend", "data", os.path.basename(filepath))
-            if os.path.exists(alt_path):
-                filepath = alt_path
-            else:
-                raise FileNotFoundError(f"Data file not found: {filepath}")
+    def run_ingestion(self):
+        print("Starting unified ingestion pipeline...")
 
-        with open(filepath, 'r') as f:
-            return json.load(f)
+        loaders = {
+            "Valmiki_Ramayan_Shlokas.json": ShlokaLoader(),
+            "ramayana_shloka_dataset.csv": CSVLoader(),
+            "BalaKanda.json": KandaLoader(),
+            "AyodhyaKanda.json": KandaLoader(),
+            "AranyaKanda.json": KandaLoader(),
+            "KishkindhaKanda.json": KandaLoader(),
+            "SundaraKanda.json": KandaLoader(),
+            "YuddhaKanda.json": KandaLoader(),
+        }
 
-    def process_valmiki_shlokas(self, data):
+        all_normalized_data = []
+        data_dir = "backend/data"
+
+        for filename, loader in loaders.items():
+            filepath = os.path.join(data_dir, filename)
+            print(f"Loading {filename}...")
+            data = loader.load(filepath)
+            all_normalized_data.extend(data[:50]) # Limit to 50 records per file for V1 demo speed
+            print(f"Loaded {len(data[:50])} records from {filename}")
+
+        print(f"Processing {len(all_normalized_data)} total records...")
+
         points = []
-        for i, item in enumerate(data):
-            text_to_embed = f"{item.get('explanation', '')} {item.get('translation', '')}"
-            if not text_to_embed.strip():
+        for i, item in enumerate(all_normalized_data):
+            unified_obj = self.metadata_builder.build(item)
+
+            if not unified_obj["text"].strip():
                 continue
 
-            vector = self.model.encode(text_to_embed).tolist()
-            payload = {
-                "kanda": item.get("kanda"),
-                "sarga": item.get("sarga"),
-                "shloka": item.get("shloka"),
-                "text": item.get("shloka_text"),
-                "explanation": item.get("explanation"),
-                "translation": item.get("translation"),
-                "comments": item.get("comments")
-            }
-            points.append(PointStruct(id=i, vector=vector, payload=payload))
+            vector = self.model.encode(unified_obj["text"]).tolist()
+            points.append(PointStruct(id=i, vector=vector, payload=unified_obj))
 
             if len(points) >= 100:
                 self.client.upsert(collection_name=self.collection_name, points=points)
@@ -56,15 +66,8 @@ class IngestionPipeline:
         if points:
             self.client.upsert(collection_name=self.collection_name, points=points)
 
-    def run_ingestion(self):
-        print("Starting ingestion...")
-        data = self.load_json_data("Valmiki_Ramayan_Shlokas.json")
-        self.process_valmiki_shlokas(data[:1000])
-        print(f"Ingested 1000 records into {self.collection_name}")
+        print(f"Ingestion complete. Total points: {len(all_normalized_data)}")
 
 if __name__ == "__main__":
     pipeline = IngestionPipeline()
     pipeline.run_ingestion()
-
-    count = pipeline.client.get_collection(collection_name="ramayana_v1").points_count
-    print(f"Total points in collection: {count}")

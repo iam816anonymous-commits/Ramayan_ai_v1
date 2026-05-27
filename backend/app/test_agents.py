@@ -2,6 +2,7 @@ from backend.app.ingestion.pipeline import IngestionPipeline
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.sage import SageAgent
+import json
 
 def test_full_flow():
     # 1. Setup Data
@@ -10,9 +11,7 @@ def test_full_flow():
 
     # 2. Setup Agents
     orchestrator = Orchestrator()
-    brain = BrainAgent()
-    # Sharing the same in-memory client for the test
-    brain.client = pipeline.client
+    brain = BrainAgent(client=pipeline.client)
     sage = SageAgent()
 
     query = "Why did Rama go to the forest?"
@@ -25,9 +24,9 @@ def test_full_flow():
     context = brain.retrieve_context(query)
     raw_response = brain.synthesize_response(query, context, intent)
 
-    final_response = sage.format_response(raw_response)
+    final_response = sage.get_full_response(query, raw_response, intent)
     print("\n--- Sage Response ---\n")
-    print(final_response)
+    print(json.dumps(final_response, indent=2))
 
 if __name__ == "__main__":
     test_full_flow()
