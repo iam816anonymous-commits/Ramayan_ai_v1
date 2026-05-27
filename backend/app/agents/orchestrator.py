@@ -14,12 +14,18 @@ class Orchestrator:
         # Personal keywords
         personal_keywords = ["i feel", "lost", "how should i", "my life", "help me", "guide", "sad", "confused", "apply"]
 
-        if any(word in query_lower for word in moral_keywords):
-            return "moral"
-        elif any(word in query_lower for word in factual_keywords):
-            return "factual"
-        elif any(word in query_lower for word in personal_keywords):
+        # Score-based classification for mixed intents
+        f_score = sum(1 for word in factual_keywords if word in query_lower)
+        m_score = sum(1 for word in moral_keywords if word in query_lower)
+        p_score = sum(1 for word in personal_keywords if word in query_lower)
+
+        # Priority: Personal > Moral > Factual (if scores are tied)
+        if p_score > 0 and p_score >= m_score and p_score >= f_score:
             return "personal"
+        if m_score > 0 and m_score >= f_score:
+            return "moral"
+        if f_score > 0:
+            return "factual"
 
         # Default fallback
         return "factual"

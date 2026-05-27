@@ -44,8 +44,9 @@ class IngestionPipeline:
             filepath = os.path.join(data_dir, filename)
             print(f"Loading {filename}...")
             data = loader.load(filepath)
-            all_normalized_data.extend(data[:50]) # Limit to 50 records per file for V1 demo speed
-            print(f"Loaded {len(data[:50])} records from {filename}")
+            limit = 200 # Increased limit for V1 demo
+            all_normalized_data.extend(data[:limit])
+            print(f"Loaded {len(data[:limit])} records from {filename}")
 
         print(f"Processing {len(all_normalized_data)} total records...")
 

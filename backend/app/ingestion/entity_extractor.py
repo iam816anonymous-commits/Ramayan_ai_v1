@@ -41,6 +41,43 @@ class EntityExtractor:
         canonical = self.resolve_entity(entity_name)
         return [r for r in self.relations if r["source"] == canonical or r["target"] == canonical]
 
+    def find_path(self, start_entity: str, end_entity: str) -> List[str]:
+        """Finds the shortest relationship path between two entities (BFS)."""
+        start = self.resolve_entity(start_entity)
+        end = self.resolve_entity(end_entity)
+
+        if start == end:
+            return [start]
+
+        # Queue stores paths: [(entity, relation_to_this_entity)]
+        queue = [[(start, None)]]
+        visited = {start}
+
+        while queue:
+            path = queue.pop(0)
+            node, _ = path[-1]
+
+            if node == end:
+                result = []
+                for i in range(len(path) - 1):
+                    curr, _ = path[i]
+                    nxt, rel_type = path[i+1]
+                    result.append(f"{curr} → {rel_type.replace('_', ' ')} → {nxt}")
+                return result
+
+            for rel in self.relations:
+                if rel["source"] == node and rel["target"] not in visited:
+                    visited.add(rel["target"])
+                    new_path = list(path)
+                    new_path.append((rel["target"], rel["type"]))
+                    queue.append(new_path)
+                elif rel["target"] == node and rel["source"] not in visited:
+                    visited.add(rel["source"])
+                    new_path = list(path)
+                    new_path.append((rel["source"], f"related to {rel['type']}"))
+                    queue.append(new_path)
+        return []
+
     def extract_entities(self, text: str) -> Dict[str, List[str]]:
         found = {
             "characters": [],

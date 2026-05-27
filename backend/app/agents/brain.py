@@ -75,8 +75,16 @@ class BrainAgent:
         primary = context[0]
         entities_found = self.entity_extractor.extract_entities(query)
 
+        # Thread of Fate logic
+        reflection = f"You seek knowledge of {', '.join(entities_found['characters']) or 'the events'} that transpired."
+        chars = entities_found["characters"]
+        if len(chars) >= 2:
+            path = self.entity_extractor.find_path(chars[0], chars[1])
+            if path:
+                reflection = f"The Thread of Fate connects them: {' and '.join(path)}. Your inquiry touches upon this divine bond."
+
         return {
-            "reflection": f"You seek knowledge of {', '.join(entities_found['characters']) or 'the events'} that transpired.",
+            "reflection": reflection,
             "meaning": f"The essence of this moment is: {primary.get('text')}",
             "context": f"This took place in the {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}.",
             "takeaway": "Knowledge of the past illuminates the path to the future.",
