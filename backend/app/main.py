@@ -6,6 +6,7 @@ from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.sage import SageAgent
 from backend.app.ingestion.pipeline import IngestionPipeline
+from backend.app.ingestion.entity_extractor import EntityExtractor
 import uvicorn
 import time
 import json
@@ -22,10 +23,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Global agents
+# Global agents and tools
 orchestrator = Orchestrator()
-brain = None # Will be initialized in startup
+brain = None
 sage = SageAgent()
+entity_extractor = EntityExtractor()
 
 # Observability log file
 OBSERVABILITY_LOG = "backend/observability.jsonl"
@@ -90,6 +92,28 @@ async def sanctum_query(request: QueryRequest):
         return full_response
     except Exception as e:
         print(f"Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/knowledge/{entity_name}")
+async def get_entity_knowledge(entity_name: str):
+    try:
+        canonical = entity_extractor.resolve_entity(entity_name)
+        relations = entity_extractor.get_relations(canonical)
+
+        # Find description if available
+        description = "A sacred entity in the Ramayana."
+        for cat in entity_extractor.entities:
+            for ent in entity_extractor.entities[cat]:
+                if ent["name"] == canonical:
+                    description = ent.get("description", description)
+                    break
+
+        return {
+            "entity": canonical,
+            "description": description,
+            "relations": relations
+        }
+    except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

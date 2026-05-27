@@ -1,0 +1,15 @@
+[
+  {"source": "Rama", "type": "spouse_of", "target": "Sita"},
+  {"source": "Sita", "type": "spouse_of", "target": "Rama"},
+  {"source": "Rama", "type": "brother_of", "target": "Laxmana"},
+  {"source": "Rama", "type": "brother_of", "target": "Bharata"},
+  {"source": "Rama", "type": "brother_of", "target": "Shatrughna"},
+  {"source": "Hanuman", "type": "devotee_of", "target": "Rama"},
+  {"source": "Vali", "type": "brother_of", "target": "Sugriva"},
+  {"source": "Sugriva", "type": "brother_of", "target": "Vali"},
+  {"source": "Angada", "type": "son_of", "target": "Vali"},
+  {"source": "Laxmana", "type": "brother_of", "target": "Rama"},
+  {"source": "Dasharatha", "type": "father_of", "target": "Rama"},
+  {"source": "Janaka", "type": "father_of", "target": "Sita"},
+  {"source": "Sugriva", "type": "ally_of", "target": "Rama"}
+]
