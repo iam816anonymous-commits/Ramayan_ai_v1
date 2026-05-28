@@ -12,19 +12,32 @@ from .metadata_builder import MetadataBuilder
 
 class IngestionPipeline:
     def __init__(self, collection_name="ramayana_v1"):
-        self.client = QdrantClient(":memory:")
+        # Persist storage to disk
+        storage_path = os.path.join("backend", "data", "qdrant_storage")
+        os.makedirs(storage_path, exist_ok=True)
+        self.client = QdrantClient(path=storage_path)
         self.collection_name = collection_name
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         self.metadata_builder = MetadataBuilder()
         self._setup_collection()
 
     def _setup_collection(self):
-        self.client.recreate_collection(
-            collection_name=self.collection_name,
-            vectors_config=VectorParams(size=384, distance=Distance.COSINE),
-        )
+        if not self.client.collection_exists(self.collection_name):
+            self.client.create_collection(
+                collection_name=self.collection_name,
+                vectors_config=VectorParams(size=384, distance=Distance.COSINE),
+            )
 
-    def run_ingestion(self):
+    def run_ingestion(self, force=False):
+        # Check if collection already has data
+        try:
+            collection_info = self.client.get_collection(self.collection_name)
+            if collection_info.points_count > 0 and not force:
+                print(f"Brain already contains {collection_info.points_count} points. Skipping ingestion.")
+                return
+        except Exception:
+            pass
+
         print("Starting unified ingestion pipeline...")
 
         loaders = {
@@ -51,14 +64,9 @@ class IngestionPipeline:
             print(f"Loading {filename}...")
             data = loader.load(filepath)
 
-            # Dynamic limits for V1 final
-            if filename.endswith(".txt"):
-                limit = 1000 # Higher limit for text chunks
-            else:
-                limit = 500 # Balanced limit for structured data
-
-            all_normalized_data.extend(data[:limit])
-            print(f"Loaded {len(data[:limit])} records from {filename}")
+            # In Sanctum V1 Whole-Brain Mode, we load everything.
+            all_normalized_data.extend(data)
+            print(f"Loaded {len(data)} records from {filename}")
 
         print(f"Processing {len(all_normalized_data)} total records...")
 

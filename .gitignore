@@ -46,3 +46,4 @@ backend/logs/
 
 # Data
 backend/data/qdrant/
+backend/data/qdrant_storage/
