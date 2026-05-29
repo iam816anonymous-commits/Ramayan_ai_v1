@@ -73,7 +73,18 @@ class BrainAgent:
 
         # Factual synthesis (default)
         primary = context[0]
+
+        # Aggregate all entities from context if query doesn't yield any
         entities_found = self.entity_extractor.extract_entities(query)
+        if not entities_found["characters"] and not entities_found["locations"]:
+            for c in context:
+                ents = c.get("entities", {})
+                entities_found["characters"].extend(ents.get("characters", []))
+                entities_found["locations"].extend(ents.get("locations", []))
+
+            # Deduplicate
+            entities_found["characters"] = list(set(entities_found["characters"]))
+            entities_found["locations"] = list(set(entities_found["locations"]))
 
         # Thread of Fate logic - Improved pathfinding presentation
         chars = entities_found["characters"]

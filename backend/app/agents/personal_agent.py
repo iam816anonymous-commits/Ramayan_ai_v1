@@ -7,9 +7,19 @@ class PersonalAgent:
         kanda = primary.get("kanda", "Ramayana")
         chars = primary.get("entities", {}).get("characters", [])
 
-        reflection = "Your heart seeks resonance with the divine journey. The struggles of the past are but reflections of the struggles within."
+        # Simple emotion detection
+        q = query.lower()
+        if any(word in q for word in ["lost", "confused", "direction", "where"]):
+            reflection = "The forest of life is dense, yet every soul is a seeker. Your inquiry into the sacred verses suggests that the path is already beginning to reveal itself to you."
+        elif any(word in q for word in ["sad", "pain", "hurt", "suffering", "grief"]):
+            reflection = "Even the heavens wept for the separation of the divine. Your sorrow is a bridge to the universal heart, echoing the trials of the great souls."
+        elif any(word in q for word in ["fear", "scared", "anxious", "worry"]):
+            reflection = "The bridge was built on faith, not on stone alone. Let the Sage remind you that even the greatest warriors trembled before their duty, yet they stepped forward."
+        else:
+            reflection = "Your heart seeks resonance with the divine journey. The struggles of the past are but reflections of the struggles within."
+
         if chars:
-            reflection = f"Just as {chars[0]} faced their trials with grace, your own path is illuminated by their divine example. The Sage hears the echoes of your seeking."
+            reflection = f"{reflection} Just as {chars[0]} navigated the trials of {kanda}, your own path is illuminated by their divine example."
 
         return {
             "reflection": reflection,

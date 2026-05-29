@@ -18,7 +18,12 @@ class MoralAgent:
         primary = context[0] if context else {}
         text = primary.get("text", "The path of Dharma is subtle.")
         kanda = primary.get("kanda", "Ramayana")
-        chars = primary.get("entities", {}).get("characters", [])
+
+        # Aggregate all characters from context
+        all_chars = set()
+        for c in context:
+            all_chars.update(c.get("entities", {}).get("characters", []))
+        chars = list(all_chars)
 
         # Try to find a relevant lesson
         matched_lesson = None
@@ -51,8 +56,12 @@ class MoralAgent:
 
         # Ground the takeaway in the specific character context
         grounded_takeaway = takeaway
-        if chars and "Dharma" in takeaway:
-            grounded_takeaway = takeaway.replace("one's", f"{chars[0]}'s")
+        if chars:
+            # Poetic replacement of generic terms with character names
+            if "one's" in grounded_takeaway:
+                grounded_takeaway = grounded_takeaway.replace("one's", f"{chars[0]}'s")
+            elif "one" in grounded_takeaway:
+                grounded_takeaway = grounded_takeaway.replace("one", f"{chars[0]}")
 
         return {
             "reflection": reflection,
