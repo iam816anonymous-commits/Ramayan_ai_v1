@@ -46,21 +46,22 @@ const WhisperParticles = () => {
           key={i}
           initial={{
             x: Math.random() * 100 + "%",
-            y: Math.random() * 100 + "%",
+            y: "110%",
             opacity: 0
           }}
           animate={{
-            y: [null, "-100%"],
+            y: "-10%",
+            x: [null, (Math.random() * 10 - 5) + "%", null],
             opacity: [0, 0.4, 0],
-            scale: [0, 1.5, 0]
+            scale: [0.5, 1.2, 0.5]
           }}
           transition={{
-            duration: Math.random() * 20 + 10,
+            duration: Math.random() * 15 + 15,
             repeat: Infinity,
-            ease: "linear",
-            delay: Math.random() * 10
+            ease: "easeInOut",
+            delay: Math.random() * 15
           }}
-          className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[1px]"
+          className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[2px]"
         />
       ))}
     </div>

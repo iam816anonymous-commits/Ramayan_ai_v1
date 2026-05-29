@@ -30,9 +30,11 @@ sage = SageAgent()
 entity_extractor = EntityExtractor()
 
 # Observability log file
-OBSERVABILITY_LOG = "backend/observability.jsonl"
+LOG_DIR = "backend/logs"
+OBSERVABILITY_LOG = os.path.join(LOG_DIR, "observability.jsonl")
 
 def log_query(data: Dict[str, Any]):
+    os.makedirs(LOG_DIR, exist_ok=True)
     with open(OBSERVABILITY_LOG, "a") as f:
         f.write(json.dumps(data) + "\n")
 
@@ -96,6 +98,14 @@ async def sanctum_query(request: QueryRequest):
     except Exception as e:
         print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/timeline")
+async def get_timeline():
+    path = "backend/knowledge/kanda_details.json"
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            return json.load(f)
+    return []
 
 @app.get("/api/knowledge/{entity_name}")
 async def get_entity_knowledge(entity_name: str):

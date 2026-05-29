@@ -109,10 +109,25 @@ class BrainAgent:
 
         # Synthesize meaning from multiple context chunks with poetic transitions
         synthesized_meaning = primary.get('text', '')
+
+        # Entity-aware synthesis: find common characters across chunks
+        common_chars = []
+        if chars:
+            for other in context[1:]:
+                other_chars = other.get("entities", {}).get("characters", [])
+                for c in chars:
+                    if c in other_chars and c not in common_chars:
+                        common_chars.append(c)
+
+        if common_chars:
+            synthesized_meaning += f" The role of {', '.join(common_chars)} is further illuminated in the following verses: "
+        elif len(context) > 1:
+            synthesized_meaning += " In the depths of the sacred verses, we find further truth: "
+
         if len(context) > 1:
             additional_context = context[1].get('text', '')
-            if additional_context and additional_context != synthesized_meaning:
-                synthesized_meaning += f" In the depths of the sacred verses, we find further truth: {additional_context}"
+            if additional_context and additional_context != primary.get('text'):
+                synthesized_meaning += additional_context
 
         # Collect all entities and sources
         all_chars = set()
@@ -131,6 +146,11 @@ class BrainAgent:
             if c.get("source"): all_sources.append(c.get("source"))
             if c.get("kanda"): kandas.add(c.get("kanda"))
 
+        # Grounding check
+        hallucination_flag = False
+        if not context or len(context) < 1:
+            hallucination_flag = True
+
         return {
             "reflection": reflection,
             "meaning": synthesized_meaning,
@@ -146,6 +166,7 @@ class BrainAgent:
                     "events": list(all_events)
                 },
                 "verses": list(set(all_verses)),
-                "sources": list(set(all_sources))
+                "sources": list(set(all_sources)),
+                "grounded": not hallucination_flag
             }
         }
