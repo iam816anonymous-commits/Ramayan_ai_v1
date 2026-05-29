@@ -18,6 +18,6 @@ The **Entity Validator** is now a mandatory gate in the retrieval pipeline. It i
 | **Who is Ram?** | **ACCEPTED** | Resolved via Alias to Rama. |
 
 ## Implementation Details
-*   **File:** `backend/app/ingestion/entity_resolver.py`
+*   **File:** `backend/ingest/entity_resolver.py`
 *   **Method:** `validate_entity` + `extract_potential_entities`
 *   **Pipeline:** Integrated into `BrainAgent.synthesize_response` as a pre-synthesis block for factual queries.

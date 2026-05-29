@@ -5,6 +5,7 @@ from typing import List, Dict, Any, Optional
 from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.sage import SageAgent
+from backend.app.cache import cache_instance
 from backend.ingest.pipeline import IngestionPipeline
 from backend.ingest.entity_extractor import EntityExtractor
 import uvicorn
@@ -74,12 +75,20 @@ async def sanctum_query(request: QueryRequest):
     if brain is None:
         raise HTTPException(status_code=503, detail="Knowledge Brain is still initializing. Please wait.")
 
+    # Check cache
+    cached_response = cache_instance.get(request.query)
+    if cached_response:
+        return cached_response
+
     start_time = time.time()
     try:
         intent = orchestrator.route_query(request.query)
-        context = brain.retrieve_context(request.query)
-        brain_response = brain.synthesize_response(request.query, context, intent)
+        context = await brain.retrieve_context(request.query)
+        brain_response = await brain.synthesize_response(request.query, context, intent)
         full_response = sage.get_full_response(request.query, brain_response, intent)
+
+        # Cache the response
+        cache_instance.set(request.query, full_response)
 
         latency = time.time() - start_time
 

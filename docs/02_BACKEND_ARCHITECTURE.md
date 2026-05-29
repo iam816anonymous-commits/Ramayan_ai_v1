@@ -7,7 +7,7 @@ The backend is built using **FastAPI** (Python 3.12+). It serves as the orchestr
 The project follows a modular package structure:
 *   `backend/app/main.py`: Entry point, API routes, and lifecycle events.
 *   `backend/app/agents/`: Specialized AI agents (Orchestrator, Brain, Sage, Moral, Personal).
-*   `backend/app/ingestion/`: Unified pipeline for processing CSV, JSON, and TXT sources.
+*   `backend/ingest/`: Unified pipeline for processing CSV, JSON, and TXT sources.
 *   `backend/app/core/`: (Implicit) Core utilities like entity extraction and relationship mapping.
 
 ## Architecture Diagram

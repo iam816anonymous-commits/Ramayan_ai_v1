@@ -1,8 +1,9 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
-from sentence_transformers import SentenceTransformer, CrossEncoder
 from typing import List, Dict, Any
 import numpy as np
+import anyio
+from backend.app.models import get_sentence_transformer, get_cross_encoder
 from backend.ingest.entity_extractor import EntityExtractor
 from backend.ingest.entity_resolver import EntityResolver
 from backend.ingest.relationship_formatter import RelationshipFormatter
@@ -14,8 +15,8 @@ class BrainAgent:
     def __init__(self, collection_name="ramayana_v1", client=None):
         self.client = client or QdrantClient(":memory:")
         self.collection_name = collection_name
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
-        self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+        self.model = get_sentence_transformer()
+        self.reranker = get_cross_encoder()
         self.entity_extractor = EntityExtractor()
         self.entity_resolver = EntityResolver()
         self.relationship_formatter = RelationshipFormatter()
@@ -24,7 +25,10 @@ class BrainAgent:
         self.moral_agent = MoralAgent()
         self.personal_reasoner = PersonalReasoner()
 
-    def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
+    async def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
+        return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent)
+
+    def _retrieve_context_sync(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
         entities = self.entity_extractor.extract_entities(query)
 
         # Phase 1: Gatekeeper Hardening
@@ -92,7 +96,10 @@ class BrainAgent:
 
         return unique_results[:top_k]
 
-    def synthesize_response(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
+    async def synthesize_response(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
+        return await anyio.to_thread.run_sync(self._synthesize_response_sync, query, context, intent)
+
+    def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
         # Phase 6: Confidence Thresholding
         entities_found = self.entity_extractor.extract_entities(query)
         confidence = self.confidence_scorer.calculate(context, intent, entities_found)

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface KandaInfo {
@@ -19,6 +19,7 @@ interface TimelineProps {
 
 const Timeline = ({ activeKanda }: TimelineProps) => {
   const [kandas, setKandas] = useState<KandaInfo[]>([]);
+  const timelineRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
 
   useEffect(() => {
     fetch('http://localhost:8000/api/timeline')
@@ -26,6 +27,22 @@ const Timeline = ({ activeKanda }: TimelineProps) => {
       .then(data => setKandas(data))
       .catch(err => console.error("Failed to fetch timeline", err));
   }, []);
+
+  useEffect(() => {
+    if (activeKanda) {
+      const matchedKanda = kandas.find(event =>
+        event.id.toLowerCase().includes(activeKanda.toLowerCase()) ||
+        activeKanda.toLowerCase().includes(event.id.toLowerCase())
+      );
+
+      if (matchedKanda && timelineRefs.current[matchedKanda.id]) {
+        timelineRefs.current[matchedKanda.id]?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+    }
+  }, [activeKanda, kandas]);
   return (
     <div className="relative py-32 bg-[#050505] text-[#d4af37] border-t border-[#d4af37]/5 overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent" />
@@ -50,6 +67,7 @@ const Timeline = ({ activeKanda }: TimelineProps) => {
             return (
               <motion.div
                 key={i}
+                ref={el => { timelineRefs.current[event.id] = el; }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}

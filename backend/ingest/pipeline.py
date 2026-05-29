@@ -1,9 +1,9 @@
 import os
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
-from sentence_transformers import SentenceTransformer
 from typing import List, Dict
 
+from backend.app.models import get_sentence_transformer
 from .shloka_loader import ShlokaLoader
 from .csv_loader import CSVLoader
 from .kanda_loader import KandaLoader
@@ -18,7 +18,7 @@ class IngestionPipeline:
         os.makedirs(storage_path, exist_ok=True)
         self.client = QdrantClient(path=storage_path)
         self.collection_name = collection_name
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.model = get_sentence_transformer()
         self.metadata_builder = MetadataBuilder()
         self.knowledge_builder = KnowledgeBuilder()
         self._setup_collection()

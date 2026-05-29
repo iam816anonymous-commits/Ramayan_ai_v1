@@ -44,7 +44,7 @@ graph LR
 
 ## The "Thread of Fate" Implementation
 This is a **Verified Feature**.
-*   **File:** `backend/app/ingestion/entity_extractor.py`
+*   **File:** `backend/ingest/entity_extractor.py`
 *   **Function:** `find_path(entity1, entity2)`
 *   **Logic:** Uses an in-memory Breadth-First Search (BFS) to find the shortest path between two characters in the relations graph.
 *   **Synthesis:** `BrainAgent.synthesize_response` formats the path result into a poetic "Thread of Fate" description.

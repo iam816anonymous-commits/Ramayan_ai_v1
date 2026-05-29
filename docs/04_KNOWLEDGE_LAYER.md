@@ -12,7 +12,7 @@ The Knowledge Layer integrates diverse scriptural and analytical datasets into a
 | **Dharma Lessons** | `dharma_lessons.json` | Grounded moral mappings for the `MoralAgent`. |
 
 ## Ingestion Pipeline
-The pipeline (`backend/app/ingestion/pipeline.py`) processes files through several stages:
+The pipeline (`backend/ingest/pipeline.py`) processes files through several stages:
 
 ### 1. Loading and Normalization
 Each file format has a dedicated loader (e.g., `ShlokaLoader`, `TXTLoader`). All data is normalized into a unified object:

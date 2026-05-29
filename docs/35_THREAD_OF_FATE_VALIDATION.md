@@ -12,6 +12,6 @@ The "Thread of Fate" narration was previously broken by repetitive grammar (e.g.
 | **Angada ↔ Vali** | "...son of of Vali" | "Angada is the son of Vali." | **FIXED** |
 
 ## Components
-*   **Formatter:** `backend/app/ingestion/relationship_formatter.py`
+*   **Formatter:** `backend/ingest/relationship_formatter.py`
 *   **Logic:** Mapping graph edges (e.g., `spouse_of`) to natural language templates.
 *   **Integration:** `BrainAgent` now joins multiple relationship steps with natural conjunctions (e.g., ", and ").
