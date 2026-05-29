@@ -67,6 +67,15 @@ const WhisperParticles = () => {
   );
 };
 
+const REVELATION_TIMINGS = {
+  REFLECTION: 0.5,
+  MEANING: 2.5,
+  CONTEXT: 4.5,
+  TAKEAWAY: 6.5,
+  SOURCES: 8.5,
+  TOTAL_DURATION: 15000 // Total time in ms for the whole reveal cycle
+};
+
 const SanctumChat = () => {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -112,9 +121,9 @@ const SanctumChat = () => {
         agent: data.agent
       }]);
 
-      // Keep state as revealing for the duration of the animations (approx 8.5s)
-      setTimeout(() => setSageState('speaking'), 8500);
-      setTimeout(() => setSageState('idle'), 15000);
+      // Keep state as revealing for the duration of the animations
+      setTimeout(() => setSageState('speaking'), REVELATION_TIMINGS.SOURCES * 1000);
+      setTimeout(() => setSageState('idle'), REVELATION_TIMINGS.TOTAL_DURATION);
     } catch (_err) {
       setMessages(prev => [...prev, {
         role: 'sage',
@@ -207,28 +216,29 @@ const SanctumChat = () => {
                         <RevelationSection
                           title="Reflection"
                           body={msg.revelation.reflection}
-                          delay={0.5}
+                          delay={REVELATION_TIMINGS.REFLECTION}
                         />
                         <RevelationSection
                           title="Meaning"
                           body={msg.revelation.meaning}
-                          delay={2.5}
+                          delay={REVELATION_TIMINGS.MEANING}
                         />
                         <RevelationSection
                           title="Context"
                           body={msg.revelation.context}
-                          delay={4.5}
+                          delay={REVELATION_TIMINGS.CONTEXT}
                         />
                         <RevelationSection
                           title="Takeaway"
                           body={msg.revelation.takeaway}
-                          delay={6.5}
+                          delay={REVELATION_TIMINGS.TAKEAWAY}
                         />
 
                         <SourceAttribution
                           meta={msg.meta}
                           agent={msg.agent}
                           onEntityClick={handleEntityClick}
+                          delay={REVELATION_TIMINGS.SOURCES}
                         />
                       </>
                     ) : (
@@ -364,7 +374,7 @@ const RevelationSection = ({ title, body, delay }: { title: string, body: string
   </motion.div>
 );
 
-const SourceAttribution = ({ meta, agent, onEntityClick }: { meta?: Meta, agent?: string, onEntityClick: (name: string) => void }) => {
+const SourceAttribution = ({ meta, agent, onEntityClick, delay }: { meta?: Meta, agent?: string, onEntityClick: (name: string) => void, delay: number }) => {
   if (!meta) return null;
 
   const allEntities = [
@@ -377,7 +387,7 @@ const SourceAttribution = ({ meta, agent, onEntityClick }: { meta?: Meta, agent?
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 8 }}
+      transition={{ delay, duration: 1.5 }}
       className="pt-8 space-y-6"
     >
       <div className="flex flex-wrap gap-2">

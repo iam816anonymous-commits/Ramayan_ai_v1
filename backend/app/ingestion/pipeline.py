@@ -9,6 +9,7 @@ from .csv_loader import CSVLoader
 from .kanda_loader import KandaLoader
 from .txt_loader import TXTLoader
 from .metadata_builder import MetadataBuilder
+from .knowledge_builder import KnowledgeBuilder
 
 class IngestionPipeline:
     def __init__(self, collection_name="ramayana_v1"):
@@ -19,6 +20,7 @@ class IngestionPipeline:
         self.collection_name = collection_name
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         self.metadata_builder = MetadataBuilder()
+        self.knowledge_builder = KnowledgeBuilder()
         self._setup_collection()
 
     def _setup_collection(self):
@@ -72,7 +74,9 @@ class IngestionPipeline:
 
         points = []
         for i, item in enumerate(all_normalized_data):
-            unified_obj = self.metadata_builder.build(item)
+            # Pre-enrich with entities for faster retrieval/filtering
+            enriched_item = self.knowledge_builder.enrich_item(item)
+            unified_obj = self.metadata_builder.build(enriched_item)
 
             if not unified_obj["text"].strip():
                 continue

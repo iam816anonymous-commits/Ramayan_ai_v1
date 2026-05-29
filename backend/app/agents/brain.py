@@ -80,8 +80,15 @@ class BrainAgent:
         if len(chars) >= 2:
             path = self.entity_extractor.find_path(chars[0], chars[1])
             if path:
-                fate_desc = " → ".join([p.split(" → ")[1] for p in path])
-                reflection = f"The Thread of Fate reveals a connection between {chars[0]} and {chars[1]} through {fate_desc}. Their destinies are eternally entwined."
+                # Format: "being the [type] of [target]"
+                steps = []
+                for p in path:
+                    _, rel, target = p.split(" → ")
+                    rel_clean = rel.lower().replace("_of", "").replace("_", " ")
+                    steps.append(f"the {rel_clean} of {target}")
+
+                fate_desc = " and ".join(steps)
+                reflection = f"The Thread of Fate reveals how {chars[0]} is connected to {chars[1]} by being {fate_desc}. Their destinies are eternally entwined."
             else:
                 reflection = f"You seek to understand the roles of {', '.join(chars)}. Each stands as a pillar of the great epic."
         elif chars:
