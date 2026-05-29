@@ -1,0 +1,32 @@
+{
+  "characters": [
+    {"name": "Rama", "description": "The avatar of Vishnu, embodiment of Dharma."},
+    {"name": "Sita", "description": "Consort of Rama, embodiment of devotion and purity."},
+    {"name": "Hanuman", "description": "The monkey god, devotee of Rama, symbol of strength and humility."},
+    {"name": "Laxmana", "description": "Brother of Rama, embodiment of loyalty."},
+    {"name": "Bharata", "description": "Brother of Rama, embodiment of sacrifice."},
+    {"name": "Shatrughna", "description": "Brother of Rama, slayer of enemies."},
+    {"name": "Vali", "description": "King of Kishkindha, brother of Sugriva."},
+    {"name": "Sugriva", "description": "King of Kishkindha, ally of Rama."},
+    {"name": "Angada", "description": "Son of Vali, nephew of Sugriva."},
+    {"name": "Ravana", "description": "King of Lanka, the ten-headed demon."},
+    {"name": "Vasistha", "description": "Royal priest of Ayodhya."},
+    {"name": "Dasharatha", "description": "King of Ayodhya, father of Rama."},
+    {"name": "Janaka", "description": "King of Mithila, father of Sita."}
+  ],
+  "locations": [
+    {"name": "Ayodhya", "description": "Capital of Kosala kingdom, birthplace of Rama."},
+    {"name": "Lanka", "description": "Island kingdom of Ravana."},
+    {"name": "Kishkindha", "description": "Monkey kingdom ruled by Vali and then Sugriva."},
+    {"name": "Mithila", "description": "Kingdom of Janaka."},
+    {"name": "Dandaka", "description": "The dense forest where Rama lived during exile."},
+    {"name": "Panchavati", "description": "The place in the forest where Sita was abducted."}
+  ],
+  "events": [
+    {"name": "Exile", "description": "Rama's fourteen-year journey into the forest."},
+    {"name": "Swayamvara", "description": "The ceremony where Rama won Sita's hand."},
+    {"name": "Abduction", "description": "The kidnapping of Sita by Ravana."},
+    {"name": "War", "description": "The great battle between Rama's army and Ravana's forces."},
+    {"name": "Coronation", "description": "Rama's return to Ayodhya as King."}
+  ]
+}
