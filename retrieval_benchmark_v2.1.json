@@ -1,42 +1,42 @@
 [
   {
     "query": "Who is Rama?",
-    "latency": 0.7181682586669922,
+    "latency": 0.6198182106018066,
     "kanda_match": false,
     "char_match": true,
     "hit_rate_5": true
   },
   {
     "query": "What was Rama's exile?",
-    "latency": 0.00012135505676269531,
+    "latency": 0.00010943412780761719,
     "kanda_match": false,
     "char_match": true,
     "hit_rate_5": false
   },
   {
     "query": "How was Sita abducted?",
-    "latency": 0.6997947692871094,
+    "latency": 0.6275053024291992,
     "kanda_match": true,
     "char_match": true,
     "hit_rate_5": true
   },
   {
     "query": "Who is Hanuman?",
-    "latency": 1.4841892719268799,
+    "latency": 1.320826768875122,
     "kanda_match": true,
     "char_match": true,
     "hit_rate_5": true
   },
   {
     "query": "The leap to Lanka",
-    "latency": 0.32598114013671875,
+    "latency": 0.2973928451538086,
     "kanda_match": false,
     "char_match": false,
     "hit_rate_5": false
   },
   {
     "query": "The battle against Ravana",
-    "latency": 0.535179853439331,
+    "latency": 0.5155878067016602,
     "kanda_match": false,
     "char_match": true,
     "hit_rate_5": false

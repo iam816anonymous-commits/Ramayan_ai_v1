@@ -3,9 +3,9 @@ from qdrant_client.models import Filter, FieldCondition, MatchValue
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from typing import List, Dict, Any
 import numpy as np
-from backend.app.ingestion.entity_extractor import EntityExtractor
-from backend.app.ingestion.entity_validator import EntityValidator
-from backend.app.ingestion.relationship_formatter import RelationshipFormatter
+from backend.ingest.entity_extractor import EntityExtractor
+from backend.ingest.entity_resolver import EntityResolver
+from backend.ingest.relationship_formatter import RelationshipFormatter
 from backend.app.confidence import ConfidenceScorer
 from .moral_agent import MoralAgent
 from .personal_reasoner import PersonalReasoner
@@ -17,7 +17,7 @@ class BrainAgent:
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
         self.entity_extractor = EntityExtractor()
-        self.entity_validator = EntityValidator()
+        self.entity_resolver = EntityResolver()
         self.relationship_formatter = RelationshipFormatter()
         self.confidence_scorer = ConfidenceScorer()
 
@@ -31,13 +31,13 @@ class BrainAgent:
         if intent == "factual":
             # Check known entities
             for char in entities["characters"]:
-                if not self.entity_validator.entity_exists(char):
+                if not self.entity_resolver.entity_exists(char):
                     return []
 
             # Check potential entities (names we might not know)
-            potential_entities = self.entity_validator.extract_potential_entities(query)
+            potential_entities = self.entity_resolver.extract_potential_entities(query)
             for pe in potential_entities:
-                if not self.entity_validator.entity_exists(pe):
+                if not self.entity_resolver.entity_exists(pe):
                     # Trigger rejection by returning empty context
                     return []
 
@@ -117,12 +117,12 @@ class BrainAgent:
         # Phase 1 Rejection Check
         if intent == "factual":
             entities_in_query = self.entity_extractor.extract_entities(query)
-            potential_entities = self.entity_validator.extract_potential_entities(query)
+            potential_entities = self.entity_resolver.extract_potential_entities(query)
 
             all_to_check = list(set(entities_in_query["characters"] + potential_entities))
 
             for char in all_to_check:
-                if not self.entity_validator.entity_exists(char):
+                if not self.entity_resolver.entity_exists(char):
                     return {
                         "reflection": "The Sage remains silent on figures beyond the sacred epic.",
                         "meaning": f"The character '{char}' does not exist in my Ramayana knowledge base.",

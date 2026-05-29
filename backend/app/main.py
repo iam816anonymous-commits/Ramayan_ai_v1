@@ -5,8 +5,8 @@ from typing import List, Dict, Any, Optional
 from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.sage import SageAgent
-from backend.app.ingestion.pipeline import IngestionPipeline
-from backend.app.ingestion.entity_extractor import EntityExtractor
+from backend.ingest.pipeline import IngestionPipeline
+from backend.ingest.entity_extractor import EntityExtractor
 import uvicorn
 import time
 import json

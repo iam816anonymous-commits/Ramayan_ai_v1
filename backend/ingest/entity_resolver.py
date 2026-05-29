@@ -2,7 +2,7 @@ import json
 import os
 from typing import Optional, Dict, List
 
-class EntityValidator:
+class EntityResolver:
     def __init__(self, knowledge_dir: str = "backend/knowledge"):
         self.knowledge_dir = knowledge_dir
         self.entities = self._load_json("entities.json", {"characters": [], "locations": [], "events": []})
