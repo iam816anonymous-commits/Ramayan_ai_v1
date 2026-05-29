@@ -1,23 +1,46 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 from typing import List, Dict, Any
+import numpy as np
 from backend.app.ingestion.entity_extractor import EntityExtractor
+from backend.app.ingestion.entity_validator import EntityValidator
+from backend.app.ingestion.relationship_formatter import RelationshipFormatter
+from backend.app.confidence import ConfidenceScorer
 from .moral_agent import MoralAgent
-from .personal_agent import PersonalAgent
+from .personal_reasoner import PersonalReasoner
 
 class BrainAgent:
     def __init__(self, collection_name="ramayana_v1", client=None):
         self.client = client or QdrantClient(":memory:")
         self.collection_name = collection_name
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
         self.entity_extractor = EntityExtractor()
+        self.entity_validator = EntityValidator()
+        self.relationship_formatter = RelationshipFormatter()
+        self.confidence_scorer = ConfidenceScorer()
 
         self.moral_agent = MoralAgent()
-        self.personal_agent = PersonalAgent()
+        self.personal_reasoner = PersonalReasoner()
 
-    def retrieve_context(self, query: str, top_k: int = 5) -> List[Dict]:
+    def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
         entities = self.entity_extractor.extract_entities(query)
+
+        # Phase 1: Gatekeeper Hardening
+        if intent == "factual":
+            # Check known entities
+            for char in entities["characters"]:
+                if not self.entity_validator.entity_exists(char):
+                    return []
+
+            # Check potential entities (names we might not know)
+            potential_entities = self.entity_validator.extract_potential_entities(query)
+            for pe in potential_entities:
+                if not self.entity_validator.entity_exists(pe):
+                    # Trigger rejection by returning empty context
+                    return []
+
         vector = self.model.encode(query).tolist()
 
         all_results = []
@@ -41,9 +64,12 @@ class BrainAgent:
         semantic_results = self.client.query_points(
             collection_name=self.collection_name,
             query=vector,
-            limit=top_k
+            limit=10 # Retrieval pool for reranking
         ).points
-        all_results.extend([hit.payload for hit in semantic_results])
+
+        for hit in semantic_results:
+            hit.payload['score'] = hit.score
+            all_results.append(hit.payload)
 
         seen = set()
         unique_results = []
@@ -53,9 +79,59 @@ class BrainAgent:
                 unique_results.append(res)
                 seen.add(key)
 
+        # Phase 2: Reranking
+        if unique_results:
+            pairs = [[query, res['text']] for res in unique_results]
+            rerank_scores = self.reranker.predict(pairs)
+
+            for i, score in enumerate(rerank_scores):
+                unique_results[i]['rerank_score'] = float(score)
+
+            # Sort by rerank score
+            unique_results.sort(key=lambda x: x['rerank_score'], reverse=True)
+
         return unique_results[:top_k]
 
     def synthesize_response(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
+        # Phase 6: Confidence Thresholding
+        entities_found = self.entity_extractor.extract_entities(query)
+        confidence = self.confidence_scorer.calculate(context, intent, entities_found)
+
+        if intent != "personal" and confidence < 0.45:
+            return {
+                "reflection": "The sacred silence holds all answers.",
+                "meaning": "I am not sufficiently confident in this answer to provide guidance.",
+                "context": "The retrieved verses do not provide a strong enough match for your inquiry.",
+                "takeaway": "Seek clarity through a more specific query or different phrasing.",
+                "source_verse": "N/A",
+                "meta": {
+                    "chunks_used": len(context),
+                    "entities": entities_found,
+                    "verses": [],
+                    "sources": [],
+                    "grounded": False,
+                    "confidence": confidence
+                }
+            }
+
+        # Phase 1 Rejection Check
+        if intent == "factual":
+            entities_in_query = self.entity_extractor.extract_entities(query)
+            potential_entities = self.entity_validator.extract_potential_entities(query)
+
+            all_to_check = list(set(entities_in_query["characters"] + potential_entities))
+
+            for char in all_to_check:
+                if not self.entity_validator.entity_exists(char):
+                    return {
+                        "reflection": "The Sage remains silent on figures beyond the sacred epic.",
+                        "meaning": f"The character '{char}' does not exist in my Ramayana knowledge base.",
+                        "context": "The Sanctum focuses exclusively on the journey of Rama and the figures of the first epic.",
+                        "takeaway": "Seek wisdom within the context of Dharma as revealed in the Ramayana.",
+                        "source_verse": "N/A",
+                        "meta": {"chunks_used": 0, "entities": {"characters": [], "locations": [], "events": []}, "verses": [], "sources": [], "grounded": False}
+                    }
+
         if not context:
             return {
                 "reflection": "The sacred silence holds all answers.",
@@ -63,13 +139,14 @@ class BrainAgent:
                 "context": "The vastness of the Ramayana contains infinite wisdom.",
                 "takeaway": "Patience and faith are the keys to understanding.",
                 "source_verse": "N/A",
-                "meta": {"chunks_used": 0, "entities": {"characters": [], "locations": [], "events": []}, "verses": [], "sources": []}
+                "meta": {"chunks_used": 0, "entities": {"characters": [], "locations": [], "events": []}, "verses": [], "sources": [], "grounded": False}
             }
 
         if intent == "moral":
             return self.moral_agent.synthesize(query, context)
         elif intent == "personal":
-            return self.personal_agent.synthesize(query, context)
+            # Phase 3: Personal Reasoner Hardening
+            return self.personal_reasoner.reason(query, context)
 
         # Factual synthesis (default)
         primary = context[0]
@@ -91,15 +168,14 @@ class BrainAgent:
         if len(chars) >= 2:
             path = self.entity_extractor.find_path(chars[0], chars[1])
             if path:
-                # Format: "being the [type] of [target]"
+                # Use RelationshipFormatter for natural language
                 steps = []
                 for p in path:
-                    _, rel, target = p.split(" → ")
-                    rel_clean = rel.lower().replace("_of", "").replace("_", " ")
-                    steps.append(f"the {rel_clean} of {target}")
+                    src, rel, tgt = p.split(" → ")
+                    steps.append(self.relationship_formatter.format(src, rel, tgt))
 
-                fate_desc = " and ".join(steps)
-                reflection = f"The Thread of Fate reveals how {chars[0]} is connected to {chars[1]} by being {fate_desc}. Their destinies are eternally entwined."
+                fate_desc = ", and ".join(steps)
+                reflection = f"The Thread of Fate reveals that {fate_desc}. Their destinies are eternally entwined."
             else:
                 reflection = f"You seek to understand the roles of {', '.join(chars)}. Each stands as a pillar of the great epic."
         elif chars:
@@ -167,6 +243,7 @@ class BrainAgent:
                 },
                 "verses": list(set(all_verses)),
                 "sources": list(set(all_sources)),
-                "grounded": not hallucination_flag
+                "grounded": not hallucination_flag,
+                "confidence": confidence
             }
         }
