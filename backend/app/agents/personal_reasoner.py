@@ -1,57 +1,22 @@
+import json
+import os
 from typing import List, Dict, Any
 
 class PersonalReasoner:
-    def __init__(self):
-        self.themes = {
-            "fear": {
-                "episode": "Hanuman's Leap over the Ocean",
-                "lesson": "Faith in one's purpose overcomes the vastest obstacles.",
-                "application": "When facing failure, remember that Hanuman's strength came from his devotion and clarity of purpose, not just physical power."
-            },
-            "grief": {
-                "episode": "Rama's mourning for Sita in Aranya Kanda",
-                "lesson": "Even the divine experience deep sorrow, showing it is a part of the human condition.",
-                "application": "Allow yourself to feel, but like Rama, eventually find the strength to continue the journey towards righteousness."
-            },
-            "loss": {
-                "episode": "The death of Jatayu",
-                "lesson": "Noble sacrifice in the face of loss immortalizes the spirit.",
-                "application": "Focus on the integrity of your actions rather than the permanence of what was lost."
-            },
+    def __init__(self, knowledge_dir: str = "backend/knowledge"):
+        self.knowledge_dir = knowledge_dir
+        self.themes = self._load_themes()
+
+    def _load_themes(self) -> Dict[str, Any]:
+        path = os.path.join(self.knowledge_dir, "personal_themes.json")
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                return json.load(f)
+        return {
             "purpose": {
-                "episode": "Rama's exile to fulfill Dasharatha's word",
-                "lesson": "Dharma (duty) is the compass that guides one through the unknown.",
-                "application": "Align your choices with your core values, even if they lead you away from comfort."
-            },
-            "loneliness": {
-                "episode": "Sita in the Ashoka Vatika",
-                "lesson": "Inner strength and unwavering focus can sustain a soul in isolation.",
-                "application": "In solitude, nurture your connection to the divine or your highest ideals."
-            },
-            "anger": {
-                "episode": "Laxmana's reaction to Rama's exile",
-                "lesson": "Righteous indignation must be tempered by wisdom and the guidance of the steady-minded.",
-                "application": "Listen to the calm voice within before acting on the fires of passion."
-            },
-            "confusion": {
-                "episode": "Sugriva's doubt before the alliance",
-                "lesson": "Friendship with the wise clears the fog of uncertainty.",
-                "application": "Seek guidance from those who embody the values you aspire to."
-            },
-            "failure": {
-                "episode": "The first unsuccessful attempts to cross to Lanka",
-                "lesson": "Persistence and collective effort turn failure into a bridge of victory.",
-                "application": "Analyze the cause of setback, gather your allies, and build your bridge one stone at a time."
-            },
-            "discipline": {
-                "episode": "The ascesis of the sages in Dandaka",
-                "lesson": "Strict adherence to a path leads to transcendental power.",
-                "application": "Small, consistent daily practices build the foundation for great shifts in life."
-            },
-            "hope": {
-                "episode": "The sight of Rama's ring given to Sita by Hanuman",
-                "lesson": "A single token of truth can dispel a mountain of despair.",
-                "application": "Hold onto small signs of progress and truth when the darkness feels overwhelming."
+                "episode": "Rama's Journey",
+                "lesson": "Dharma guides the way.",
+                "application": "Stay steadfast in your duty."
             }
         }
 
@@ -70,7 +35,7 @@ class PersonalReasoner:
 
     def reason(self, query: str, context: List[Dict]) -> Dict[str, Any]:
         theme_key = self.detect_theme(query)
-        theme_data = self.themes[theme_key]
+        theme_data = self.themes.get(theme_key, self.themes.get("purpose"))
 
         primary_verse = context[0] if context else {"text": "Dharma is subtle and eternal.", "kanda": "Universal", "verse": "N/A"}
 

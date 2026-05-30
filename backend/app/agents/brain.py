@@ -153,7 +153,15 @@ class BrainAgent:
             return self.moral_agent.synthesize(query, context)
         elif intent == "personal":
             # Phase 3: Personal Reasoner Hardening
-            return self.personal_reasoner.reason(query, context)
+            brain_res = self.personal_reasoner.reason(query, context)
+            brain_res["meta"] = {
+                "chunks_used": len(context),
+                "kanda": context[0].get("kanda") if context else "Universal",
+                "entities": {"characters": [], "locations": [], "events": []},
+                "verses": [str(context[0].get("verse"))] if context else [],
+                "sources": [context[0].get("source")] if context else ["Scriptures"]
+            }
+            return brain_res
 
         # Factual synthesis (default)
         primary = context[0]

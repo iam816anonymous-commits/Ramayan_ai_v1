@@ -1,15 +1,182 @@
 [
-  {"source": "Rama", "type": "spouse_of", "target": "Sita"},
-  {"source": "Sita", "type": "spouse_of", "target": "Rama"},
-  {"source": "Rama", "type": "brother_of", "target": "Laxmana"},
-  {"source": "Rama", "type": "brother_of", "target": "Bharata"},
-  {"source": "Rama", "type": "brother_of", "target": "Shatrughna"},
-  {"source": "Hanuman", "type": "devotee_of", "target": "Rama"},
-  {"source": "Vali", "type": "brother_of", "target": "Sugriva"},
-  {"source": "Sugriva", "type": "brother_of", "target": "Vali"},
-  {"source": "Angada", "type": "son_of", "target": "Vali"},
-  {"source": "Laxmana", "type": "brother_of", "target": "Rama"},
-  {"source": "Dasharatha", "type": "father_of", "target": "Rama"},
-  {"source": "Janaka", "type": "father_of", "target": "Sita"},
-  {"source": "Sugriva", "type": "ally_of", "target": "Rama"}
+  {
+    "source": "Janaka",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Sita",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Maricha",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Bharata",
+    "type": "son_of",
+    "target": "Kaikeyi"
+  },
+  {
+    "source": "Rama",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Bharata",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Kaikeyi",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Kausalya",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Rama",
+    "type": "son_of",
+    "target": "Kausalya"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "brother_of",
+    "target": "Bharata"
+  },
+  {
+    "source": "Bharata",
+    "type": "brother_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Vasistha",
+    "type": "son_of",
+    "target": "Kaikeyi"
+  },
+  {
+    "source": "Bharata",
+    "type": "brother_of",
+    "target": "Lakshmana"
+  },
+  {
+    "source": "Rama",
+    "type": "son_of",
+    "target": "Kaikeyi"
+  },
+  {
+    "source": "Rama",
+    "type": "brother_of",
+    "target": "Lakshmana"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "brother_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Ravana",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Sugriva",
+    "type": "son_of",
+    "target": "Sumitra"
+  },
+  {
+    "source": "Angada",
+    "type": "son_of",
+    "target": "Vali"
+  },
+  {
+    "source": "Hanuman",
+    "type": "brother_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Hanuman",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Hanuman",
+    "type": "spouse_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Indrajit",
+    "type": "son_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Sugriva",
+    "type": "brother_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Vali",
+    "type": "brother_of",
+    "target": "Lakshmana"
+  },
+  {
+    "source": "Indrajit",
+    "type": "son_of",
+    "target": "Vali"
+  },
+  {
+    "source": "Sugriva",
+    "type": "son_of",
+    "target": "Vali"
+  },
+  {
+    "source": "Hanuman",
+    "type": "son_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Ravana",
+    "type": "son_of",
+    "target": "Dasharatha"
+  },
+  {
+    "source": "Rama",
+    "type": "son_of",
+    "target": "Dasharatha"
+  },
+  {
+    "source": "Hanuman",
+    "type": "son_of",
+    "target": "Kaikeyi"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "son_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Rama",
+    "type": "brother_of",
+    "target": "Bharata"
+  },
+  {
+    "source": "Rama",
+    "type": "son_of",
+    "target": "Vali"
+  }
 ]
