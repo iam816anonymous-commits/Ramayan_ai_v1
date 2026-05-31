@@ -1,8 +1,8 @@
-# Ramayana AI — Sanctum V1 (Stabilized)
+# Sanctum | Premium Divine Ramayana Experience
 
-Welcome to the Sanctum. This document provides instructions on how to set up, run, and ingest your own data into the platform.
+Welcome to the Sanctum. This is a sacred interactive experience designed for contemplation on the Ramayana.
 
-## 1. Local Setup & VS Code
+## 1. Local Setup & VS Code (Launch Guide)
 
 ### Prerequisites
 - Python 3.10+
@@ -58,7 +58,13 @@ The Sanctum "learns" from files placed in the `backend/data/` directory.
 
 ---
 
-## 3. Stabilization Notes (V1.1 Hotfix)
-- **Timeline:** Now uses static data from `backend/knowledge/kanda_details.json` to ensure 100% uptime regardless of backend state.
-- **Hydration:** Fixed issues with random particles causing UI flickering/errors during SSR handoff.
-- **Performance:** Asynchronous RAG pipeline ensures the UI remains responsive during deep scriptural retrievals.
+## 3. Premium Experience Architecture
+- **Unified Sage Presence:** A singular focal orb combining sacred geometry and breathing aura.
+- **Sequential Revelation:** Wisdom is revealed in four stages (Reflection, Meaning, Context, Takeaway) with intentional timing.
+- **Chronicles (Timeline):** A museum-style vertical journey through the Seven Kandas.
+- **Luxury Aesthetic:** Deep Obsidian (#050505) and Metallic Gold (#D4AF37) palette with Cinzel & Lora typography.
+
+## 4. Stabilization & Reliability
+- **Zero-Fetch Timeline:** Uses static scriptural metadata to prevent runtime network errors.
+- **Hydration Secure:** All dynamic elements (particles, random paths) are gated by client-side mount checks.
+- **Asynchronous RAG:** Backend model inference is offloaded from the event loop for smooth UI performance.
