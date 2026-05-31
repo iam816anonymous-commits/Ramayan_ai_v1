@@ -38,28 +38,43 @@ interface EntityKnowledge {
 }
 
 const WhisperParticles = () => {
-  const particles = Array.from({ length: 20 });
+  const [mounted, setMounted] = React.useState(false);
+  const particlesData = React.useMemo(() => {
+    return Array.from({ length: 20 }).map(() => ({
+      x: Math.random() * 100 + "%",
+      duration: Math.random() * 15 + 15,
+      delay: Math.random() * 15,
+      drift: (Math.random() * 10 - 5) + "%"
+    }));
+  }, []);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {particles.map((_, i) => (
+      {particlesData.map((data, i) => (
         <motion.div
           key={i}
           initial={{
-            x: Math.random() * 100 + "%",
+            x: data.x,
             y: "110%",
             opacity: 0
           }}
           animate={{
             y: "-10%",
-            x: [null, (Math.random() * 10 - 5) + "%", null],
+            x: [null, data.drift, null],
             opacity: [0, 0.4, 0],
             scale: [0.5, 1.2, 0.5]
           }}
           transition={{
-            duration: Math.random() * 15 + 15,
+            duration: data.duration,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: Math.random() * 15
+            delay: data.delay
           }}
           className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[2px]"
         />

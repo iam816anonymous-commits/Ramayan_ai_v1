@@ -17,16 +17,66 @@ interface TimelineProps {
   activeKanda?: string | null;
 }
 
-const Timeline = ({ activeKanda }: TimelineProps) => {
-  const [kandas, setKandas] = useState<KandaInfo[]>([]);
-  const timelineRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+const KANDAS: KandaInfo[] = [
+  {
+    "id": "Bala",
+    "kanda": "Bala Kanda",
+    "title": "The Divine Birth",
+    "summary": "Focuses on the childhood of Rama and the early adventures with Sage Vishwamitra.",
+    "theme": "Innocence & Lineage",
+    "events": ["Birth of Rama", "Slaying of Tataka", "Breaking of Shiva's Bow", "Marriage to Sita"],
+    "journey": "Ayodhya → Mithila"
+  },
+  {
+    "id": "Ayodhya",
+    "kanda": "Ayodhya Kanda",
+    "title": "The Great Exile",
+    "summary": "Describes the preparations for Rama's coronation and his eventual exile to the forest.",
+    "theme": "Duty & Sacrifice",
+    "events": ["Kaikeyi's Boon", "Dasharatha's Grief", "Rama's Departure", "Bharata's Meeting"],
+    "journey": "Ayodhya → Chitrakoot"
+  },
+  {
+    "id": "Aranya",
+    "kanda": "Aranya Kanda",
+    "title": "The Forest Dwellers",
+    "summary": "Relates the life of Rama in the forest and the abduction of Sita by Ravana.",
+    "theme": "Trial & Separation",
+    "events": ["Slaying of Khara", "The Golden Deer", "Sita's Abduction", "Meeting Jatayu"],
+    "journey": "Chitrakoot → Dandaka Forest"
+  },
+  {
+    "id": "Kishkindha",
+    "kanda": "Kishkindha Kanda",
+    "title": "The Monkey Alliance",
+    "summary": "Covers Rama's meeting with Hanuman and the alliance with the monkey king Sugriva.",
+    "theme": "Friendship & Valor",
+    "events": ["Meeting Hanuman", "Slaying of Vali", "Search for Sita Begins", "Sampati's Vision"],
+    "journey": "Dandaka → Kishkindha"
+  },
+  {
+    "id": "Sundara",
+    "kanda": "Sundara Kanda",
+    "title": "Hanuman's Leap",
+    "summary": "The beautiful kanda focusing on Hanuman's journey to Lanka to find Sita.",
+    "theme": "Devotion & Hope",
+    "events": ["Leaping the Ocean", "Finding Sita", "Burning of Lanka", "Return to Rama"],
+    "journey": "Kishkindha → Lanka"
+  },
+  {
+    "id": "Yuddha",
+    "kanda": "Yuddha Kanda",
+    "title": "The Great War",
+    "summary": "Describes the epic battle between Rama's forces and Ravana's army.",
+    "theme": "Victory & Dharma",
+    "events": ["Building the Bridge", "The Great Battle", "Fall of Ravana", "Rama's Coronation"],
+    "journey": "Lanka → Ayodhya"
+  }
+];
 
-  useEffect(() => {
-    fetch('http://localhost:8000/api/timeline')
-      .then(res => res.json())
-      .then(data => setKandas(data))
-      .catch(err => console.error("Failed to fetch timeline", err));
-  }, []);
+const Timeline = ({ activeKanda }: TimelineProps) => {
+  const kandas = KANDAS;
+  const timelineRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
 
   useEffect(() => {
     if (activeKanda) {
