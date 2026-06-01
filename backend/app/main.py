@@ -44,10 +44,14 @@ async def startup_event():
     global brain
     pipeline = IngestionPipeline()
     pipeline.run_ingestion()
+    # Share the same client instance to avoid lock issues
     brain = BrainAgent(client=pipeline.client)
 
 class QueryRequest(BaseModel):
     query: str
+
+class ReindexRequest(BaseModel):
+    force: bool = False
 
 class Revelation(BaseModel):
     reflection: str
@@ -69,6 +73,20 @@ class QueryResponse(BaseModel):
     meta: Meta
     revelation: Revelation
     source_verse: Optional[str]
+
+@app.post("/api/admin/reindex")
+async def admin_reindex(request: ReindexRequest):
+    global brain
+    if brain is None:
+         raise HTTPException(status_code=503, detail="Brain not initialized.")
+    try:
+        # Use brain's client to avoid lock issues
+        pipeline = IngestionPipeline(client=brain.client)
+        pipeline.run_ingestion(force=request.force)
+        # BrainAgent already uses the same client
+        return {"status": "success", "message": "Re-indexing complete."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/sanctum", response_model=QueryResponse)
 async def sanctum_query(request: QueryRequest):

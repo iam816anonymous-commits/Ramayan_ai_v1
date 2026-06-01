@@ -20,8 +20,8 @@
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
-      "confidence": 0.89,
-      "answer": "Hanuman, son of the Windgod, glowing like a golden mountain, whose face resembled the rising Sun add"
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
     },
     {
       "category": "Gatekeeper",
@@ -83,7 +83,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.26,
+      "confidence": 0.25,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -111,8 +111,8 @@
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
-      "confidence": 0.89,
-      "answer": "Hanuman, son of the Windgod, glowing like a golden mountain, whose face resembled the rising Sun add"
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
     },
     {
       "category": "Gatekeeper",
@@ -174,7 +174,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.26,
+      "confidence": 0.25,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -202,8 +202,8 @@
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
-      "confidence": 0.89,
-      "answer": "Hanuman, son of the Windgod, glowing like a golden mountain, whose face resembled the rising Sun add"
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
     },
     {
       "category": "Gatekeeper",
@@ -265,7 +265,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.26,
+      "confidence": 0.25,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -293,8 +293,8 @@
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
-      "confidence": 0.89,
-      "answer": "Hanuman, son of the Windgod, glowing like a golden mountain, whose face resembled the rising Sun add"
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
     },
     {
       "category": "Gatekeeper",

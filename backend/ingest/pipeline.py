@@ -1,4 +1,6 @@
 import os
+import json
+import time
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from typing import List, Dict
@@ -12,11 +14,14 @@ from .metadata_builder import MetadataBuilder
 from .knowledge_builder import KnowledgeBuilder
 
 class IngestionPipeline:
-    def __init__(self, collection_name="ramayana_v1"):
+    def __init__(self, collection_name="ramayana_v1", client=None):
         # Persist storage to disk
-        storage_path = os.path.join("backend", "data", "qdrant_storage")
-        os.makedirs(storage_path, exist_ok=True)
-        self.client = QdrantClient(path=storage_path)
+        self.data_dir = "backend/data"
+        self.storage_path = os.path.join(self.data_dir, "qdrant_storage")
+        self.state_file = os.path.join(self.data_dir, "ingestion_state.json")
+        os.makedirs(self.storage_path, exist_ok=True)
+
+        self.client = client or QdrantClient(path=self.storage_path)
         self.collection_name = collection_name
         self.model = get_sentence_transformer()
         self.metadata_builder = MetadataBuilder()
@@ -30,17 +35,45 @@ class IngestionPipeline:
                 vectors_config=VectorParams(size=384, distance=Distance.COSINE),
             )
 
-    def run_ingestion(self, force=False):
-        # Check if collection already has data
-        try:
-            collection_info = self.client.get_collection(self.collection_name)
-            if collection_info.points_count > 0 and not force:
-                print(f"Brain already contains {collection_info.points_count} points. Skipping ingestion.")
-                return
-        except Exception:
-            pass
+    def _get_state(self):
+        if os.path.exists(self.state_file):
+            with open(self.state_file, 'r') as f:
+                return json.load(f)
+        return None
 
-        print("Starting unified ingestion pipeline...")
+    def _save_state(self, points_count: int):
+        state = {
+            "version": "1.0",
+            "points": points_count,
+            "completed": True,
+            "timestamp": time.ctime(),
+            "embedding_model": "all-MiniLM-L6-v2"
+        }
+        with open(self.state_file, 'w') as f:
+            json.dump(state, f, indent=2)
+
+    def run_ingestion(self, force=False):
+        # 1. Check if collection exists and verify via state file
+        try:
+            state = self._get_state()
+            if self.client.collection_exists(self.collection_name):
+                collection_info = self.client.get_collection(self.collection_name)
+
+                if not force and state and state.get("completed"):
+                    if collection_info.points_count > 0:
+                        print(f"Existing collection detected: {self.collection_name}")
+                        print(f"Points: {collection_info.points_count}")
+                        print("Ready (Skipping Ingestion).")
+                        return
+        except Exception as e:
+            print(f"Checking collection state: {e}")
+
+        if force:
+            print(f"Deleting existing collection {self.collection_name} for full re-indexing...")
+            self.client.delete_collection(self.collection_name)
+            self._setup_collection()
+
+        print("Starting initial ingestion..." if not force else "Forcing re-ingestion...")
 
         loaders = {
             "Valmiki_Ramayan_Shlokas.json": ShlokaLoader(),
@@ -91,7 +124,9 @@ class IngestionPipeline:
         if points:
             self.client.upsert(collection_name=self.collection_name, points=points)
 
-        print(f"Ingestion complete. Total points: {len(all_normalized_data)}")
+        total_points = self.client.get_collection(self.collection_name).points_count
+        self._save_state(total_points)
+        print(f"Ingestion complete. Total points: {total_points}")
 
 if __name__ == "__main__":
     pipeline = IngestionPipeline()
