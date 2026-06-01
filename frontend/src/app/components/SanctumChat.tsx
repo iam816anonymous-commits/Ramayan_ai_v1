@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Timeline from './Timeline';
-import SagePresence from './SagePresence';
 import IntricateBorder from './IntricateBorder';
 import SacredLamp from './SacredLamp';
 
@@ -32,6 +30,7 @@ interface Message {
   revelation?: Revelation;
   meta?: Meta;
   agent?: string;
+  source_verse?: string;
 }
 
 interface EntityKnowledge {
@@ -41,28 +40,36 @@ interface EntityKnowledge {
 }
 
 const REVELATION_TIMINGS = {
-  REFLECTION: 1.0,
-  MEANING: 4.5,
-  CONTEXT: 8.0,
-  TAKEAWAY: 11.5,
-  SOURCES: 15.0,
-  TOTAL_DURATION: 25000
+  REFLECTION: 0.5,
+  MEANING: 2.5,
+  CONTEXT: 4.5,
+  TAKEAWAY: 6.5,
+  SOURCES: 8.5
 };
 
 const SanctumChat = () => {
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [sageState, setSageState] = useState<'idle' | 'thinking' | 'revealing' | 'speaking'>('idle');
-  const [activeKanda, setActiveKanda] = useState<string | null>(null);
+  const [activeMessageIndex, setActiveMessageIndex] = useState<number | null>(null);
   const [selectedEntity, setSelectedEntity] = useState<EntityKnowledge | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll the query list
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
+
+  // Auto-scroll to answer panel on new response
+  useEffect(() => {
+    if (activeMessageIndex !== null && answerRef.current) {
+      answerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [activeMessageIndex]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +79,6 @@ const SanctumChat = () => {
     setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
     setQuery('');
     setLoading(true);
-    setSageState('thinking');
 
     try {
       const res = await fetch('http://localhost:8000/api/sanctum', {
@@ -82,26 +88,20 @@ const SanctumChat = () => {
       });
       const data = await res.json();
 
-      setSageState('revealing');
-      if (data.meta?.kanda) {
-        setActiveKanda(data.meta.kanda);
-      }
-
+      const sageMsgIndex = messages.length + 1;
       setMessages(prev => [...prev, {
         role: 'sage',
         revelation: data.revelation,
         meta: data.meta,
-        agent: data.agent
+        agent: data.agent,
+        source_verse: data.source_verse
       }]);
-
-      setTimeout(() => setSageState('speaking'), REVELATION_TIMINGS.SOURCES * 1000);
-      setTimeout(() => setSageState('idle'), REVELATION_TIMINGS.TOTAL_DURATION);
+      setActiveMessageIndex(sageMsgIndex);
     } catch (_err) {
       setMessages(prev => [...prev, {
         role: 'sage',
         content: "The connection to the Sanctum has been interrupted. The silence remains unbroken."
       }]);
-      setSageState('idle');
     } finally {
       setLoading(false);
     }
@@ -117,124 +117,183 @@ const SanctumChat = () => {
     }
   };
 
-  return (
-    <div className="flex flex-col min-h-screen bg-[#050505] text-[#D4AF37] font-lora overflow-x-hidden selection:bg-[#D4AF37]/20 selection:text-[#FDFCF0]">
-      <SagePresence state={sageState} />
+  const activeMessage = activeMessageIndex !== null ? messages[activeMessageIndex] : null;
 
-      <div className="relative z-10 flex flex-col h-screen p-4 md:p-12">
-        <header className="mb-12 md:mb-20 text-center relative pointer-events-none">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl tracking-[0.4em] uppercase mb-4 font-cinzel font-light text-[#FDFCF0] drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-          >
-            Sanctum
-          </motion.h1>
-          <div className="flex items-center justify-center space-x-4 opacity-40">
-             <div className="w-12 h-[1px] bg-[#D4AF37]" />
-             <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">The Eternal Knowledge Platform</p>
-             <div className="w-12 h-[1px] bg-[#D4AF37]" />
-          </div>
+  return (
+    <div className="relative z-10 flex flex-col lg:flex-row h-[calc(100vh-6rem)] overflow-hidden">
+
+      {/* Left Panel: Query Panel */}
+      <div className="w-full lg:w-1/3 flex flex-col border-r border-[#D4AF37]/5 bg-[#050505]/40 backdrop-blur-md">
+        <header className="p-8 border-b border-[#D4AF37]/5">
+          <h2 className="text-[10px] uppercase tracking-[0.5em] opacity-40 font-cinzel font-light">Quest Panel</h2>
         </header>
 
-        <main
+        {/* Query History */}
+        <div
           ref={scrollRef}
-          className="flex-1 overflow-y-auto max-w-5xl mx-auto w-full space-y-24 scrollbar-hide pb-48 px-6"
+          className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-hide"
         >
-          <AnimatePresence mode='popLayout'>
-            {messages.map((msg, i) => (
-              <motion.div
+          {messages.filter(m => m.role === 'user').map((msg, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                // Find the corresponding sage response
+                const sageIdx = messages.findIndex((m, idx) => idx > messages.indexOf(msg) && m.role === 'sage');
+                if (sageIdx !== -1) setActiveMessageIndex(sageIdx);
+              }}
+              className={`w-full text-left p-6 border transition-all ${
+                activeMessageIndex !== null && messages.indexOf(msg) === activeMessageIndex - 1
+                ? 'border-[#D4AF37]/40 bg-[#D4AF37]/5 text-[#FDFCF0]'
+                : 'border-[#D4AF37]/5 opacity-40 hover:opacity-100 hover:border-[#D4AF37]/20'
+              }`}
+            >
+              <p className="text-sm font-light italic leading-relaxed line-clamp-2">
+                &ldquo;{msg.content}&rdquo;
+              </p>
+            </button>
+          ))}
+
+          {loading && (
+            <div className="flex flex-col items-center py-12 space-y-4 opacity-30">
+              <SacredLamp />
+              <span className="text-[8px] tracking-[0.3em] uppercase italic">Communing...</span>
+            </div>
+          )}
+        </div>
+
+        {/* Input Box */}
+        <div className="p-8 border-t border-[#D4AF37]/5">
+          <form onSubmit={handleSubmit} className="relative">
+            <textarea
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
+              disabled={loading}
+              placeholder="Whisper your quest..."
+              className="w-full bg-[#111] border border-[#D4AF37]/10 p-6 rounded-sm focus:outline-none focus:border-[#D4AF37]/40 transition-all placeholder:text-[#D4AF37]/20 text-lg font-light disabled:opacity-30 text-[#FDFCF0] resize-none h-32"
+            />
+            <button
+              type="submit"
+              disabled={loading || !query.trim()}
+              className="mt-4 w-full py-4 bg-[#D4AF37]/5 border border-[#D4AF37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#D4AF37]/10 transition-all disabled:opacity-10"
+            >
+              Ask the Sage
+            </button>
+          </form>
+
+          <div className="mt-8 grid grid-cols-1 gap-2">
+            {["Why did Rama go to exile?", "The role of Hanuman", "Lessons on Dharma"].map((s, i) => (
+              <button
                 key={i}
-                initial={{ opacity: 0, y: 60, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
-                className={`flex flex-col ${msg.role === 'user' ? 'items-center mb-16' : 'items-start'}`}
+                onClick={() => setQuery(s)}
+                className="text-left text-[9px] uppercase tracking-[0.2em] opacity-30 hover:opacity-60 transition-opacity"
               >
-                {msg.role === 'user' ? (
-                  <div className="max-w-[70%] text-center">
-                    <span className="text-xl md:text-3xl opacity-50 font-light italic leading-relaxed text-[#FDFCF0]">
-                      &ldquo;{msg.content}&rdquo;
-                    </span>
-                  </div>
-                ) : (
-                  <IntricateBorder className="w-full bg-[#080808]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
-                  <div className="w-full space-y-16 md:space-y-24 p-12 md:p-24">
-                    {msg.revelation ? (
-                      <>
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel: Answer Sanctum */}
+      <div
+        ref={answerRef}
+        className="w-full lg:w-2/3 flex flex-col bg-[#050505]/60 backdrop-blur-xl overflow-y-auto scroll-smooth"
+      >
+        <header className="p-8 border-b border-[#D4AF37]/5 sticky top-0 bg-[#050505]/80 backdrop-blur-md z-10 flex justify-between items-center">
+          <h2 className="text-[10px] uppercase tracking-[0.5em] opacity-40 font-cinzel font-light">Answer Sanctum</h2>
+          {activeMessage?.agent && (
+            <span className="text-[8px] tracking-[0.3em] opacity-20 italic">
+              {activeMessage.agent}
+            </span>
+          )}
+        </header>
+
+        <div className="flex-1 p-8 lg:p-20">
+          <AnimatePresence mode="wait">
+            {activeMessage ? (
+              <motion.div
+                key={activeMessageIndex}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-4xl mx-auto space-y-20 pb-20"
+              >
+                {activeMessage.revelation ? (
+                  <>
+                    <RevelationSection
+                      title="Reflection"
+                      body={activeMessage.revelation.reflection}
+                      delay={REVELATION_TIMINGS.REFLECTION}
+                    />
+
+                    <div className="space-y-12">
+                      <RevelationSection
+                        title="Meaning"
+                        body={activeMessage.revelation.meaning}
+                        delay={REVELATION_TIMINGS.MEANING}
+                        large
+                      />
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                         <RevelationSection
-                          title="Reflection"
-                          body={msg.revelation.reflection}
-                          delay={REVELATION_TIMINGS.REFLECTION}
-                        />
-                        <RevelationSection
-                          title="The Meaning"
-                          body={msg.revelation.meaning}
-                          delay={REVELATION_TIMINGS.MEANING}
-                        />
-                        <RevelationSection
-                          title="Divine Context"
-                          body={msg.revelation.context}
+                          title="Context"
+                          body={activeMessage.revelation.context}
                           delay={REVELATION_TIMINGS.CONTEXT}
                         />
                         <RevelationSection
-                          title="Eternal Takeaway"
-                          body={msg.revelation.takeaway}
+                          title="Takeaway"
+                          body={activeMessage.revelation.takeaway}
                           delay={REVELATION_TIMINGS.TAKEAWAY}
                         />
+                      </div>
+                    </div>
 
-                        <SourceAttribution
-                          meta={msg.meta}
-                          agent={msg.agent}
-                          onEntityClick={handleEntityClick}
-                          delay={REVELATION_TIMINGS.SOURCES}
-                        />
-                      </>
-                    ) : (
-                      <p className="text-xl md:text-2xl font-light opacity-80 text-[#FDFCF0] leading-relaxed">{msg.content}</p>
+                    {/* Supporting Shlokas Section */}
+                    {activeMessage.source_verse && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: REVELATION_TIMINGS.SOURCES, duration: 2 }}
+                        className="space-y-8"
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
+                          <h3 className="text-[9px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">Sacred Shloka</h3>
+                        </div>
+                        <IntricateBorder className="bg-[#111]/40 p-10">
+                          <p className="text-2xl md:text-3xl font-light text-[#D4AF37] leading-relaxed text-center italic font-serif">
+                            {activeMessage.source_verse}
+                          </p>
+                        </IntricateBorder>
+                      </motion.div>
                     )}
-                  </div>
-                  </IntricateBorder>
+
+                    <SourceAttribution
+                      meta={activeMessage.meta}
+                      onEntityClick={handleEntityClick}
+                      delay={REVELATION_TIMINGS.SOURCES}
+                    />
+                  </>
+                ) : (
+                  <p className="text-xl md:text-2xl font-light opacity-80 text-[#FDFCF0] leading-relaxed text-center py-20">
+                    {activeMessage.content}
+                  </p>
                 )}
               </motion.div>
-            ))}
-          </AnimatePresence>
-
-          {loading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col items-center justify-center py-20 space-y-8"
-            >
-              <SacredLamp />
-              <span className="text-[10px] tracking-[0.5em] opacity-30 uppercase italic font-light">The Sage communes with the infinite...</span>
-            </motion.div>
-          )}
-        </main>
-
-        <footer className="fixed bottom-0 left-0 w-full p-8 md:p-12 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-20">
-          <div className="max-w-5xl mx-auto">
-            <form onSubmit={handleSubmit} className="relative group">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                disabled={loading}
-                placeholder={loading ? "Listen in silence..." : "Whisper your quest for truth..."}
-                className="w-full bg-transparent border-b border-[#D4AF37]/10 py-8 px-6 focus:outline-none focus:border-[#D4AF37]/40 transition-all placeholder:text-[#D4AF37]/10 text-2xl md:text-4xl font-light tracking-wide disabled:opacity-30 text-[#FDFCF0]"
-              />
-              <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center space-x-6">
-                <div className={`w-1.5 h-1.5 rounded-full transition-all duration-1000 ${sageState === 'thinking' ? 'bg-[#D4AF37] shadow-[0_0_15px_#D4AF37]' : 'bg-[#D4AF37]/5'}`} />
-                <span className="hidden md:block text-[9px] tracking-[0.4em] opacity-10 uppercase font-light group-focus-within:opacity-30 transition-opacity">
-                  Align with the One
-                </span>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center space-y-8 opacity-10">
+                 <h3 className="text-xl uppercase tracking-[1em] font-cinzel">The Sanctum Awaits</h3>
+                 <p className="text-sm tracking-widest italic">Submit your query to awaken the Sage</p>
               </div>
-            </form>
-          </div>
-        </footer>
-      </div>
-
-      <div className="relative z-10">
-        <Timeline activeKanda={activeKanda} />
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Entity Knowledge Explorer Modal */}
@@ -244,7 +303,7 @@ const SanctumChat = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm"
             onClick={() => setSelectedEntity(null)}
           >
             <motion.div
@@ -255,37 +314,13 @@ const SanctumChat = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
-
-              <div className="space-y-2">
-                <h2 className="text-[10px] uppercase tracking-[0.6em] opacity-40">Knowledge Explorer</h2>
-                <h3 className="text-4xl font-light tracking-widest uppercase">{selectedEntity.entity}</h3>
-              </div>
-
-              <p className="text-xl font-light leading-relaxed opacity-80 text-[#eeeae0]">
-                {selectedEntity.description}
-              </p>
-
-              <div className="space-y-4">
-                <h4 className="text-[10px] uppercase tracking-[0.4em] opacity-40">Divine Relations</h4>
-                <div className="flex flex-wrap gap-3">
-                  {selectedEntity.relations?.map((rel, idx) => (
-                    <div key={idx} className="px-4 py-2 border border-[#d4af37]/10 bg-[#111] flex items-center space-x-3">
-                      <span className="text-xs font-light">{rel.source}</span>
-                      <span className="text-[9px] uppercase tracking-tighter opacity-30 italic">{rel.type.replace(/_/g, ' ')}</span>
-                      <span className="text-xs font-light">{rel.target}</span>
-                    </div>
-                  ))}
-                  {(!selectedEntity.relations || selectedEntity.relations.length === 0) && (
-                    <span className="text-xs opacity-30 italic">No direct relations discovered yet.</span>
-                  )}
-                </div>
-              </div>
-
+              <h3 className="text-4xl font-light tracking-widest uppercase">{selectedEntity.entity}</h3>
+              <p className="text-xl font-light leading-relaxed opacity-80 text-[#eeeae0]">{selectedEntity.description}</p>
               <button
                 onClick={() => setSelectedEntity(null)}
-                className="w-full py-4 border border-[#d4af37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#d4af37]/5 transition-colors mt-4"
+                className="w-full py-4 border border-[#d4af37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#d4af37]/5 transition-colors"
               >
-                Return to Sanctum
+                Close
               </button>
             </motion.div>
           </motion.div>
@@ -295,67 +330,60 @@ const SanctumChat = () => {
   );
 };
 
-const RevelationSection = ({ title, body, delay }: { title: string, body: string, delay: number }) => (
+const RevelationSection = ({ title, body, delay, large }: { title: string, body: string, delay: number, large?: boolean }) => (
   <motion.div
-    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+    initial={{ opacity: 0, y: 20, filter: "blur(5px)" }}
     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-    transition={{ delay, duration: 3.5, ease: [0.16, 1, 0.3, 1] }}
-    className="space-y-8"
+    transition={{ delay, duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+    className="space-y-6"
   >
     <div className="flex items-center space-x-4">
-      <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
-      <h3 className="text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">{title}</h3>
+      <div className="w-6 h-[1px] bg-[#D4AF37]/20" />
+      <h3 className="text-[8px] uppercase tracking-[0.4em] text-[#D4AF37] opacity-40">{title}</h3>
     </div>
-    <p className="text-xl md:text-5xl leading-[1.7] font-light text-[#FDFCF0] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] first-letter:text-6xl md:first-letter:text-8xl first-letter:font-cinzel first-letter:mr-3 first-letter:float-left first-letter:text-[#D4AF37]">
+    <p className={`${large ? 'text-2xl md:text-4xl' : 'text-lg md:text-xl'} leading-relaxed font-light text-[#FDFCF0] opacity-90`}>
       {body}
     </p>
   </motion.div>
 );
 
-const SourceAttribution = ({ meta, agent, onEntityClick, delay }: { meta?: Meta, agent?: string, onEntityClick: (name: string) => void, delay: number }) => {
+const SourceAttribution = ({ meta, onEntityClick, delay }: { meta?: Meta, onEntityClick: (name: string) => void, delay: number }) => {
   if (!meta) return null;
 
-  const allEntities = useMemo(() => [
-    ...meta.entities.characters,
-    ...meta.entities.locations,
-    ...meta.entities.events
-  ], [meta.entities]);
+  const allEntities = [...meta.entities.characters, ...meta.entities.locations];
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay, duration: 2 }}
-      className="pt-16 mt-16 border-t border-[#D4AF37]/5 space-y-10"
+      className="pt-16 border-t border-[#D4AF37]/5 space-y-12"
     >
       <div className="flex flex-wrap gap-4">
         {allEntities.map((ent, idx) => (
           <button
             key={idx}
             onClick={() => onEntityClick(ent)}
-            className="px-5 py-2 text-[10px] uppercase tracking-[0.3em] border border-[#D4AF37]/5 hover:border-[#D4AF37]/20 hover:bg-[#D4AF37]/5 transition-all opacity-30 hover:opacity-100 text-[#FDFCF0]"
+            className="px-4 py-2 text-[8px] uppercase tracking-[0.2em] border border-[#D4AF37]/10 hover:border-[#D4AF37]/40 transition-all text-[#FDFCF0] opacity-40 hover:opacity-100"
           >
             {ent}
           </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-[10px] uppercase tracking-[0.3em] opacity-20 font-light">
-        <div className="space-y-2">
-          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Kanda</span>
-          <span className="text-[#FDFCF0]">{meta.kanda || "Universal"}</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-[9px] uppercase tracking-[0.3em] opacity-30">
+        <div>
+          <span className="block opacity-40 mb-1">Kanda</span>
+          {meta.kanda || "Universal"}
         </div>
-        <div className="space-y-2">
-          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Verses</span>
-          <span className="text-[#FDFCF0]">{meta.verses.join(', ') || "Various"}</span>
+        <div>
+          <span className="block opacity-40 mb-1">Verses</span>
+          {meta.verses.join(', ') || "Various"}
         </div>
-        <div className="space-y-2">
-          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Sanctum Lineage</span>
-          <span className="text-[#FDFCF0]">{meta.sources.join(', ')}</span>
+        <div>
+          <span className="block opacity-40 mb-1">Lineage</span>
+          {meta.sources.join(', ')}
         </div>
-      </div>
-      <div className="text-[8px] uppercase tracking-[0.6em] opacity-10 italic">
-        Wisdom channeled via {agent}
       </div>
     </motion.div>
   );
