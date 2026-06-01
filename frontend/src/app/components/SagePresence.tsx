@@ -31,12 +31,22 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
   const [mounted, setMounted] = useState(false);
 
   const particles = useMemo(() => {
-    return Array.from({ length: 30 }).map((_, i) => ({
+    return Array.from({ length: 40 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100 + "%",
-      duration: Math.random() * 20 + 10,
-      delay: Math.random() * 10,
-      size: Math.random() * 2 + 1
+      duration: Math.random() * 30 + 20,
+      delay: Math.random() * 20,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.1
+    }));
+  }, []);
+
+  const orbitingOrbs = useMemo(() => {
+    return Array.from({ length: 3 }).map((_, i) => ({
+      id: i,
+      duration: 40 + i * 20,
+      radius: 200 + i * 50,
+      delay: -i * 10
     }));
   }, []);
 
@@ -48,20 +58,62 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden bg-[#050505]">
       <SacredGeometry />
 
-      {/* Central Focal Orb */}
-      <motion.div
-        animate={{
-          scale: state === 'thinking' ? [1, 1.1, 1] : [1, 1.03, 1],
-          opacity: state === 'thinking' ? [0.2, 0.4, 0.2] : [0.1, 0.2, 0.1],
-        }}
-        transition={{
-          duration: state === 'thinking' ? 2 : 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        className="relative w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full bg-gradient-to-b from-[#D4AF37]/20 to-transparent blur-3xl"
-        style={{ willChange: "transform, opacity" }}
-      />
+      {/* Orbiting Wisdom Orbs */}
+      {orbitingOrbs.map((orb) => (
+        <motion.div
+          key={orb.id}
+          className="absolute w-[2px] h-[2px] bg-[#D4AF37] rounded-full"
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            duration: orb.duration,
+            repeat: Infinity,
+            ease: "linear",
+            delay: orb.delay
+          }}
+          style={{
+            width: orb.radius * 2,
+            height: orb.radius * 2,
+            border: '1px solid rgba(212, 175, 55, 0.03)',
+            borderRadius: '50%',
+          }}
+        >
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#D4AF37] rounded-full blur-[1px]"
+            style={{ opacity: 0.2 }}
+          />
+        </motion.div>
+      ))}
+
+      {/* Central Focal Orb - Layered for Depth */}
+      <div className="relative">
+        <motion.div
+          animate={{
+            scale: state === 'thinking' ? [1, 1.2, 1] : [1, 1.05, 1],
+            opacity: state === 'thinking' ? [0.3, 0.6, 0.3] : [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: state === 'thinking' ? 3 : 10,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[450px] h-[250px] md:h-[450px] rounded-full bg-[#D4AF37] blur-[120px]"
+          style={{ willChange: "transform, opacity" }}
+        />
+        <motion.div
+          animate={{
+            scale: state === 'thinking' ? [1, 1.1, 1] : [1, 1.03, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full bg-gradient-to-tr from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 blur-[80px]"
+        />
+      </div>
 
       {/* Floating Wisdom Particles */}
       {particles.map((p) => (
@@ -70,8 +122,8 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
           initial={{ x: p.x, y: "110%", opacity: 0 }}
           animate={{
             y: "-10%",
-            opacity: [0, 0.3, 0],
-            scale: [0.5, 1, 0.5]
+            opacity: [0, p.opacity, 0],
+            scale: [0.3, 1, 0.3]
           }}
           transition={{
             duration: p.duration,
@@ -80,7 +132,7 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
             ease: "linear"
           }}
           style={{ width: p.size, height: p.size }}
-          className="absolute bg-[#D4AF37] rounded-full blur-[1px]"
+          className="absolute bg-[#D4AF37] rounded-full blur-[0.5px]"
         />
       ))}
     </div>

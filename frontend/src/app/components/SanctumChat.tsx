@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Timeline from './Timeline';
 import SagePresence from './SagePresence';
+import IntricateBorder from './IntricateBorder';
+import SacredLamp from './SacredLamp';
 
 interface Revelation {
   reflection: string;
@@ -39,12 +41,12 @@ interface EntityKnowledge {
 }
 
 const REVELATION_TIMINGS = {
-  REFLECTION: 0.5,
-  MEANING: 2.5,
-  CONTEXT: 4.5,
-  TAKEAWAY: 6.5,
-  SOURCES: 8.5,
-  TOTAL_DURATION: 15000
+  REFLECTION: 1.0,
+  MEANING: 4.5,
+  CONTEXT: 8.0,
+  TAKEAWAY: 11.5,
+  SOURCES: 15.0,
+  TOTAL_DURATION: 25000
 };
 
 const SanctumChat = () => {
@@ -143,9 +145,9 @@ const SanctumChat = () => {
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, y: 60, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
                 className={`flex flex-col ${msg.role === 'user' ? 'items-center mb-16' : 'items-start'}`}
               >
                 {msg.role === 'user' ? (
@@ -155,7 +157,8 @@ const SanctumChat = () => {
                     </span>
                   </div>
                 ) : (
-                  <div className="w-full space-y-16 md:space-y-24 bg-[#080808]/40 backdrop-blur-xl border border-[#D4AF37]/10 p-12 md:p-24 rounded-[2px] shadow-2xl">
+                  <IntricateBorder className="w-full bg-[#080808]/60 backdrop-blur-2xl shadow-2xl overflow-hidden">
+                  <div className="w-full space-y-16 md:space-y-24 p-12 md:p-24">
                     {msg.revelation ? (
                       <>
                         <RevelationSection
@@ -190,6 +193,7 @@ const SanctumChat = () => {
                       <p className="text-xl md:text-2xl font-light opacity-80 text-[#FDFCF0] leading-relaxed">{msg.content}</p>
                     )}
                   </div>
+                  </IntricateBorder>
                 )}
               </motion.div>
             ))}
@@ -201,20 +205,7 @@ const SanctumChat = () => {
               animate={{ opacity: 1 }}
               className="flex flex-col items-center justify-center py-20 space-y-8"
             >
-              <div className="flex space-x-4">
-                {[0, 1, 2].map((idx) => (
-                  <motion.div
-                    key={idx}
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.2, 0.8, 0.2],
-                      boxShadow: ["0 0 0px #D4AF37", "0 0 10px #D4AF37", "0 0 0px #D4AF37"]
-                    }}
-                    transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.4 }}
-                    className="w-1 h-1 bg-[#D4AF37] rounded-full"
-                  />
-                ))}
-              </div>
+              <SacredLamp />
               <span className="text-[10px] tracking-[0.5em] opacity-30 uppercase italic font-light">The Sage communes with the infinite...</span>
             </motion.div>
           )}
@@ -306,16 +297,16 @@ const SanctumChat = () => {
 
 const RevelationSection = ({ title, body, delay }: { title: string, body: string, delay: number }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay, duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
-    className="space-y-6"
+    initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    transition={{ delay, duration: 3.5, ease: [0.16, 1, 0.3, 1] }}
+    className="space-y-8"
   >
     <div className="flex items-center space-x-4">
       <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
       <h3 className="text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">{title}</h3>
     </div>
-    <p className="text-xl md:text-4xl leading-[1.6] font-light text-[#FDFCF0] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+    <p className="text-xl md:text-5xl leading-[1.7] font-light text-[#FDFCF0] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)] first-letter:text-6xl md:first-letter:text-8xl first-letter:font-cinzel first-letter:mr-3 first-letter:float-left first-letter:text-[#D4AF37]">
       {body}
     </p>
   </motion.div>
