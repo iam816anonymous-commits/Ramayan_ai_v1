@@ -1,11 +1,13 @@
 import json
 import os
 from typing import Dict, List, Any
+from .moral_validator import MoralValidator
 
 class MoralAgent:
     def __init__(self, knowledge_dir: str = "backend/knowledge"):
         self.knowledge_dir = knowledge_dir
         self.lessons = self._load_lessons()
+        self.validator = MoralValidator()
 
     def _load_lessons(self) -> List[Dict]:
         path = os.path.join(self.knowledge_dir, "dharma_lessons.json")
@@ -62,6 +64,25 @@ class MoralAgent:
                 grounded_takeaway = grounded_takeaway.replace("one's", f"{chars[0]}'s")
             elif "one" in grounded_takeaway:
                 grounded_takeaway = grounded_takeaway.replace("one", f"{chars[0]}")
+
+        # Phase 4: Moral Validation
+        validation = self.validator.validate_moral_claim(query, context, grounded_takeaway)
+        if not validation["valid"]:
+            return {
+                "reflection": "The path of Dharma is often shrouded in silence when evidence is scarce.",
+                "meaning": "I could not find enough evidence in the retrieved verses to support this moral interpretation.",
+                "context": "The sacred verses retrieved do not explicitly contain the themes of your moral inquiry.",
+                "takeaway": "Approach the query with fresh eyes or seek another passage for guidance.",
+                "source_verse": "N/A",
+                "meta": {
+                    "chunks_used": len(context),
+                    "kanda": kanda,
+                    "entities": {"characters": chars, "locations": [], "events": []},
+                    "verses": [],
+                    "sources": [],
+                    "grounded": False
+                }
+            }
 
         return {
             "reflection": reflection,

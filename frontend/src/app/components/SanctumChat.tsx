@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Timeline from './Timeline';
+import SagePresence from './SagePresence';
 
 interface Revelation {
   reflection: string;
@@ -37,44 +38,13 @@ interface EntityKnowledge {
   relations: Array<{source: string, type: string, target: string}>;
 }
 
-const WhisperParticles = () => {
-  const particles = Array.from({ length: 20 });
-  return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {particles.map((_, i) => (
-        <motion.div
-          key={i}
-          initial={{
-            x: Math.random() * 100 + "%",
-            y: "110%",
-            opacity: 0
-          }}
-          animate={{
-            y: "-10%",
-            x: [null, (Math.random() * 10 - 5) + "%", null],
-            opacity: [0, 0.4, 0],
-            scale: [0.5, 1.2, 0.5]
-          }}
-          transition={{
-            duration: Math.random() * 15 + 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: Math.random() * 15
-          }}
-          className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[2px]"
-        />
-      ))}
-    </div>
-  );
-};
-
 const REVELATION_TIMINGS = {
   REFLECTION: 0.5,
   MEANING: 2.5,
   CONTEXT: 4.5,
   TAKEAWAY: 6.5,
   SOURCES: 8.5,
-  TOTAL_DURATION: 15000 // Total time in ms for the whole reveal cycle
+  TOTAL_DURATION: 15000
 };
 
 const SanctumChat = () => {
@@ -122,7 +92,6 @@ const SanctumChat = () => {
         agent: data.agent
       }]);
 
-      // Keep state as revealing for the duration of the animations
       setTimeout(() => setSageState('speaking'), REVELATION_TIMINGS.SOURCES * 1000);
       setTimeout(() => setSageState('idle'), REVELATION_TIMINGS.TOTAL_DURATION);
     } catch (_err) {
@@ -147,71 +116,46 @@ const SanctumChat = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#0a0a0a] text-[#d4af37] font-serif overflow-x-hidden">
-      <WhisperParticles />
+    <div className="flex flex-col min-h-screen bg-[#050505] text-[#D4AF37] font-lora overflow-x-hidden selection:bg-[#D4AF37]/20 selection:text-[#FDFCF0]">
+      <SagePresence state={sageState} />
 
-      {/* Sage Aura Background Effect */}
-      <div className={`fixed inset-0 pointer-events-none transition-opacity duration-3000 z-0 ${
-        sageState === 'thinking' ? 'opacity-30' :
-        sageState === 'revealing' ? 'opacity-40' :
-        sageState === 'speaking' ? 'opacity-25' : 'opacity-15'
-      }`}>
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.7, 1, 0.7]
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[#d4af37] rounded-full blur-[150px] mix-blend-screen"
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#d4af37]/5 rounded-full animate-ping opacity-20" />
-      </div>
-
-      <div className="relative z-10 flex flex-col h-screen p-4 md:p-8">
-        <header className="mb-8 md:mb-12 text-center relative">
-          <motion.div
-            animate={{
-              scale: [1, 1.05, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#d4af37] rounded-full blur-2xl z-0"
-          />
+      <div className="relative z-10 flex flex-col h-screen p-4 md:p-12">
+        <header className="mb-12 md:mb-20 text-center relative pointer-events-none">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl tracking-[0.3em] uppercase mb-2 font-light relative z-10"
+            className="text-4xl md:text-6xl tracking-[0.4em] uppercase mb-4 font-cinzel font-light text-[#FDFCF0] drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]"
           >
             Sanctum
           </motion.h1>
-          <p className="text-[10px] md:text-xs tracking-[0.2em] opacity-40 uppercase relative z-10">V1 | Divine Intelligence</p>
+          <div className="flex items-center justify-center space-x-4 opacity-40">
+             <div className="w-12 h-[1px] bg-[#D4AF37]" />
+             <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase font-light">The Eternal Knowledge Platform</p>
+             <div className="w-12 h-[1px] bg-[#D4AF37]" />
+          </div>
         </header>
 
         <main
           ref={scrollRef}
-          className="flex-1 overflow-y-auto max-w-3xl mx-auto w-full space-y-16 scrollbar-hide pb-32 px-4"
+          className="flex-1 overflow-y-auto max-w-5xl mx-auto w-full space-y-24 scrollbar-hide pb-48 px-6"
         >
           <AnimatePresence mode='popLayout'>
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                className={`flex flex-col ${msg.role === 'user' ? 'items-center mb-16' : 'items-start'}`}
               >
                 {msg.role === 'user' ? (
-                  <div className="max-w-[80%]">
-                    <span className="text-lg md:text-xl opacity-60 font-light italic leading-relaxed text-right block">
+                  <div className="max-w-[70%] text-center">
+                    <span className="text-xl md:text-3xl opacity-50 font-light italic leading-relaxed text-[#FDFCF0]">
                       &ldquo;{msg.content}&rdquo;
                     </span>
                   </div>
                 ) : (
-                  <div className="w-full space-y-12 border-l border-[#d4af37]/20 pl-6 md:pl-10 py-4">
+                  <div className="w-full space-y-16 md:space-y-24 bg-[#080808]/40 backdrop-blur-xl border border-[#D4AF37]/10 p-12 md:p-24 rounded-[2px] shadow-2xl">
                     {msg.revelation ? (
                       <>
                         <RevelationSection
@@ -220,17 +164,17 @@ const SanctumChat = () => {
                           delay={REVELATION_TIMINGS.REFLECTION}
                         />
                         <RevelationSection
-                          title="Meaning"
+                          title="The Meaning"
                           body={msg.revelation.meaning}
                           delay={REVELATION_TIMINGS.MEANING}
                         />
                         <RevelationSection
-                          title="Context"
+                          title="Divine Context"
                           body={msg.revelation.context}
                           delay={REVELATION_TIMINGS.CONTEXT}
                         />
                         <RevelationSection
-                          title="Takeaway"
+                          title="Eternal Takeaway"
                           body={msg.revelation.takeaway}
                           delay={REVELATION_TIMINGS.TAKEAWAY}
                         />
@@ -243,7 +187,7 @@ const SanctumChat = () => {
                         />
                       </>
                     ) : (
-                      <p className="text-lg opacity-80">{msg.content}</p>
+                      <p className="text-xl md:text-2xl font-light opacity-80 text-[#FDFCF0] leading-relaxed">{msg.content}</p>
                     )}
                   </div>
                 )}
@@ -255,47 +199,46 @@ const SanctumChat = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex flex-col items-start space-y-4 border-l border-[#d4af37]/10 pl-10"
+              className="flex flex-col items-center justify-center py-20 space-y-8"
             >
-              <div className="flex space-x-2">
-                <motion.div
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1.5 h-1.5 bg-[#d4af37] rounded-full"
-                />
-                <motion.div
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                  className="w-1.5 h-1.5 bg-[#d4af37] rounded-full"
-                />
-                <motion.div
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                  className="w-1.5 h-1.5 bg-[#d4af37] rounded-full"
-                />
+              <div className="flex space-x-4">
+                {[0, 1, 2].map((idx) => (
+                  <motion.div
+                    key={idx}
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.2, 0.8, 0.2],
+                      boxShadow: ["0 0 0px #D4AF37", "0 0 10px #D4AF37", "0 0 0px #D4AF37"]
+                    }}
+                    transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.4 }}
+                    className="w-1 h-1 bg-[#D4AF37] rounded-full"
+                  />
+                ))}
               </div>
-              <span className="text-[10px] tracking-[0.4em] opacity-30 uppercase italic">The Sage is contemplating the eternal...</span>
+              <span className="text-[10px] tracking-[0.5em] opacity-30 uppercase italic font-light">The Sage communes with the infinite...</span>
             </motion.div>
           )}
         </main>
 
-        <footer className="mt-auto pt-8 pb-4 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a] to-transparent max-w-3xl mx-auto w-full px-4">
-          <form onSubmit={handleSubmit} className="relative">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              disabled={loading}
-              placeholder={loading ? "The Sage is speaking..." : "Whisper your query..."}
-              className="w-full bg-transparent border-b border-[#d4af37]/20 py-6 px-4 focus:outline-none focus:border-[#d4af37]/60 transition-all placeholder:text-[#d4af37]/20 text-xl md:text-2xl font-light tracking-wide disabled:opacity-50"
-            />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center space-x-4">
-              <div className={`w-2 h-2 rounded-full transition-colors duration-1000 ${sageState === 'thinking' ? 'bg-amber-500 shadow-[0_0_10px_#f59e0b]' : 'bg-[#d4af37]/20'}`} />
-              <span className="hidden md:block text-[10px] tracking-[0.3em] opacity-20 uppercase font-light">
-                Press Enter
-              </span>
-            </div>
-          </form>
+        <footer className="fixed bottom-0 left-0 w-full p-8 md:p-12 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-20">
+          <div className="max-w-5xl mx-auto">
+            <form onSubmit={handleSubmit} className="relative group">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                disabled={loading}
+                placeholder={loading ? "Listen in silence..." : "Whisper your quest for truth..."}
+                className="w-full bg-transparent border-b border-[#D4AF37]/10 py-8 px-6 focus:outline-none focus:border-[#D4AF37]/40 transition-all placeholder:text-[#D4AF37]/10 text-2xl md:text-4xl font-light tracking-wide disabled:opacity-30 text-[#FDFCF0]"
+              />
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center space-x-6">
+                <div className={`w-1.5 h-1.5 rounded-full transition-all duration-1000 ${sageState === 'thinking' ? 'bg-[#D4AF37] shadow-[0_0_15px_#D4AF37]' : 'bg-[#D4AF37]/5'}`} />
+                <span className="hidden md:block text-[9px] tracking-[0.4em] opacity-10 uppercase font-light group-focus-within:opacity-30 transition-opacity">
+                  Align with the One
+                </span>
+              </div>
+            </form>
+          </div>
         </footer>
       </div>
 
@@ -363,13 +306,16 @@ const SanctumChat = () => {
 
 const RevelationSection = ({ title, body, delay }: { title: string, body: string, delay: number }) => (
   <motion.div
-    initial={{ opacity: 0, x: -10 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay, duration: 2, ease: "easeOut" }}
-    className="space-y-3"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay, duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+    className="space-y-6"
   >
-    <h3 className="text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-30 font-medium">{title}</h3>
-    <p className="text-lg md:text-2xl leading-relaxed font-light opacity-90 text-[#eeeae0] drop-shadow-sm">
+    <div className="flex items-center space-x-4">
+      <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
+      <h3 className="text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">{title}</h3>
+    </div>
+    <p className="text-xl md:text-4xl leading-[1.6] font-light text-[#FDFCF0] drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
       {body}
     </p>
   </motion.div>
@@ -378,47 +324,47 @@ const RevelationSection = ({ title, body, delay }: { title: string, body: string
 const SourceAttribution = ({ meta, agent, onEntityClick, delay }: { meta?: Meta, agent?: string, onEntityClick: (name: string) => void, delay: number }) => {
   if (!meta) return null;
 
-  const allEntities = [
+  const allEntities = useMemo(() => [
     ...meta.entities.characters,
     ...meta.entities.locations,
     ...meta.entities.events
-  ];
+  ], [meta.entities]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay, duration: 1.5 }}
-      className="pt-8 space-y-6"
+      transition={{ delay, duration: 2 }}
+      className="pt-16 mt-16 border-t border-[#D4AF37]/5 space-y-10"
     >
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-4">
         {allEntities.map((ent, idx) => (
           <button
             key={idx}
             onClick={() => onEntityClick(ent)}
-            className="px-3 py-1 text-[9px] uppercase tracking-widest border border-[#d4af37]/10 hover:border-[#d4af37]/40 hover:bg-[#d4af37]/5 transition-all opacity-40 hover:opacity-100"
+            className="px-5 py-2 text-[10px] uppercase tracking-[0.3em] border border-[#D4AF37]/5 hover:border-[#D4AF37]/20 hover:bg-[#D4AF37]/5 transition-all opacity-30 hover:opacity-100 text-[#FDFCF0]"
           >
             {ent}
           </button>
         ))}
       </div>
 
-      <div className="flex flex-wrap gap-6 text-[10px] uppercase tracking-[0.2em] opacity-30">
-        <div className="flex items-center space-x-2 border-r border-[#d4af37]/10 pr-6">
-          <span className="font-bold">Kanda:</span>
-          <span>{meta.kanda || "Universal"}</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-[10px] uppercase tracking-[0.3em] opacity-20 font-light">
+        <div className="space-y-2">
+          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Kanda</span>
+          <span className="text-[#FDFCF0]">{meta.kanda || "Universal"}</span>
         </div>
-        <div className="flex items-center space-x-2 border-r border-[#d4af37]/10 pr-6">
-          <span className="font-bold">Verses:</span>
-          <span>{meta.verses.join(', ') || "Various"}</span>
+        <div className="space-y-2">
+          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Verses</span>
+          <span className="text-[#FDFCF0]">{meta.verses.join(', ') || "Various"}</span>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="font-bold">Source:</span>
-          <span>{meta.sources.join(', ')}</span>
+        <div className="space-y-2">
+          <span className="block opacity-40 text-[8px] tracking-[0.5em]">Sanctum Lineage</span>
+          <span className="text-[#FDFCF0]">{meta.sources.join(', ')}</span>
         </div>
       </div>
-      <div className="text-[9px] uppercase tracking-[0.5em] opacity-20 italic">
-        Revealed via {agent}
+      <div className="text-[8px] uppercase tracking-[0.6em] opacity-10 italic">
+        Wisdom channeled via {agent}
       </div>
     </motion.div>
   );

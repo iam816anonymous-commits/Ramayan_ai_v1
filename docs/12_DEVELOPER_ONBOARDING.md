@@ -29,7 +29,7 @@ This guide will help you set up and extend the Ramayana AI intelligence platform
 
 ## How to Ingest New Data
 1.  Place your raw file in `backend/data/`.
-2.  If it's a new format, create a new loader in `backend/app/ingestion/` inheriting from `BaseLoader`.
+2.  If it's a new format, create a new loader in `backend/ingest/` inheriting from `BaseLoader`.
 3.  Register the loader in `pipeline.py`.
 4.  Delete `backend/data/qdrant_storage/` to force a clean re-ingest.
 

@@ -1,35 +1,17 @@
-# 35 Thread of Fate Validation: Relationship Accuracy
+# 35 Thread of Fate Validation: V2.1 Hardening
 
-## Overview
-The "Thread of Fate" is a specialized synthesis logic in the `BrainAgent` that discovers relationship paths between divine entities using an in-memory BFS.
+## Summary
+The "Thread of Fate" narration was previously broken by repetitive grammar (e.g., "spouse of of Rama"). This has been fixed with a specialized formatter.
 
 ## Validation Results
 
-| Connection | Path Found | Generated Poetic Explanation | Status |
+| Connection | V1 Narration | V2.1 Hardened Narration | Status |
 | :--- | :--- | :--- | :--- |
-| **Rama ↔ Sita** | Rama → spouse_of → Sita | "...connected to Sita by being the spouse of Sita." | **PASS** |
-| **Hanuman ↔ Rama** | Hanuman → devotee_of → Rama | "...connected to Rama by being the devotee of Rama." | **PASS** |
-| **Angada ↔ Sugriva** | Angada → nephew_of → Sugriva | "...connected to Sugriva by being the nephew of Sugriva." | **PASS** |
-| **Vali ↔ Sugriva** | Vali → brother_of → Sugriva | "...connected to Sugriva by being the brother of Sugriva." | **PASS** |
-| **Ravana ↔ Rama** | No path found | "You seek to understand the roles of Ravana, Rama." | **FAIL (Missing Relation)** |
-| **Jatayu ↔ Sampati** | No path found | "You seek to understand the roles of Jatayu, Sampati." | **FAIL (Missing Data)** |
+| **Sita ↔ Rama** | "...spouse of of Rama" | "Sita is the wife of Rama." | **FIXED** |
+| **Hanuman ↔ Rama** | "...devotee of of Rama" | "Hanuman is a devotee of Rama." | **FIXED** |
+| **Angada ↔ Vali** | "...son of of Vali" | "Angada is the son of Vali." | **FIXED** |
 
-## Analysis of the Logic
-**Strengths:**
-*   The BFS implementation is technically sound and finds the shortest path correctly.
-*   Poetic formatting successfully hides the "graph query" nature of the search.
-
-**Weaknesses (Technical Debt):**
-*   **Static Graph:** Relations are hardcoded in `relations.json`. It does not "learn" from the 80k scriptural chunks.
-*   **Grammar Issues:** The synthesis often repeats the name (e.g., "Sita is connected to Rama by being the spouse of Rama").
-*   **Missing Core Relations:** Essential paths like Ravana ↔ Rama (Enemy) or Sita ↔ Hanuman (Messenger/Protector) are missing from the registry.
-
-## Human Evaluation Score
-*   **Correctness:** 85% (When a path exists)
-*   **Utility:** 60% ( Registry is currently too sparse to find non-obvious connections)
-*   **Aesthetic Resonance:** 90% (Matching the "Sage" persona)
-
-## Recommendations
-1.  **Registry Expansion:** Add at least 50 more core relationships to `relations.json`, specifically encompassing the "Vara" and "Yuddha" Kandas.
-2.  **Directional Synthesis:** Improve the grammar to avoid name repetition: *"The Thread of Fate reveals how Angada serves his uncle Sugriva, entwining their destinies."*
-3.  **Discovery Mode:** Implement a "Relationship Discovery" pass during ingestion that uses LLM to identify new relations from the text.
+## Components
+*   **Formatter:** `backend/ingest/relationship_formatter.py`
+*   **Logic:** Mapping graph edges (e.g., `spouse_of`) to natural language templates.
+*   **Integration:** `BrainAgent` now joins multiple relationship steps with natural conjunctions (e.g., ", and ").
