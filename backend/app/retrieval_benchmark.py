@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import time
+import asyncio
 from typing import List, Dict
 
 # Setup paths for local imports
@@ -17,7 +18,7 @@ class RetrievalBenchmark:
         self.client = QdrantClient(path=storage_path)
         self.brain = BrainAgent(client=self.client)
 
-    def run_benchmark(self, queries: List[Dict]):
+    async def run_benchmark(self, queries: List[Dict]):
         results = []
         for item in queries:
             query = item["query"]
@@ -25,7 +26,7 @@ class RetrievalBenchmark:
             expected_char = item.get("character")
 
             start_time = time.time()
-            context = self.brain.retrieve_context(query, top_k=5)
+            context = await self.brain.retrieve_context(query, top_k=5)
             latency = time.time() - start_time
 
             top_1_kanda = context[0].get("kanda") if context else None
@@ -44,7 +45,7 @@ class RetrievalBenchmark:
 
         return results
 
-if __name__ == "__main__":
+async def main():
     benchmark = RetrievalBenchmark()
     test_queries = [
         {"query": "Who is Rama?", "character": "Rama", "kanda": "Bala Kanda"},
@@ -55,7 +56,7 @@ if __name__ == "__main__":
         {"query": "The battle against Ravana", "character": "Ravana", "kanda": "Yuddha Kanda"}
     ]
 
-    report = benchmark.run_benchmark(test_queries)
+    report = await benchmark.run_benchmark(test_queries)
 
     avg_latency = sum(r["latency"] for r in report) / len(report)
     accuracy_kanda = sum(1 for r in report if r["kanda_match"]) / len(report)
@@ -68,3 +69,6 @@ if __name__ == "__main__":
 
     with open("retrieval_benchmark_v2.1.json", "w") as f:
         json.dump(report, f, indent=2)
+
+if __name__ == "__main__":
+    asyncio.run(main())

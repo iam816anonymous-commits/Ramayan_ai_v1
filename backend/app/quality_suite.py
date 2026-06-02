@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-import time
+import asyncio
 from typing import List, Dict
 
 # Setup paths for local imports
@@ -20,21 +20,21 @@ class QualitySuite:
         self.brain = BrainAgent(client=self.client)
         self.sage = SageAgent()
 
-    def run_query(self, query: str):
+    async def run_query(self, query: str):
         intent = self.orchestrator.route_query(query)
-        context = self.brain.retrieve_context(query, intent=intent)
-        brain_response = self.brain.synthesize_response(query, context, intent)
+        context = await self.brain.retrieve_context(query, intent=intent)
+        brain_response = await self.brain.synthesize_response(query, context, intent)
         full_response = self.sage.get_full_response(query, brain_response, intent)
         return full_response
 
-    def evaluate(self, queries: List[Dict]):
+    async def evaluate(self, queries: List[Dict]):
         results = []
         for item in queries:
             query = item["query"]
             category = item["category"]
             expected_behavior = item["expected"] # 'answer' or 'reject'
 
-            res = self.run_query(query)
+            res = await self.run_query(query)
             is_rejected = "silence" in res["revelation"]["reflection"].lower() or "not sufficiently confident" in res["answer"].lower() or "does not exist" in res["answer"].lower()
 
             passed = False
@@ -52,7 +52,7 @@ class QualitySuite:
             })
         return results
 
-if __name__ == "__main__":
+async def main():
     suite = QualitySuite()
 
     test_cases = [
@@ -83,7 +83,7 @@ if __name__ == "__main__":
         full_cases.extend(test_cases)
 
     print(f"Running quality suite on {len(full_cases)} queries...")
-    results = suite.evaluate(full_cases)
+    results = await suite.evaluate(full_cases)
 
     pass_rate = sum(1 for r in results if r["passed"]) / len(results)
 
@@ -97,3 +97,6 @@ if __name__ == "__main__":
 
     with open("quality_suite_v2.1_report.json", "w") as f:
         json.dump(report, f, indent=2)
+
+if __name__ == "__main__":
+    asyncio.run(main())

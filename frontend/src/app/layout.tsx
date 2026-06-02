@@ -39,8 +39,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${lora.variable} antialiased bg-[#050505] text-[#D4AF37]`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${lora.variable} antialiased bg-[#050505] text-[#D4AF37] relative`}
       >
+        <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] mix-blend-overlay bg-noise" />
         {children}
       </body>
     </html>
