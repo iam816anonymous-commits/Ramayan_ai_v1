@@ -53,6 +53,10 @@
       "description": "Rama is the sustainer of this world, destroyer of enemies and protector of all living beings and of the moral code."
     },
     {
+      "name": "Narada",
+      "description": "A divine sage and messenger of the gods who tells the story of Rama to Valmiki."
+    },
+    {
       "name": "Ravana",
       "description": "Ravana is inflicting pains on the three worlds."
     },
@@ -83,6 +87,10 @@
     {
       "name": "Vasistha",
       "description": "Vasistha is repeatedly  assuring  the saints saying \"Do not fear, I will now destroy Viswamitra, son of Gadhi just as the Sun dispels the morning mist (they fled)\"."
+    },
+    {
+      "name": "Valmiki",
+      "description": "The sage and author of the Ramayana who received the story of Rama from Narada."
     },
     {
       "name": "Vibhishana",

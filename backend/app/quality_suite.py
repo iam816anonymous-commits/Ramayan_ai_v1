@@ -60,6 +60,8 @@ async def main():
         {"category": "Characters", "query": "Who is Rama?", "expected": "answer"},
         {"category": "Characters", "query": "Who is Sita?", "expected": "answer"},
         {"category": "Characters", "query": "Who is Hanuman?", "expected": "answer"},
+        {"category": "Characters", "query": "Who is Narada?", "expected": "answer"},
+        {"category": "Characters", "query": "Who is Valmiki?", "expected": "answer"},
         # Unknown Entities
         {"category": "Gatekeeper", "query": "Who is Draupadi?", "expected": "reject"},
         {"category": "Gatekeeper", "query": "Who is Batman?", "expected": "reject"},

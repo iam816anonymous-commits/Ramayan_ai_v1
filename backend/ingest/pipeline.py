@@ -114,7 +114,17 @@ class IngestionPipeline:
             if not unified_obj["text"].strip():
                 continue
 
-            vector = self.model.encode(unified_obj["text"]).tolist()
+            # Build embedding_text for Canonical Source Hierarchy
+            kanda = unified_obj.get("kanda", "")
+            chapter = unified_obj.get("chapter", "")
+            verse = unified_obj.get("verse", "")
+            translation = unified_obj.get("translation", "")
+            explanation = unified_obj.get("explanation", "")
+            comments = unified_obj.get("comments", "")
+
+            embedding_text = f"{kanda} {chapter} {verse}\n\n{translation}\n\n{explanation}\n\n{comments}".strip()
+
+            vector = self.model.encode(embedding_text).tolist()
             points.append(PointStruct(id=i, vector=vector, payload=unified_obj))
 
             if len(points) >= 100:

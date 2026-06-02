@@ -1,27 +1,41 @@
 {
-  "total_queries": 325,
-  "pass_rate": 0.9230769230769231,
+  "total_queries": 375,
+  "pass_rate": 0.9333333333333333,
   "results": [
     {
       "category": "Characters",
       "query": "Who is Rama?",
       "passed": true,
-      "confidence": 0.92,
-      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+      "confidence": 0.88,
+      "answer": "My husband known in the world as Rama is largeeyed, longarmed, virtuous, truthful, pure and is alway"
     },
     {
       "category": "Characters",
       "query": "Who is Sita?",
       "passed": true,
-      "confidence": 0.91,
-      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+      "confidence": 0.88,
+      "answer": "Sita, the illustrious daughter of Janaka and princess of Videha, has accomplished her purpose by fol"
     },
     {
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Narada?",
+      "passed": true,
+      "confidence": 0.85,
+      "answer": "There along with Narada, Tumburu and Gopa, distinguished kings of the gandharvas, looking bright lik"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Valmiki?",
+      "passed": true,
+      "confidence": 0.83,
+      "answer": "Ascetic Valmiki enquired of Narada, preeminent among the sages ever engaged in the practice of relig"
     },
     {
       "category": "Gatekeeper",
@@ -48,29 +62,29 @@
       "category": "Misspellings",
       "query": "Who is Ram?",
       "passed": true,
-      "confidence": 0.46,
+      "confidence": 0.59,
       "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
     },
     {
       "category": "Misspellings",
       "query": "Who is Bali?",
       "passed": true,
-      "confidence": 0.63,
-      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+      "confidence": 0.57,
+      "answer": "Then the resplendent Visnu, born from the womb of Aditi and assuming the form of Vamana, approached,"
     },
     {
       "category": "Morality",
       "query": "What is Dharma?",
       "passed": true,
       "confidence": 0,
-      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+      "answer": "The sacred text reveals: ''O monkey dharma is very subtle. It is extremely difficult to understand. "
     },
     {
       "category": "Morality",
       "query": "What is the lesson of Rama?",
       "passed": true,
-      "confidence": 0.87,
-      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+      "confidence": 0.61,
+      "answer": "\"O mighty Rakshasas Wise elders say that through wise counsel victory is possible. Therefore, in the"
     },
     {
       "category": "Personal",
@@ -83,36 +97,50 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.27,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Confidence",
       "query": "How many grains of sand are in Lanka?",
       "passed": true,
-      "confidence": 0.28,
+      "confidence": 0.29,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Characters",
       "query": "Who is Rama?",
       "passed": true,
-      "confidence": 0.92,
-      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+      "confidence": 0.88,
+      "answer": "My husband known in the world as Rama is largeeyed, longarmed, virtuous, truthful, pure and is alway"
     },
     {
       "category": "Characters",
       "query": "Who is Sita?",
       "passed": true,
-      "confidence": 0.91,
-      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+      "confidence": 0.88,
+      "answer": "Sita, the illustrious daughter of Janaka and princess of Videha, has accomplished her purpose by fol"
     },
     {
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Narada?",
+      "passed": true,
+      "confidence": 0.85,
+      "answer": "There along with Narada, Tumburu and Gopa, distinguished kings of the gandharvas, looking bright lik"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Valmiki?",
+      "passed": true,
+      "confidence": 0.83,
+      "answer": "Ascetic Valmiki enquired of Narada, preeminent among the sages ever engaged in the practice of relig"
     },
     {
       "category": "Gatekeeper",
@@ -139,29 +167,29 @@
       "category": "Misspellings",
       "query": "Who is Ram?",
       "passed": true,
-      "confidence": 0.46,
+      "confidence": 0.59,
       "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
     },
     {
       "category": "Misspellings",
       "query": "Who is Bali?",
       "passed": true,
-      "confidence": 0.63,
-      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+      "confidence": 0.57,
+      "answer": "Then the resplendent Visnu, born from the womb of Aditi and assuming the form of Vamana, approached,"
     },
     {
       "category": "Morality",
       "query": "What is Dharma?",
       "passed": true,
       "confidence": 0,
-      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+      "answer": "The sacred text reveals: ''O monkey dharma is very subtle. It is extremely difficult to understand. "
     },
     {
       "category": "Morality",
       "query": "What is the lesson of Rama?",
       "passed": true,
-      "confidence": 0.87,
-      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+      "confidence": 0.61,
+      "answer": "\"O mighty Rakshasas Wise elders say that through wise counsel victory is possible. Therefore, in the"
     },
     {
       "category": "Personal",
@@ -174,36 +202,50 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.27,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Confidence",
       "query": "How many grains of sand are in Lanka?",
       "passed": true,
-      "confidence": 0.28,
+      "confidence": 0.29,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Characters",
       "query": "Who is Rama?",
       "passed": true,
-      "confidence": 0.92,
-      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+      "confidence": 0.88,
+      "answer": "My husband known in the world as Rama is largeeyed, longarmed, virtuous, truthful, pure and is alway"
     },
     {
       "category": "Characters",
       "query": "Who is Sita?",
       "passed": true,
-      "confidence": 0.91,
-      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+      "confidence": 0.88,
+      "answer": "Sita, the illustrious daughter of Janaka and princess of Videha, has accomplished her purpose by fol"
     },
     {
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Narada?",
+      "passed": true,
+      "confidence": 0.85,
+      "answer": "There along with Narada, Tumburu and Gopa, distinguished kings of the gandharvas, looking bright lik"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Valmiki?",
+      "passed": true,
+      "confidence": 0.83,
+      "answer": "Ascetic Valmiki enquired of Narada, preeminent among the sages ever engaged in the practice of relig"
     },
     {
       "category": "Gatekeeper",
@@ -230,29 +272,29 @@
       "category": "Misspellings",
       "query": "Who is Ram?",
       "passed": true,
-      "confidence": 0.46,
+      "confidence": 0.59,
       "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
     },
     {
       "category": "Misspellings",
       "query": "Who is Bali?",
       "passed": true,
-      "confidence": 0.63,
-      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+      "confidence": 0.57,
+      "answer": "Then the resplendent Visnu, born from the womb of Aditi and assuming the form of Vamana, approached,"
     },
     {
       "category": "Morality",
       "query": "What is Dharma?",
       "passed": true,
       "confidence": 0,
-      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+      "answer": "The sacred text reveals: ''O monkey dharma is very subtle. It is extremely difficult to understand. "
     },
     {
       "category": "Morality",
       "query": "What is the lesson of Rama?",
       "passed": true,
-      "confidence": 0.87,
-      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+      "confidence": 0.61,
+      "answer": "\"O mighty Rakshasas Wise elders say that through wise counsel victory is possible. Therefore, in the"
     },
     {
       "category": "Personal",
@@ -265,92 +307,50 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.27,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Confidence",
       "query": "How many grains of sand are in Lanka?",
       "passed": true,
-      "confidence": 0.28,
+      "confidence": 0.29,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
       "category": "Characters",
       "query": "Who is Rama?",
       "passed": true,
-      "confidence": 0.92,
-      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+      "confidence": 0.88,
+      "answer": "My husband known in the world as Rama is largeeyed, longarmed, virtuous, truthful, pure and is alway"
     },
     {
       "category": "Characters",
       "query": "Who is Sita?",
       "passed": true,
-      "confidence": 0.91,
-      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+      "confidence": 0.88,
+      "answer": "Sita, the illustrious daughter of Janaka and princess of Videha, has accomplished her purpose by fol"
     },
     {
       "category": "Characters",
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
     },
     {
-      "category": "Gatekeeper",
-      "query": "Who is Draupadi?",
+      "category": "Characters",
+      "query": "Who is Narada?",
       "passed": true,
-      "confidence": 0.0,
-      "answer": "I am not sufficiently confident in this answer to provide guidance."
+      "confidence": 0.85,
+      "answer": "There along with Narada, Tumburu and Gopa, distinguished kings of the gandharvas, looking bright lik"
     },
     {
-      "category": "Gatekeeper",
-      "query": "Who is Batman?",
+      "category": "Characters",
+      "query": "Who is Valmiki?",
       "passed": true,
-      "confidence": 0.0,
-      "answer": "I am not sufficiently confident in this answer to provide guidance."
-    },
-    {
-      "category": "Gatekeeper",
-      "query": "Who is Elon Musk?",
-      "passed": true,
-      "confidence": 0.0,
-      "answer": "I am not sufficiently confident in this answer to provide guidance."
-    },
-    {
-      "category": "Misspellings",
-      "query": "Who is Ram?",
-      "passed": true,
-      "confidence": 0.46,
-      "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
-    },
-    {
-      "category": "Misspellings",
-      "query": "Who is Bali?",
-      "passed": true,
-      "confidence": 0.63,
-      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
-    },
-    {
-      "category": "Morality",
-      "query": "What is Dharma?",
-      "passed": true,
-      "confidence": 0,
-      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
-    },
-    {
-      "category": "Morality",
-      "query": "What is the lesson of Rama?",
-      "passed": true,
-      "confidence": 0.87,
-      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
-    },
-    {
-      "category": "Personal",
-      "query": "I feel lost",
-      "passed": true,
-      "confidence": 0,
-      "answer": "The episode of Verse 6 in Bala Kanda teaches us that Valmiki, the master, having found both Kusa and"
+      "confidence": 0.83,
+      "answer": "Ascetic Valmiki enquired of Narada, preeminent among the sages ever engaged in the practice of relig"
     }
   ]
 }

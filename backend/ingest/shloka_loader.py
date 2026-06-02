@@ -20,10 +20,17 @@ class ShlokaLoader(BaseLoader):
         for item in data:
             normalized_data.append({
                 "text": f"{item.get('explanation', '')} {item.get('translation', '')}",
+                "translation": item.get("translation"),
+                "explanation": item.get("explanation"),
+                "comments": item.get("comments"),
+                "transliteration": item.get("transliteration"),
+                "shloka_text": item.get("shloka_text"),
                 "kanda": item.get("kanda"),
                 "chapter": str(item.get("sarga")),
                 "verse": str(item.get("shloka")),
-                "shloka_text": item.get("shloka_text"),
-                "source": "Valmiki_Ramayan_Shlokas.json"
+                "sarga": item.get("sarga"),
+                "shloka": item.get("shloka"),
+                "source": "Valmiki_Ramayan_Shlokas.json",
+                "authority": 1.0 # Tier 1
             })
         return normalized_data

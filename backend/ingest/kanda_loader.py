@@ -19,10 +19,12 @@ class KandaLoader(BaseLoader):
         for item in data:
             normalized_data.append({
                 "text": item.get("translation", ""),
+                "translation": item.get("translation", ""),
                 "kanda": item.get("book", ""),
                 "chapter": item.get("chapter", ""),
                 "verse": item.get("verse", ""),
                 "word_dictionary": item.get("wordDictionary", ""),
-                "source": os.path.basename(filepath)
+                "source": os.path.basename(filepath),
+                "authority": 0.8 # Tier 2
             })
         return normalized_data

@@ -17,9 +17,9 @@ class ConfidenceScorer:
         # Typically MiniLM scores are between 0.3 and 0.8 for good matches
         retrieval_score = primary.get("score", 0.0)
 
-        # 2. Rerank Score (Cross Encoder)
+        # 2. Rerank Score (Cross Encoder) - using final_score from brain.py
         # MS-Marco Cross Encoder scores are often on a different scale, but usually > 0 for relevance
-        rerank_score = primary.get("rerank_score", -10.0)
+        rerank_score = primary.get("final_score", -10.0)
         import math
         # Normalize rerank: map -5..5 to 0..1 roughly using sigmoid
         normalized_rerank = 1.0 / (1.0 + math.exp(-rerank_score))
@@ -28,11 +28,18 @@ class ConfidenceScorer:
         entity_weight = 0.0
         if entities_found["characters"]:
             # If the primary chunk character matches one of the query characters
-            primary_char = primary.get("character", "").lower()
-            if any(c.lower() in primary_char for c in entities_found["characters"]):
+            # check both legacy 'character' and new 'entities' list
+            primary_chars = primary.get("entities", [])
+            legacy_char = primary.get("character", "").lower()
+
+            match_found = False
+            for q_char in entities_found["characters"]:
+                if q_char in primary_chars or q_char.lower() in legacy_char:
+                    match_found = True
+                    break
+
+            if match_found:
                 entity_weight = 1.0
-            elif any(primary_char in c.lower() for c in entities_found["characters"]):
-                entity_weight = 0.8
         else:
             # If no entities in query, we don't penalize as much
             entity_weight = 0.5

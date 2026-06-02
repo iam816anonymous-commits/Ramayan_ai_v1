@@ -29,6 +29,7 @@ class BrainAgent:
         return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent)
 
     def _retrieve_context_sync(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
+        # Step 1: Entity Extraction
         entities = self.entity_extractor.extract_entities(query)
 
         # Phase 1: Gatekeeper Hardening
@@ -49,26 +50,32 @@ class BrainAgent:
 
         all_results = []
 
-        # 1. Exact Entity Search
+        # Step 2: Metadata Search (Tier 1 Priority)
         if entities["characters"]:
             for char in entities["characters"]:
                 try:
+                    # Search Tier 1 (Valmiki) first for exact entity match
                     search_result = self.client.scroll(
                         collection_name=self.collection_name,
                         scroll_filter=Filter(
-                            must=[FieldCondition(key="character", match=MatchValue(value=char))]
+                            must=[
+                                FieldCondition(key="entities", match=MatchValue(value=char)),
+                                FieldCondition(key="authority", match=MatchValue(value=1.0))
+                            ]
                         ),
-                        limit=2
+                        limit=3
                     )[0]
-                    all_results.extend([hit.payload for hit in search_result])
+                    for hit in search_result:
+                        hit.payload['metadata_match'] = True
+                        all_results.append(hit.payload)
                 except Exception:
                     pass
 
-        # 2. Semantic Search
+        # Step 3: Semantic Search
         semantic_results = self.client.query_points(
             collection_name=self.collection_name,
             query=vector,
-            limit=10 # Retrieval pool for reranking
+            limit=15 # Retrieval pool for reranking
         ).points
 
         for hit in semantic_results:
@@ -83,16 +90,26 @@ class BrainAgent:
                 unique_results.append(res)
                 seen.add(key)
 
-        # Phase 2: Reranking
+        # Step 4, 5, 6: Weighted Merge, Deduplication, and Reranking
         if unique_results:
-            pairs = [[query, res['text']] for res in unique_results]
+            pairs = [[query, res.get('translation', res.get('text', ''))] for res in unique_results]
             rerank_scores = self.reranker.predict(pairs)
 
             for i, score in enumerate(rerank_scores):
-                unique_results[i]['rerank_score'] = float(score)
+                # final_score = semantic_score + authority_weight + entity_match_bonus
+                authority_weight = unique_results[i].get('authority', 0.6)
 
-            # Sort by rerank score
-            unique_results.sort(key=lambda x: x['rerank_score'], reverse=True)
+                # Entity Match Bonus
+                entity_bonus = 0.0
+                doc_entities = unique_results[i].get('entities', [])
+                for q_char in entities["characters"]:
+                    if q_char in doc_entities:
+                        entity_bonus += 0.5
+
+                unique_results[i]['final_score'] = float(score) + authority_weight + entity_bonus
+
+            # Sort by final score
+            unique_results.sort(key=lambda x: x['final_score'], reverse=True)
 
         return unique_results[:top_k]
 
@@ -205,7 +222,13 @@ class BrainAgent:
         common_chars = []
         if chars:
             for other in context[1:]:
-                other_chars = other.get("entities", {}).get("characters", [])
+                # Adjust for new schema where 'entities' is a list of characters
+                other_ents = other.get("entities", [])
+                if isinstance(other_ents, dict):
+                    other_chars = other_ents.get("characters", [])
+                else:
+                    other_chars = other_ents
+
                 for c in chars:
                     if c in other_chars and c not in common_chars:
                         common_chars.append(c)
@@ -229,18 +252,43 @@ class BrainAgent:
         kandas = set()
 
         for c in context:
-            ents = c.get("entities", {})
-            all_chars.update(ents.get("characters", []))
-            all_locs.update(ents.get("locations", []))
-            all_events.update(ents.get("events", []))
+            ents = c.get("entities", [])
+            if isinstance(ents, dict):
+                all_chars.update(ents.get("characters", []))
+                all_locs.update(ents.get("locations", []))
+                all_events.update(ents.get("events", []))
+            else:
+                all_chars.update(ents)
+                all_locs.update(c.get("locations", []))
+                all_events.update(c.get("events", []))
             if c.get("verse"): all_verses.append(str(c.get("verse")))
             if c.get("source"): all_sources.append(c.get("source"))
             if c.get("kanda"): kandas.add(c.get("kanda"))
 
-        # Grounding check
+        # Grounding Rules & Sacred Silence (Phase 8)
         hallucination_flag = False
         if not context or len(context) < 1:
             hallucination_flag = True
+
+        # Check if Tier 1 supports the answer
+        has_tier1 = any(c.get("authority") == 1.0 for c in context)
+
+        if intent == "factual" and not has_tier1 and confidence < 0.6:
+             return {
+                "reflection": "The sacred silence holds all answers.",
+                "meaning": "The sacred verses I preserve do not clearly reveal this.",
+                "context": "While echoes of your query exist, the canonical Tier 1 scripture remains silent on this specific detail.",
+                "takeaway": "Seek wisdom through the primary journey of Rama as revealed in the Valmiki Ramayana.",
+                "source_verse": "N/A",
+                "meta": {
+                    "chunks_used": len(context),
+                    "entities": entities_found,
+                    "verses": [],
+                    "sources": [],
+                    "grounded": False,
+                    "confidence": confidence
+                }
+            }
 
         return {
             "reflection": reflection,
@@ -251,6 +299,7 @@ class BrainAgent:
             "meta": {
                 "chunks_used": len(context),
                 "kanda": primary.get("kanda"),
+                "authority": primary.get("authority"),
                 "entities": {
                     "characters": list(all_chars),
                     "locations": list(all_locs),

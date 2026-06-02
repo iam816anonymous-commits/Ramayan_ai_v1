@@ -24,7 +24,11 @@ class MoralAgent:
         # Aggregate all characters from context
         all_chars = set()
         for c in context:
-            all_chars.update(c.get("entities", {}).get("characters", []))
+            ents = c.get("entities", [])
+            if isinstance(ents, dict):
+                all_chars.update(ents.get("characters", []))
+            else:
+                all_chars.update(ents)
         chars = list(all_chars)
 
         # Try to find a relevant lesson
