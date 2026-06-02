@@ -1,0 +1,356 @@
+{
+  "total_queries": 325,
+  "pass_rate": 0.9230769230769231,
+  "results": [
+    {
+      "category": "Characters",
+      "query": "Who is Rama?",
+      "passed": true,
+      "confidence": 0.92,
+      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Sita?",
+      "passed": true,
+      "confidence": 0.91,
+      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Hanuman?",
+      "passed": true,
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Draupadi?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Batman?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Elon Musk?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Ram?",
+      "passed": true,
+      "confidence": 0.46,
+      "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Bali?",
+      "passed": true,
+      "confidence": 0.63,
+      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+    },
+    {
+      "category": "Morality",
+      "query": "What is Dharma?",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+    },
+    {
+      "category": "Morality",
+      "query": "What is the lesson of Rama?",
+      "passed": true,
+      "confidence": 0.87,
+      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+    },
+    {
+      "category": "Personal",
+      "query": "I feel lost",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The episode of Verse 6 in Bala Kanda teaches us that Valmiki, the master, having found both Kusa and"
+    },
+    {
+      "category": "Personal",
+      "query": "I fear failure",
+      "passed": false,
+      "confidence": 0.25,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Confidence",
+      "query": "How many grains of sand are in Lanka?",
+      "passed": true,
+      "confidence": 0.28,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Rama?",
+      "passed": true,
+      "confidence": 0.92,
+      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Sita?",
+      "passed": true,
+      "confidence": 0.91,
+      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Hanuman?",
+      "passed": true,
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Draupadi?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Batman?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Elon Musk?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Ram?",
+      "passed": true,
+      "confidence": 0.46,
+      "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Bali?",
+      "passed": true,
+      "confidence": 0.63,
+      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+    },
+    {
+      "category": "Morality",
+      "query": "What is Dharma?",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+    },
+    {
+      "category": "Morality",
+      "query": "What is the lesson of Rama?",
+      "passed": true,
+      "confidence": 0.87,
+      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+    },
+    {
+      "category": "Personal",
+      "query": "I feel lost",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The episode of Verse 6 in Bala Kanda teaches us that Valmiki, the master, having found both Kusa and"
+    },
+    {
+      "category": "Personal",
+      "query": "I fear failure",
+      "passed": false,
+      "confidence": 0.25,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Confidence",
+      "query": "How many grains of sand are in Lanka?",
+      "passed": true,
+      "confidence": 0.28,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Rama?",
+      "passed": true,
+      "confidence": 0.92,
+      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Sita?",
+      "passed": true,
+      "confidence": 0.91,
+      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Hanuman?",
+      "passed": true,
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Draupadi?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Batman?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Elon Musk?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Ram?",
+      "passed": true,
+      "confidence": 0.46,
+      "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Bali?",
+      "passed": true,
+      "confidence": 0.63,
+      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+    },
+    {
+      "category": "Morality",
+      "query": "What is Dharma?",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+    },
+    {
+      "category": "Morality",
+      "query": "What is the lesson of Rama?",
+      "passed": true,
+      "confidence": 0.87,
+      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+    },
+    {
+      "category": "Personal",
+      "query": "I feel lost",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The episode of Verse 6 in Bala Kanda teaches us that Valmiki, the master, having found both Kusa and"
+    },
+    {
+      "category": "Personal",
+      "query": "I fear failure",
+      "passed": false,
+      "confidence": 0.25,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Confidence",
+      "query": "How many grains of sand are in Lanka?",
+      "passed": true,
+      "confidence": 0.28,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Rama?",
+      "passed": true,
+      "confidence": 0.92,
+      "answer": "Rama is a son of  the renowned king Dasaratha, who was a firm ambankment (protector) of righteousnes"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Sita?",
+      "passed": true,
+      "confidence": 0.91,
+      "answer": "She is Sita, princess of Videha, a virtuous lady of golden complexion, a beautiful lady of slender w"
+    },
+    {
+      "category": "Characters",
+      "query": "Who is Hanuman?",
+      "passed": true,
+      "confidence": 0.9,
+      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Draupadi?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Batman?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Gatekeeper",
+      "query": "Who is Elon Musk?",
+      "passed": true,
+      "confidence": 0.0,
+      "answer": "I am not sufficiently confident in this answer to provide guidance."
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Ram?",
+      "passed": true,
+      "confidence": 0.46,
+      "answer": "O Son of the Raghus illustrious Gautama's power of ascetism was such that thenceforth Indra possesse"
+    },
+    {
+      "category": "Misspellings",
+      "query": "Who is Bali?",
+      "passed": true,
+      "confidence": 0.63,
+      "answer": "\"While Bali was performing the sacrifice (to confirm his position as lord of the three worlds), the "
+    },
+    {
+      "category": "Morality",
+      "query": "What is Dharma?",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The sacred text reveals: ''Dharma is violated when we help not one who has helped. Loss of a virtuou"
+    },
+    {
+      "category": "Morality",
+      "query": "What is the lesson of Rama?",
+      "passed": true,
+      "confidence": 0.87,
+      "answer": "\ufeff\ufeff Rama knows the ways of righteousness. He is true to his word and free from envy. He possesses a s"
+    },
+    {
+      "category": "Personal",
+      "query": "I feel lost",
+      "passed": true,
+      "confidence": 0,
+      "answer": "The episode of Verse 6 in Bala Kanda teaches us that Valmiki, the master, having found both Kusa and"
+    }
+  ]
+}
