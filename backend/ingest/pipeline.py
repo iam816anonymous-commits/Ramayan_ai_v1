@@ -105,23 +105,32 @@ class IngestionPipeline:
 
         print(f"Processing {len(all_normalized_data)} total records...")
 
-        points = []
-        for i, item in enumerate(all_normalized_data):
-            # Pre-enrich with entities for faster retrieval/filtering
-            enriched_item = self.knowledge_builder.enrich_item(item)
-            unified_obj = self.metadata_builder.build(enriched_item)
+        batch_size = 64
+        for i in range(0, len(all_normalized_data), batch_size):
+            batch_items = all_normalized_data[i:i + batch_size]
 
-            if not unified_obj["text"].strip():
+            # 1. Enrich and build metadata for the batch
+            batch_metadata = []
+            valid_indices = []
+            for j, item in enumerate(batch_items):
+                enriched_item = self.knowledge_builder.enrich_item(item)
+                unified_obj = self.metadata_builder.build(enriched_item)
+                if unified_obj["text"].strip():
+                    batch_metadata.append(unified_obj)
+                    valid_indices.append(i + j)
+
+            if not batch_metadata:
                 continue
 
-            vector = self.model.encode(unified_obj["text"]).tolist()
-            points.append(PointStruct(id=i, vector=vector, payload=unified_obj))
+            # 2. Batch encode texts (Significant performance boost)
+            texts = [obj["text"] for obj in batch_metadata]
+            vectors = self.model.encode(texts).tolist()
 
-            if len(points) >= 100:
-                self.client.upsert(collection_name=self.collection_name, points=points)
-                points = []
-
-        if points:
+            # 3. Create Points and Upsert
+            points = [
+                PointStruct(id=idx, vector=vec, payload=payload)
+                for idx, vec, payload in zip(valid_indices, vectors, batch_metadata)
+            ]
             self.client.upsert(collection_name=self.collection_name, points=points)
 
         total_points = self.client.get_collection(self.collection_name).points_count
