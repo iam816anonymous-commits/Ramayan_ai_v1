@@ -21,7 +21,7 @@
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
     },
     {
       "category": "Gatekeeper",
@@ -83,7 +83,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.26,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -112,7 +112,7 @@
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
     },
     {
       "category": "Gatekeeper",
@@ -174,7 +174,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.26,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -203,7 +203,7 @@
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
     },
     {
       "category": "Gatekeeper",
@@ -265,7 +265,7 @@
       "category": "Personal",
       "query": "I fear failure",
       "passed": false,
-      "confidence": 0.25,
+      "confidence": 0.26,
       "answer": "I am not sufficiently confident in this answer to provide guidance."
     },
     {
@@ -294,7 +294,7 @@
       "query": "Who is Hanuman?",
       "passed": true,
       "confidence": 0.9,
-      "answer": "Hanuman, son of the Windgod, with an ingenious mind assumed the guise of a mendicant. \u0924\u0924\u0903 then, \u092e\u093e\u0930\u0941"
+      "answer": "Hanuman, the bull among monkeys, admired the laudable Sita and the virtuous Rama and once again bega"
     },
     {
       "category": "Gatekeeper",

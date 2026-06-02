@@ -105,23 +105,36 @@ class IngestionPipeline:
 
         print(f"Processing {len(all_normalized_data)} total records...")
 
-        points = []
-        for i, item in enumerate(all_normalized_data):
-            # Pre-enrich with entities for faster retrieval/filtering
-            enriched_item = self.knowledge_builder.enrich_item(item)
-            unified_obj = self.metadata_builder.build(enriched_item)
+        # Batched processing for performance
+        batch_size = 64
+        current_id = 0
+        for i in range(0, len(all_normalized_data), batch_size):
+            batch_data = all_normalized_data[i:i + batch_size]
 
-            if not unified_obj["text"].strip():
+            # 1. Enrichment and Metadata Building (CPU)
+            unified_objects = []
+            for item in batch_data:
+                enriched_item = self.knowledge_builder.enrich_item(item)
+                unified_obj = self.metadata_builder.build(enriched_item)
+                if unified_obj["text"].strip():
+                    unified_objects.append(unified_obj)
+
+            if not unified_objects:
+                # We still need to account for skipped items if we wanted to maintain absolute indices,
+                # but since we filter out empty ones, we'll just use a continuous sequence for Qdrant IDs.
                 continue
 
-            vector = self.model.encode(unified_obj["text"]).tolist()
-            points.append(PointStruct(id=i, vector=vector, payload=unified_obj))
+            # 2. Batched Encoding (Vectorization - Parallelized)
+            texts = [obj["text"] for obj in unified_objects]
+            # Speedup comes from processing multiple sentences in one model call
+            vectors = self.model.encode(texts).tolist()
 
-            if len(points) >= 100:
-                self.client.upsert(collection_name=self.collection_name, points=points)
-                points = []
+            # 3. Upsert to Qdrant
+            points = []
+            for j in range(len(unified_objects)):
+                points.append(PointStruct(id=current_id, vector=vectors[j], payload=unified_objects[j]))
+                current_id += 1
 
-        if points:
             self.client.upsert(collection_name=self.collection_name, points=points)
 
         total_points = self.client.get_collection(self.collection_name).points_count
@@ -129,5 +142,7 @@ class IngestionPipeline:
         print(f"Ingestion complete. Total points: {total_points}")
 
 if __name__ == "__main__":
+    import sys
+    force = "--force" in sys.argv
     pipeline = IngestionPipeline()
-    pipeline.run_ingestion()
+    pipeline.run_ingestion(force=force)
