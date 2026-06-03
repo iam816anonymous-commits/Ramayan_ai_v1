@@ -11,6 +11,7 @@ from backend.ingest.relationship_formatter import RelationshipFormatter
 from backend.app.confidence import ConfidenceScorer
 from .moral_agent import MoralAgent
 from .personal_reasoner import PersonalReasoner
+from .sage import SageAgent
 
 class BrainAgent:
     def __init__(self, collection_name="ramayana_v1", client=None):
@@ -25,6 +26,7 @@ class BrainAgent:
 
         self.moral_agent = MoralAgent()
         self.personal_reasoner = PersonalReasoner()
+        self.sage = SageAgent() # Needed for persona rejection strings
 
     async def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual", entities: Dict = None) -> List[Dict]:
         return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent, entities)
@@ -101,6 +103,28 @@ class BrainAgent:
     async def synthesize_response(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
         return await anyio.to_thread.run_sync(self._synthesize_response_sync, query, context, intent, entities)
 
+    def _calculate_character_focus(self, text: str, primary_name: str, other_names: List[str]) -> float:
+        """
+        Calculates a focus score based on the frequency of the primary character vs others.
+        """
+        if not primary_name:
+            return 1.0
+
+        text_lower = text.lower()
+        primary_count = text_lower.count(primary_name.lower())
+
+        other_count = 0
+        for other in other_names:
+            if other.lower() != primary_name.lower():
+                other_count += text_lower.count(other.lower())
+
+        if primary_count == 0 and other_count == 0:
+            return 1.0
+
+        # Score = primary frequency / total character frequency
+        score = primary_count / (primary_count + other_count + 0.1)
+        return score
+
     def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
         # Phase 6: Confidence Thresholding
         entities_found = entities if entities is not None else self.entity_extractor.extract_entities(query)
@@ -108,9 +132,16 @@ class BrainAgent:
         # Identity Engine Check (Prioritize for identity queries)
         chars = entities_found["characters"]
         identity_profile = None
+
+        # Determine the primary subject of the query
+        primary_subject = None
+        if len(chars) > 0:
+            # Simple heuristic: first character mentioned or first character in entities_found
+            primary_subject = chars[0]
+
         is_identity_query = ("who is" in query.lower() or "tell me about" in query.lower())
-        if len(chars) == 1 and is_identity_query:
-            identity_profile = self.entity_resolver.get_profile(chars[0])
+        if is_identity_query and primary_subject:
+             identity_profile = self.entity_resolver.get_profile(primary_subject)
 
         confidence = self.confidence_scorer.calculate(context, intent, entities_found)
 
@@ -223,28 +254,47 @@ class BrainAgent:
 
         # Synthesize meaning from multiple context chunks with poetic transitions
         if identity_profile:
-            synthesized_meaning = f"{identity_profile['name']} is recognized as {identity_profile['significance']} Among their many virtues, they are known to be {', '.join(identity_profile['traits'])}. The scriptures record: '{primary.get('text', '')}'"
+            # Character-Centric Synthesis: Identity Profile is the core, verses are supporting evidence
+            name = identity_profile['name']
+            synthesized_meaning = f"{name} is recognized as {identity_profile['significance']} Among the many virtues of {name}, they are known to be {', '.join(identity_profile['traits'])}. "
+
+            # Filter context chunks to those that actually mention the primary subject to prevent hijacking
+            supporting_verses = []
+            for c in context:
+                c_text = c.get('text', '')
+                if name.lower() in c_text.lower():
+                    supporting_verses.append(c_text)
+
+            if supporting_verses:
+                synthesized_meaning += f"The scriptures record regarding {name}: '{supporting_verses[0]}'"
+
+                # Check for additional supporting verses for the SAME character
+                if len(supporting_verses) > 1:
+                    synthesized_meaning += f" Furthermore, we find: '{supporting_verses[1][:200]}...'"
+            else:
+                # Fallback if retrieval is weak/hijacked but profile exists
+                synthesized_meaning += f"The presence of {name} in the sacred verses reminds us of the subtle ways Dharma works through all beings."
         else:
             synthesized_meaning = primary.get('text', '')
 
-        # Entity-aware synthesis: find common characters across chunks
-        common_chars = []
-        if chars:
-            for other in context[1:]:
-                other_chars = other.get("entities", {}).get("characters", [])
-                for c in chars:
-                    if c in other_chars and c not in common_chars:
-                        common_chars.append(c)
+            # Entity-aware synthesis for non-identity factual queries: find common characters across chunks
+            common_chars = []
+            if chars:
+                for other in context[1:]:
+                    other_chars = other.get("entities", {}).get("characters", [])
+                    for c in chars:
+                        if c in other_chars and c not in common_chars:
+                            common_chars.append(c)
 
-        if common_chars:
-            synthesized_meaning += f" The role of {', '.join(common_chars)} is further illuminated in the following verses: "
-        elif len(context) > 1:
-            synthesized_meaning += " In the depths of the sacred verses, we find further truth: "
+            if common_chars:
+                synthesized_meaning += f" The role of {', '.join(common_chars)} is further illuminated in the following verses: "
+            elif len(context) > 1:
+                synthesized_meaning += " In the depths of the sacred verses, we find further truth: "
 
-        if len(context) > 1:
-            additional_context = context[1].get('text', '')
-            if additional_context and additional_context != primary.get('text'):
-                synthesized_meaning += additional_context
+            if len(context) > 1:
+                additional_context = context[1].get('text', '')
+                if additional_context and additional_context != primary.get('text'):
+                    synthesized_meaning += additional_context
 
         # Collect all entities and sources
         all_chars = set()
@@ -268,19 +318,34 @@ class BrainAgent:
         if not context or len(context) < 1:
             hallucination_flag = True
 
-        # Context refinement
+        # Preliminary Takeaway for focus calculation
         if identity_profile:
-            context_desc = f"{identity_profile['name']} is a pivotal figure whose presence illuminates the {primary.get('kanda', 'epic')}. "
-        else:
-            context_desc = f"This wisdom is preserved across {', '.join(list(kandas) or ['the Kandas'])}. "
-
-        context_desc += f"Specifically in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}."
-
-        # Takeaway refinement
-        if identity_profile:
-            takeaway = f"Through the life of {identity_profile['name']}, we learn that {random.choice(identity_profile['traits'])} is a prerequisite for a life of Dharma."
+            name = identity_profile['name']
+            takeaway = f"In contemplating {name}, we see that {random.choice(identity_profile['traits'])} is not just a trait, but a living expression of {name}'s devotion to Truth."
         else:
             takeaway = f"Witnessing {primary.get('event') or 'the events'} teaches us that every moment is a step in the divine plan."
+
+        # Character Focus Validation (Identity Queries)
+        focus_score = 1.0
+        if identity_profile:
+            full_text = f"{reflection} {synthesized_meaning} {takeaway}"
+            all_known_chars = [c['name'] for c in self.entity_resolver.entities['characters']]
+            focus_score = self._calculate_character_focus(full_text, identity_profile['name'], all_known_chars)
+
+            # Penalize and adjust if hijacked (score < 0.4)
+            if focus_score < 0.4:
+                 # Re-synthesis to force focus
+                 synthesized_meaning = f"Focusing strictly on {identity_profile['name']}: {identity_profile['description']} {identity_profile['significance']}"
+
+        # Context refinement
+        if identity_profile:
+            name = identity_profile['name']
+            context_desc = f"The journey of {name} is a pivotal part of the Ramayana, particularly in the {primary.get('kanda', 'sacred kandas')}. "
+            context_desc += f"Specific details regarding {name} can be found in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}."
+        else:
+            context_desc = f"This wisdom is preserved across {', '.join(list(kandas) or ['the Kandas'])}. "
+            context_desc += f"Specifically in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}."
+
 
         return {
             "reflection": reflection,
@@ -299,6 +364,7 @@ class BrainAgent:
                 "verses": list(set(all_verses)),
                 "sources": list(set(all_sources)),
                 "grounded": not hallucination_flag,
-                "confidence": confidence
+                "confidence": confidence,
+                "character_focus": focus_score
             }
         }

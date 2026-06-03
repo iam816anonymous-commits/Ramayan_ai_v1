@@ -54,7 +54,7 @@ class PersonalReasoner:
         primary_verse = context[0] if context else {"text": "Dharma is subtle and eternal.", "kanda": "Universal", "verse": "N/A"}
 
         # Wisdom Synthesis: Transform retrieved fragment into a Sage's guidance
-        reflection = f"In the sacred silence of the heart, the echoes of {theme_key} often resonate. You are not alone in this pilgrimage."
+        reflection = f"In the quiet sanctuary of the heart, the echoes of {theme_key} often resonate. You are not alone in this pilgrimage."
 
         meaning = (
             f"The scriptures speak of a time when {theme_data['episode']}. "

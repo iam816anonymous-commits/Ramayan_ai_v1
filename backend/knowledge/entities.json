@@ -107,6 +107,12 @@
       "description": "The Adi Kavi (First Poet) and author of the Ramayana. Once a bandit named Ratnakara, he was transformed by the mantra of Rama and eventually provided shelter to the exiled Sita.",
       "traits": ["Transformed", "Poetic", "Sage", "Compassionate"],
       "significance": "He represents the power of transformation and the preservation of the Divine story for all generations."
+    },
+    {
+      "name": "Mandodari",
+      "description": "The Queen of Lanka and the wife of Ravana. A woman of immense wisdom, beauty, and righteousness who repeatedly counseled her husband to return Sita and follow the path of Dharma.",
+      "traits": ["Wise", "Righteous", "Grieved", "Dharmic"],
+      "significance": "She represents the voice of conscience within the fortress of ego, proving that one can remain devoted to Truth even in the most unrighteous of environments."
     }
   ],
   "locations": [
