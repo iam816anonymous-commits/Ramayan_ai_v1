@@ -1,17 +1,22 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
+from pydantic import BaseModel, Field
+from typing import List, Dict, Any, Optional, Annotated
 from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.sage import SageAgent
 from backend.app.cache import cache_instance
 from backend.ingest.pipeline import IngestionPipeline
 from backend.ingest.entity_extractor import EntityExtractor
+from dotenv import load_dotenv
 import uvicorn
 import time
 import json
 import os
+import secrets
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI(title="Ramayana AI - Sanctum V1 API")
 
@@ -48,7 +53,7 @@ async def startup_event():
     brain = BrainAgent(client=pipeline.client)
 
 class QueryRequest(BaseModel):
-    query: str
+    query: str = Field(..., max_length=500)
 
 class ReindexRequest(BaseModel):
     force: bool = False
@@ -75,7 +80,12 @@ class QueryResponse(BaseModel):
     source_verse: Optional[str]
 
 @app.post("/api/admin/reindex")
-async def admin_reindex(request: ReindexRequest):
+async def admin_reindex(request: ReindexRequest, x_admin_token: Annotated[Optional[str], Header()] = None):
+    # Security: Verify Admin Token with constant-time comparison
+    expected_token = os.getenv("ADMIN_TOKEN")
+    if not expected_token or not x_admin_token or not secrets.compare_digest(x_admin_token, expected_token):
+        raise HTTPException(status_code=401, detail="Unauthorized access to administrative endpoint.")
+
     global brain
     if brain is None:
          raise HTTPException(status_code=503, detail="Brain not initialized.")
@@ -85,8 +95,8 @@ async def admin_reindex(request: ReindexRequest):
         pipeline.run_ingestion(force=request.force)
         # BrainAgent already uses the same client
         return {"status": "success", "message": "Re-indexing complete."}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal Server Error during re-indexing.")
 
 @app.post("/api/sanctum", response_model=QueryResponse)
 async def sanctum_query(request: QueryRequest):
@@ -123,8 +133,9 @@ async def sanctum_query(request: QueryRequest):
 
         return full_response
     except Exception as e:
+        # Internal logging remains detailed
         print(f"Error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Internal Server Error. The Sage is currently contemplating.")
 
 @app.get("/api/timeline")
 async def get_timeline():
@@ -153,8 +164,8 @@ async def get_entity_knowledge(entity_name: str):
             "description": description,
             "relations": relations
         }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=500, detail="Internal Server Error while retrieving entity knowledge.")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
