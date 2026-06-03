@@ -111,8 +111,9 @@ async def sanctum_query(request: QueryRequest):
     start_time = time.time()
     try:
         intent = orchestrator.route_query(request.query)
-        context = await brain.retrieve_context(request.query)
-        brain_response = await brain.synthesize_response(request.query, context, intent)
+        entities = entity_extractor.extract_entities(request.query)
+        context = await brain.retrieve_context(request.query, intent=intent, entities=entities)
+        brain_response = await brain.synthesize_response(request.query, context, intent, entities=entities)
         full_response = sage.get_full_response(request.query, brain_response, intent)
 
         # Cache the response

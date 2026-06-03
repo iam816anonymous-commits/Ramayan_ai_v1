@@ -48,6 +48,7 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
       size: Math.random() * 1.5 + 0.5,
       opacity: Math.random() * 0.4 + 0.1
     }));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(newParticles);
     setMounted(true);
   }, []);
