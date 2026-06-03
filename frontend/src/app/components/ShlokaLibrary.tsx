@@ -53,7 +53,10 @@ const ShlokaLibrary = () => {
                </div>
 
                <div className="flex justify-center pt-8">
-                  <button className="text-[10px] uppercase tracking-[0.4em] font-cinzel text-[#C9A86A] opacity-30 hover:opacity-100 transition-all border border-[#C9A86A]/10 px-8 py-3 rounded-full">
+                  <button
+                    className="text-[10px] uppercase tracking-[0.4em] font-cinzel text-[#C9A86A] opacity-30 hover:opacity-100 transition-all border border-[#C9A86A]/10 px-8 py-3 rounded-full"
+                    aria-label={`View detailed explanation for shloka from ${shloka.source}`}
+                  >
                     View Explanation
                   </button>
                </div>

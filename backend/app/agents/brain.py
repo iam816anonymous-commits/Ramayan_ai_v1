@@ -32,8 +32,7 @@ class BrainAgent:
         return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent, entities)
 
     def _retrieve_context_sync(self, query: str, top_k: int = 3, intent: str = "factual", entities: Dict = None) -> List[Dict]:
-        if entities is None:
-            entities = self.entity_extractor.extract_entities(query)
+        entities = entities or self.entity_extractor.extract_entities(query)
 
         # Phase 1: Gatekeeper Hardening
         if intent == "factual" and ("who is" in query.lower() or "tell me about" in query.lower()):
@@ -127,7 +126,7 @@ class BrainAgent:
 
     def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
         # Phase 6: Confidence Thresholding
-        entities_found = entities if entities is not None else self.entity_extractor.extract_entities(query)
+        entities_found = entities or self.entity_extractor.extract_entities(query)
 
         # Identity Engine Check (Prioritize for identity queries)
         chars = entities_found["characters"]

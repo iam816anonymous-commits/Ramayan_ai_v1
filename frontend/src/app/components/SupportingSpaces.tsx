@@ -64,7 +64,10 @@ const SupportingSpaces = ({ view }: Props) => {
           </div>
 
           <div className="pt-12">
-             <button className="px-10 py-5 border border-[#C9A86A]/10 text-[10px] uppercase tracking-[0.5em] font-cinzel text-[#E6CF9B] hover:bg-[#C9A86A]/5 transition-all">
+             <button
+              className="px-10 py-5 border border-[#C9A86A]/10 text-[10px] uppercase tracking-[0.5em] font-cinzel text-[#E6CF9B] hover:bg-[#C9A86A]/5 transition-all"
+              aria-label={`Enter the ${active.title} space`}
+             >
                 Enter Space
              </button>
           </div>

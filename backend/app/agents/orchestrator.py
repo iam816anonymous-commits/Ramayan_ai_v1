@@ -25,14 +25,15 @@ class Orchestrator:
             "i feel", "lost", "how should i", "what should i", "my life", "help me", "guide",
             "sad", "confused", "apply", "burden", "struggle", "advice",
             "inspiration", "motivation", "peace", "grief", "fear", "anxious",
-            "failure", "failed", "success", "my path", "my journey", "i need", "i am", "help"
+            "failure", "failed", "success", "my path", "my journey", "i need", "i am", "help",
+            "troubled", "facing", "deal with", "handle", "lonely", "hopeless", "uncertain"
         ]
 
         # Score-based classification for mixed intents
         # Weighted scoring: Personal has highest weight to prevent drift to factual
         f_score = sum(1 for word in factual_keywords if word in query_lower)
-        m_score = sum(1.2 for word in moral_keywords if word in query_lower)
-        p_score = sum(1.5 for word in personal_keywords if word in query_lower)
+        m_score = sum(1.3 for word in moral_keywords if word in query_lower)
+        p_score = sum(1.8 for word in personal_keywords if word in query_lower)
 
         # Priority and threshold based classification
         if p_score >= 1.5 and p_score >= m_score and p_score >= f_score:
