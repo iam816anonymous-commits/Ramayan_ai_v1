@@ -16,5 +16,12 @@
   {"source": "Ravana", "type": "brother_of", "target": "Kumbhakarna"},
   {"source": "Hanuman", "type": "devotee_of", "target": "Rama"},
   {"source": "Sugriva", "type": "ally_of", "target": "Rama"},
-  {"source": "Lakshmana", "type": "brother_of", "target": "Rama"}
+  {"source": "Lakshmana", "type": "brother_of", "target": "Rama"},
+  {"source": "Vali", "type": "father_of", "target": "Angada"},
+  {"source": "Tara", "type": "mother_of", "target": "Angada"},
+  {"source": "Sampati", "type": "brother_of", "target": "Jatayu"},
+  {"source": "Jatayu", "type": "brother_of", "target": "Sampati"},
+  {"source": "Ravana", "type": "enemy_of", "target": "Rama"},
+  {"source": "Rama", "type": "enemy_of", "target": "Ravana"},
+  {"source": "Sugriva", "type": "spouse_of", "target": "Ruma"}
 ]

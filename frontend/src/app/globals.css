@@ -6,25 +6,24 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-cinzel: var(--font-cinzel);
-  --font-lora: var(--font-lora);
-}
+  --color-background: #080705;
+  --color-foreground: #C9A86A;
+  --color-temple-stone: #11100D;
+  --color-ancient-gold: #C9A86A;
+  --color-soft-gold: #E6CF9B;
+  --color-parchment: #F2EAD8;
+  --color-muted-text: #B7AA92;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-cinzel: var(--font-cinzel);
+  --font-marcellus: var(--font-marcellus);
+  --font-cormorant: var(--font-cormorant);
+  --font-inter: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #080705;
+  color: #C9A86A;
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
 
 .bg-noise {
@@ -37,6 +36,26 @@ body {
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    text-shadow: 0 0 30px rgba(201, 168, 106, 0.4);
   }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Meditative Animations */
+@keyframes slow-drift {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.animate-meditative {
+  animation: slow-drift 10s ease-in-out infinite;
 }

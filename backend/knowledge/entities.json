@@ -1,156 +1,156 @@
 {
   "characters": [
     {
-      "name": "Angada",
-      "description": "Angada is out into the forest he had collected some reports from the spies which he has transmitted to me."
-    },
-    {
-      "name": "Bharata",
-      "description": "Bharata is residing at Nandigrama (and his ruling the kingdom from there), Rama's departure for Dandakaranya, and the killing of Viradha."
-    },
-    {
-      "name": "Dasharatha",
-      "description": "A key figure in the Ramayana."
-    },
-    {
-      "name": "Hanuman",
-      "description": "Hanuman is best of monkeys, you need not think about (the future of) Angada."
-    },
-    {
-      "name": "Indrajit",
-      "description": "A key figure in the Ramayana."
-    },
-    {
-      "name": "Janaka",
-      "description": "Janaka is messengers travelled for three days, rested for three nights on the way and entered the city of Ayodhya along with their horses tired."
-    },
-    {
-      "name": "Kaikeyi",
-      "description": "Kaikeyi is inflamed against the king."
-    },
-    {
-      "name": "Kausalya",
-      "description": "Kausalya is meditating with her eyes halfclosed."
-    },
-    {
-      "name": "Kumbhakarna",
-      "description": "Kumbhakarna is another brother of mine."
-    },
-    {
-      "name": "Lakshmana",
-      "description": "Lakshmana is tale of the birth of Ganga\": \u0907\u0924\u094d\u092f\u093e\u0930\u094d\u0937\u0947 \u0936\u094d\u0930\u0940\u092e\u0926\u094d\u0930\u093e\u092e\u093e\u092f\u0923\u0947 \u0935\u093e\u0932\u094d\u092e\u0940\u0915\u0940\u092f \u0906\u0926\u093f\u0915\u093e\u0935\u094d\u092f\u0947 \u092c\u093e\u0932\u0915\u093e\u0923\u094d\u0921\u0947 \u0937\u091f\u094d\u0924\u094d\u0930\u093f\u0902\u0936\u0938\u094d\u0938\u0930\u094d\u0917:\u0964\u0964 Thus ends the thirtysixth sarga of Balakanda of the holy Ramayana the first epic composed by sage Valmiki."
-    },
-    {
-      "name": "Manthara",
-      "description": "Manthara is extremely unhappy."
-    },
-    {
-      "name": "Maricha",
-      "description": "Maricha is thrown to a full distance of hundred yojanas into the surging high seas."
-    },
-    {
       "name": "Rama",
-      "description": "Rama is the sustainer of this world, destroyer of enemies and protector of all living beings and of the moral code."
-    },
-    {
-      "name": "Ravana",
-      "description": "Ravana is inflicting pains on the three worlds."
-    },
-    {
-      "name": "Shatrughna",
-      "description": "A key figure in the Ramayana."
+      "description": "The seventh avatar of Vishnu, the Maryada Purushottama—the Supreme Man who embodies the limits of morality. Prince of Ayodhya, eldest son of Dasharatha, he is the living embodiment of Dharma, whose journey through exile and war serves as the ultimate guide for righteous living.",
+      "traits": ["Dharmic", "Patient", "Resolute", "Compassionate"],
+      "significance": "His life is the central pillar of the Ramayana, demonstrating how a soul can remain perfectly aligned with truth despite overwhelming adversity."
     },
     {
       "name": "Sita",
-      "description": "Sita is and returned to deliver the good news to Rama."
+      "description": "The daughter of the Earth, found in a furrow by King Janaka. She is the incarnation of Lakshmi and the embodiment of Shakti, grace, and unwavering devotion. Her strength in the face of captivity in Lanka is the spiritual heart of the epic.",
+      "traits": ["Devout", "Resilient", "Pure", "Wise"],
+      "significance": "She represents the soul's yearning for the Divine and the quiet strength of virtue that outlasts even the greatest tyranny."
+    },
+    {
+      "name": "Hanuman",
+      "description": "The son of the Wind God (Vayu) and the supreme devotee of Rama. A vanara of infinite strength, wisdom, and humility, he is the bridge between the human and the divine. His leap across the ocean to Lanka symbolizes the power of faith and selfless service.",
+      "traits": ["Selfless", "Infinite Strength", "Vedic Scholar", "Humble"],
+      "significance": "He is the ideal devotee (Bhakta), showing that true power comes through surrender to the Divine will."
+    },
+    {
+      "name": "Lakshmana",
+      "description": "The devoted brother of Rama, born to Queen Sumitra. He is an incarnation of Shesha Naag, the serpent of infinity. He chose fourteen years of sleepless exile to serve Rama and Sita, representing the selfless protection of the Divine path.",
+      "traits": ["Devoted", "Fierce", "Protective", "Ascetic"],
+      "significance": "His character illustrates the duty of the younger sibling and the fierce guardian of righteousness."
+    },
+    {
+      "name": "Ravana",
+      "description": "The ten-headed King of Lanka, a great scholar and devotee of Shiva who fell through the weight of his own ego (Ahankara). His abduction of Sita triggered the Great War and led to his ultimate redemption through death at Rama's hands.",
+      "traits": ["Brilliant", "Egotistical", "Powerful", "Tragic"],
+      "significance": "He serves as a cautionary tale: that knowledge and power, when divorced from Dharma, lead only to destruction."
+    },
+    {
+      "name": "Dasharatha",
+      "description": "The King of Ayodhya and father of Rama. A noble ruler whose one moment of weakness—a promise made in the past—led to the exile of his beloved son and his own death from grief.",
+      "traits": ["Noble", "Honorable", "Suffering", "Regretful"],
+      "significance": "He represents the heavy burden of earthly duty and the tragic consequences of binding promises."
+    },
+    {
+      "name": "Bharata",
+      "description": "The son of Kaikeyi who refused the throne of Ayodhya out of love for Rama. He ruled the kingdom for fourteen years from Nandigrama, placing Rama's sandals on the throne as a symbol of the true King's authority.",
+      "traits": ["Selfless", "Guilt-ridden", "Righteous", "Ascetic"],
+      "significance": "He is the exemplar of sibling love and the refusal to profit from another's misfortune."
+    },
+    {
+      "name": "Shatrughna",
+      "description": "The youngest brother of Rama and the twin of Lakshmana. He represents the silent elimination of inner enemies (Shatru) and the unwavering support of the righteous kingdom.",
+      "traits": ["Silent", "Victorious", "Devoted", "Efficient"],
+      "significance": "His name means 'Slayer of Enemies,' yet his greatest victory was the quiet fulfillment of duty in the shadow of his brothers."
     },
     {
       "name": "Sugriva",
-      "description": "Sugriva is very pleased and made a pact with Rama in the presence of Agni as witness."
-    },
-    {
-      "name": "Sumitra",
-      "description": "A key figure in the Ramayana."
-    },
-    {
-      "name": "Surpanakha",
-      "description": "A key figure in the Ramayana."
-    },
-    {
-      "name": "Vali",
-      "description": "Vali is wise in his actions."
-    },
-    {
-      "name": "Vasistha",
-      "description": "Vasistha is repeatedly  assuring  the saints saying \"Do not fear, I will now destroy Viswamitra, son of Gadhi just as the Sun dispels the morning mist (they fled)\"."
+      "description": "The exiled Vanara King of Kishkindha who formed a sacred alliance with Rama. With the help of Rama, he regained his kingdom from his brother Vali and dedicated his entire army to the search for Sita.",
+      "traits": ["Allied", "Grateful", "Regal", "Determined"],
+      "significance": "His story highlights the importance of choosing the right allies and the sanctity of a promise made before the fire."
     },
     {
       "name": "Vibhishana",
-      "description": "Vibhishana is under a white umbrella clad in white, with white garlands and white sandal paste."
+      "description": "The younger brother of Ravana who chose the path of Dharma over family loyalty. He sought refuge at Rama's feet and was crowned the King of Lanka after Ravana's fall.",
+      "traits": ["Righteous", "Courageous", "Seeker", "Loyal to Truth"],
+      "significance": "He demonstrates that one's true home is wherever Dharma resides, regardless of birth or blood."
+    },
+    {
+      "name": "Jatayu",
+      "description": "The ancient vulture king and friend of Dasharatha. He fought Ravana valiantly to save Sita, sacrificing his wings and life. He died in Rama's lap, attaining a state even great sages envy.",
+      "traits": ["Valiant", "Sacrificial", "Ancient", "Loyal"],
+      "significance": "His sacrifice shows that even the smallest act of courage in the service of the Divine is immortalized."
+    },
+    {
+      "name": "Sampati",
+      "description": "The elder brother of Jatayu, a massive vulture who lost his wings while protecting his brother from the sun's heat. His wings regrew when he helped the Vanaras by confirming Sita's presence in Lanka.",
+      "traits": ["Far-sighted", "Protective", "Enduring", "Redeemed"],
+      "significance": "He represents the power of truthful speech and the restoration of one's strength through service to the Divine."
+    },
+    {
+      "name": "Angada",
+      "description": "The son of Vali and Tara, and the crown prince of Kishkindha. A warrior of immense strength and diplomacy who served as Rama's envoy to Ravana's court.",
+      "traits": ["Diplomatic", "Strong", "Loyal", "Brave"],
+      "significance": "His choice to serve Rama despite Rama having killed his father is a profound lesson in transcending personal grief for the sake of Dharma."
+    },
+    {
+      "name": "Ruma",
+      "description": "The wife of Sugriva, who was forcibly taken by Vali. Her plight was the primary reason for the conflict between the royal brothers of Kishkindha.",
+      "traits": ["Patient", "Suffering", "Virtuous"],
+      "significance": "She represents the innocent victims of unrighteousness whose restoration is a key goal of the Dharmic hero."
+    },
+    {
+      "name": "Kaikeyi",
+      "description": "The youngest queen of Dasharatha and mother of Bharata. Influenced by her maid Manthara, she demanded Rama's exile, triggering the entire epic journey.",
+      "traits": ["Strong-willed", "Influenced", "Regretful", "Complex"],
+      "significance": "She is the catalyst of the Divine plan, showing how even a momentary lapse in judgment can change the course of history."
+    },
+    {
+      "name": "Vasistha",
+      "description": "The Kula Guru (family preceptor) of the Ikshvaku dynasty. One of the Saptarishis, he is the master of spiritual knowledge and the guide who ensured the spiritual foundation of Ayodhya.",
+      "traits": ["Wise", "Serene", "Knowledgeable", "Steady"],
+      "significance": "He represents the eternal wisdom of the Vedas that guides even the greatest of kings."
+    },
+    {
+      "name": "Kabandha",
+      "description": "A Gandharva named Vishvavasu who was cursed to be a headless demon. He was liberated by Rama and Lakshmana, after which he provided the crucial advice to seek Sugriva's alliance.",
+      "traits": ["Liberated", "Informative", "Transformed"],
+      "significance": "His story illustrates the power of the Divine to liberate souls from the most terrible of curses."
+    },
+    {
+      "name": "Valmiki",
+      "description": "The Adi Kavi (First Poet) and author of the Ramayana. Once a bandit named Ratnakara, he was transformed by the mantra of Rama and eventually provided shelter to the exiled Sita.",
+      "traits": ["Transformed", "Poetic", "Sage", "Compassionate"],
+      "significance": "He represents the power of transformation and the preservation of the Divine story for all generations."
     }
   ],
   "locations": [
     {
       "name": "Ayodhya",
-      "description": "Ayodhya is best of cities, the first of the four castes (brahmins) used to worship gods and guests."
-    },
-    {
-      "name": "Chitrakuta",
-      "description": "Chitrakuta is the right place for you to stay."
-    },
-    {
-      "name": "Dandaka",
-      "description": "A significant location in the Ramayana."
-    },
-    {
-      "name": "Godavari",
-      "description": "Godavari is beautiful, surrounded by trees with flowers in bloom, filled with flocks of swans, ducks and ruddy geese."
-    },
-    {
-      "name": "Kishkindha",
-      "description": "A significant location in the Ramayana."
+      "description": "The 'Unconquerable' city on the banks of the Sarayu. Capital of the Ikshvaku dynasty, it represents the ideal kingdom (Ram Rajya) where peace and prosperity flourish under the rule of Dharma."
     },
     {
       "name": "Lanka",
-      "description": "Lanka is on the peak of a mountain surrounded by, and in the middle of, the sea."
+      "description": "The golden city of the Rakshasas, built by Vishwakarma. A place of immense wealth and power, it became a fortress of ego under Ravana, only to be purified by the fires of Hanuman and the arrows of Rama."
     },
     {
-      "name": "Mithila",
-      "description": "Mithila is river Mandakini flowing in the mountain, gratified her by offering meat (to eat) and sat on the mountain slope."
+      "name": "Chitrakuta",
+      "description": "The 'Hill of Many Wonders' where Rama, Sita, and Lakshmana spent the early part of their exile. A place of serene beauty and spiritual vibration."
     },
     {
       "name": "Panchavati",
-      "description": "A significant location in the Ramayana."
+      "description": "The forest of five banyan trees on the banks of the Godavari. It was from here that Sita was abducted, marking the transition from peaceful exile to the path of war."
     },
     {
-      "name": "Rishyamukha",
-      "description": "A significant location in the Ramayana."
-    },
-    {
-      "name": "Sarayu",
-      "description": "Sarayu is rising, filled with rain water."
+      "name": "Kishkindha",
+      "description": "The kingdom of the Vanaras, located in a valley of caves. A wild, vibrant land where the alliance that would save Sita was forged."
     }
   ],
   "events": [
     {
-      "name": "Exile",
-      "description": "Rama's journey into the forest to fulfill his father's vow."
+      "name": "Putrakameshti Yagna",
+      "description": "The sacred fire ritual performed by King Dasharatha to beget sons, leading to the birth of Rama and his brothers."
     },
     {
-      "name": "Swayamvara",
-      "description": "The contest for Sita's hand won by Rama."
+      "name": "Sita Swayamvara",
+      "description": "The contest in Mithila where Rama lifted and broke the celestial bow of Shiva (Pinaka), winning the hand of Sita."
     },
     {
-      "name": "Abduction",
-      "description": "The seizure of Sita by the demon king Ravana."
+      "name": "The Exile",
+      "description": "The fourteen-year journey into the Dandaka forest, triggered by Kaikeyi's boons, which served as the crucible for Rama's divine mission."
     },
     {
-      "name": "War",
-      "description": "The righteous battle for the liberation of Sita and the restoration of Dharma."
+      "name": "Hanuman's Leap",
+      "description": "The miraculous flight across the ocean to Lanka, symbolizing the triumph of spirit over physical limitations."
     },
     {
-      "name": "Coronation",
-      "description": "The triumphant return of Rama to the throne of Ayodhya."
+      "name": "Ramayana War",
+      "description": "The cosmic battle between the forces of Rama and Ravana, ending in the victory of Dharma and the liberation of Sita."
     }
   ]
 }

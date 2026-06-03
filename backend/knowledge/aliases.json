@@ -1,13 +1,19 @@
 {
-  "rama": ["ram", "raghava", "ramachandra"],
-  "sita": ["seetha", "maithili", "janaki", "vaidehi"],
-  "hanuman": ["hanumana", "anjaneya", "maruti", "pavanaputra"],
+  "rama": ["ram", "raghava", "ramachandra", "maryada purushottama", "son of dasharatha", "prince of ayodhya", "lord rama"],
+  "sita": ["seetha", "maithili", "janaki", "vaidehi", "daughter of janaka", "princess of mithila"],
+  "hanuman": ["hanumana", "anjaneya", "maruti", "pavanaputra", "son of vayu", "bajrangbali", "sankat mochan"],
   "vali": ["bali"],
   "sugriva": ["sugreeva"],
   "angada": ["angadha"],
   "vasistha": ["vasista", "vashishta"],
-  "laxmana": ["lakshmana", "lakshman"],
+  "lakshmana": ["laxmana", "lakshman", "saumitri", "ramanuj"],
   "ayodhya": ["ayodhyaa", "saketa"],
   "lanka": ["lankaa"],
-  "kishkindha": ["kishkinda"]
+  "kishkindha": ["kishkinda"],
+  "ravana": ["dashanana", "lankesh", "king of lanka"],
+  "dasharatha": ["dasaratha", "king of ayodhya"],
+  "bharata": ["bharat"],
+  "vibhishana": ["vibhishan"],
+  "jatayu": ["vulture king"],
+  "valmiki": ["ratnakara", "adi kavi"]
 }

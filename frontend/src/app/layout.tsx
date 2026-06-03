@@ -1,18 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Cinzel, Lora } from "next/font/google";
+import { Cinzel, Marcellus, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: 'swap',
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: 'swap',
-});
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -20,8 +8,22 @@ const cinzel = Cinzel({
   display: 'swap',
 });
 
-const lora = Lora({
-  variable: "--font-lora",
+const marcellus = Marcellus({
+  variable: "--font-marcellus",
+  subsets: ["latin"],
+  weight: "400",
+  display: 'swap',
+});
+
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: 'swap',
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: 'swap',
 });
@@ -39,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} ${lora.variable} antialiased bg-[#050505] text-[#D4AF37] relative`}
+        className={`${cinzel.variable} ${marcellus.variable} ${cormorant.variable} ${inter.variable} antialiased bg-[#080705] text-[#C9A86A] relative`}
       >
         <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] mix-blend-overlay bg-noise" />
         {children}

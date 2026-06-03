@@ -19,7 +19,7 @@ class MoralValidator:
         # (This is already mostly handled by characters logic in MoralAgent)
 
         # Heuristic 2: Keyword overlap between lesson/query and context
-        overlap = [w for w in self.virtue_keywords if w in context_text]
+        overlap = [w for w in self.virtue_keywords if w in context_text or w in lesson_lower or w in query.lower()]
 
         # If the context is extremely generic, it might still be valid for general dharma
         if len(overlap) > 0:

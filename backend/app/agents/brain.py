@@ -2,6 +2,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, FieldCondition, MatchValue
 from typing import List, Dict, Any
 import numpy as np
+import random
 import anyio
 from backend.app.models import get_sentence_transformer, get_cross_encoder
 from backend.ingest.entity_extractor import EntityExtractor
@@ -33,7 +34,7 @@ class BrainAgent:
             entities = self.entity_extractor.extract_entities(query)
 
         # Phase 1: Gatekeeper Hardening
-        if intent == "factual":
+        if intent == "factual" and ("who is" in query.lower() or "tell me about" in query.lower()):
             # Check known entities
             for char in entities["characters"]:
                 if not self.entity_resolver.entity_exists(char):
@@ -103,11 +104,20 @@ class BrainAgent:
     def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
         # Phase 6: Confidence Thresholding
         entities_found = entities if entities is not None else self.entity_extractor.extract_entities(query)
+
+        # Identity Engine Check (Prioritize for identity queries)
+        chars = entities_found["characters"]
+        identity_profile = None
+        is_identity_query = ("who is" in query.lower() or "tell me about" in query.lower())
+        if len(chars) == 1 and is_identity_query:
+            identity_profile = self.entity_resolver.get_profile(chars[0])
+
         confidence = self.confidence_scorer.calculate(context, intent, entities_found)
 
-        if intent != "personal" and confidence < 0.45:
+        # If it's an identity query and we have a profile, we don't reject even if confidence is low
+        if intent not in ["personal", "moral"] and confidence < 0.45 and not identity_profile:
             return {
-                "reflection": "The sacred silence holds all answers.",
+                "reflection": self.sage.persona["rejection"]["low_confidence"],
                 "meaning": "I am not sufficiently confident in this answer to provide guidance.",
                 "context": "The retrieved verses do not provide a strong enough match for your inquiry.",
                 "takeaway": "Seek clarity through a more specific query or different phrasing.",
@@ -123,7 +133,7 @@ class BrainAgent:
             }
 
         # Phase 1 Rejection Check
-        if intent == "factual":
+        if intent == "factual" and ("who is" in query.lower() or "tell me about" in query.lower()):
             entities_in_query = entities_found
             potential_entities = self.entity_resolver.extract_potential_entities(query)
 
@@ -132,7 +142,7 @@ class BrainAgent:
             for char in all_to_check:
                 if not self.entity_resolver.entity_exists(char):
                     return {
-                        "reflection": "The Sage remains silent on figures beyond the sacred epic.",
+                        "reflection": self.sage.persona["rejection"]["non_scriptural"],
                         "meaning": f"The character '{char}' does not exist in my Ramayana knowledge base.",
                         "context": "The Sanctum focuses exclusively on the journey of Rama and the figures of the first epic.",
                         "takeaway": "Seek wisdom within the context of Dharma as revealed in the Ramayana.",
@@ -142,7 +152,7 @@ class BrainAgent:
 
         if not context:
             return {
-                "reflection": "The sacred silence holds all answers.",
+                "reflection": self.sage.persona["rejection"]["low_confidence"],
                 "meaning": "Even when the path is not immediately clear, Dharma guides us.",
                 "context": "The vastness of the Ramayana contains infinite wisdom.",
                 "takeaway": "Patience and faith are the keys to understanding.",
@@ -151,7 +161,10 @@ class BrainAgent:
             }
 
         if intent == "moral":
-            return self.moral_agent.synthesize(query, context)
+            res = self.moral_agent.synthesize(query, context)
+            if "confidence" not in res["meta"]:
+                res["meta"]["confidence"] = confidence
+            return res
         elif intent == "personal":
             # Phase 3: Personal Reasoner Hardening
             brain_res = self.personal_reasoner.reason(query, context)
@@ -167,6 +180,7 @@ class BrainAgent:
         # Factual synthesis (default)
         primary = context[0]
 
+
         # Aggregate all entities from context if query doesn't yield any
         if not entities_found["characters"] and not entities_found["locations"]:
             for c in context:
@@ -179,27 +193,39 @@ class BrainAgent:
             entities_found["locations"] = list(set(entities_found["locations"]))
 
         # Thread of Fate logic - Improved pathfinding presentation
-        chars = entities_found["characters"]
         if len(chars) >= 2:
             path = self.entity_extractor.find_path(chars[0], chars[1])
             if path:
                 # Use RelationshipFormatter for natural language
                 steps = []
                 for p in path:
-                    src, rel, tgt = p.split(" → ")
-                    steps.append(self.relationship_formatter.format(src, rel, tgt))
+                    parts = p.split(" → ")
+                    if len(parts) == 3:
+                        src, rel, tgt = parts
+                        steps.append(self.relationship_formatter.format(src, rel, tgt))
+                    else:
+                        steps.append(p)
 
                 fate_desc = ", and ".join(steps)
                 reflection = f"The Thread of Fate reveals that {fate_desc}. Their destinies are eternally entwined."
             else:
                 reflection = f"You seek to understand the roles of {', '.join(chars)}. Each stands as a pillar of the great epic."
+        elif identity_profile:
+            reflection = f"You inquire about {identity_profile['name']}, {identity_profile['description']}"
         elif chars:
             reflection = f"Your focus rests upon {chars[0]}. The Sage observes the echoes of their journey through the Kandas."
         else:
             reflection = "You inquire about the sacred events that shaped the world's first epic."
 
+        # Sage Voice refinement for reflection
+        if len(reflection) < 100: # If it's a short generic reflection, keep it, but SageAgent will wrap it.
+             pass
+
         # Synthesize meaning from multiple context chunks with poetic transitions
-        synthesized_meaning = primary.get('text', '')
+        if identity_profile:
+            synthesized_meaning = f"{identity_profile['name']} is recognized as {identity_profile['significance']} Among their many virtues, they are known to be {', '.join(identity_profile['traits'])}. The scriptures record: '{primary.get('text', '')}'"
+        else:
+            synthesized_meaning = primary.get('text', '')
 
         # Entity-aware synthesis: find common characters across chunks
         common_chars = []
@@ -242,11 +268,25 @@ class BrainAgent:
         if not context or len(context) < 1:
             hallucination_flag = True
 
+        # Context refinement
+        if identity_profile:
+            context_desc = f"{identity_profile['name']} is a pivotal figure whose presence illuminates the {primary.get('kanda', 'epic')}. "
+        else:
+            context_desc = f"This wisdom is preserved across {', '.join(list(kandas) or ['the Kandas'])}. "
+
+        context_desc += f"Specifically in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}."
+
+        # Takeaway refinement
+        if identity_profile:
+            takeaway = f"Through the life of {identity_profile['name']}, we learn that {random.choice(identity_profile['traits'])} is a prerequisite for a life of Dharma."
+        else:
+            takeaway = f"Witnessing {primary.get('event') or 'the events'} teaches us that every moment is a step in the divine plan."
+
         return {
             "reflection": reflection,
             "meaning": synthesized_meaning,
-            "context": f"This wisdom is preserved across {', '.join(list(kandas) or ['the Kandas'])}. Specifically in {primary.get('kanda')}, Chapter {primary.get('chapter')}, Verse {primary.get('verse')}.",
-            "takeaway": f"Witnessing {primary.get('event') or 'the events'} teaches us that every moment is a step in the divine plan.",
+            "context": context_desc,
+            "takeaway": takeaway,
             "source_verse": primary.get("shloka_text") or primary.get("text"),
             "meta": {
                 "chunks_used": len(context),

@@ -18,14 +18,14 @@ class Orchestrator:
         moral_keywords = [
             "lesson", "dharma", "moral", "right", "wrong", "virtue", "ethics",
             "duty", "teach", "meaning", "wisdom", "righteousness", "truth",
-            "consequence", "action", "choice", "symbolism", "allegory"
+            "consequence", "action", "choice", "symbolism", "allegory", "leadership", "devotion"
         ]
         # Personal keywords (Emotional, introspective, and application-focused)
         personal_keywords = [
             "i feel", "lost", "how should i", "what should i", "my life", "help me", "guide",
             "sad", "confused", "apply", "burden", "struggle", "advice",
             "inspiration", "motivation", "peace", "grief", "fear", "anxious",
-            "failure", "success", "my path", "my journey", "i need", "i am", "help"
+            "failure", "failed", "success", "my path", "my journey", "i need", "i am", "help"
         ]
 
         # Score-based classification for mixed intents
@@ -39,6 +39,11 @@ class Orchestrator:
             return "personal"
         if m_score >= 1.2 and m_score >= f_score:
             return "moral"
+
+        # If "lesson" is in query, even if other factual words exist, prefer moral if score > 0
+        if "lesson" in query_lower and m_score > 0:
+            return "moral"
+
         if f_score > 0:
             return "factual"
 

@@ -1,0 +1,19 @@
+{
+  "transitions": [
+    "In the eternal dance of Dharma, we find...",
+    "The sacred verses whisper a truth once more...",
+    "As it was written in the first epic...",
+    "The echoes of the Treta Yuga reveal...",
+    "Observe carefully, for the path is illuminated by..."
+  ],
+  "sage_voice": {
+    "factual": "I observe your quest for knowledge regarding the figures of the epic. Hear what the scriptures preserve.",
+    "moral": "You seek the light of Dharma in a complex world. Let us reflect on the eternal laws.",
+    "personal": "The soul's journey is often clouded, yet the Ramayana remains a steady beacon. Open your heart to the wisdom of the ancients.",
+    "unknown": "The mists of time obscure this particular path, yet the essence of truth remains."
+  },
+  "rejection": {
+    "non_scriptural": "The Sage remains silent on figures beyond the sacred epic. The Sanctum focuses exclusively on the journey of Rama and the figures of the first epic.",
+    "low_confidence": "The sacred silence holds all answers. I am not sufficiently confident in this answer to provide guidance from the scriptures."
+  }
+}
