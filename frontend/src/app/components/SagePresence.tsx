@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const SacredGeometry = () => (
@@ -29,9 +29,11 @@ const SacredGeometry = () => (
 
 const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revealing' | 'speaking' }) => {
   const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<{id: number, x: string, duration: number, delay: number, size: number, opacity: number}[]>([]);
+  const [orbitingOrbs, setOrbitingOrbs] = useState<{id: number, duration: number, radius: number, delay: number}[]>([]);
 
-  const particles = useMemo(() => {
-    return Array.from({ length: 40 }).map((_, i) => ({
+  useEffect(() => {
+    const generatedParticles = Array.from({ length: 40 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100 + "%",
       duration: Math.random() * 30 + 20,
@@ -39,18 +41,19 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
       size: Math.random() * 1.5 + 0.5,
       opacity: Math.random() * 0.4 + 0.1
     }));
-  }, []);
 
-  const orbitingOrbs = useMemo(() => {
-    return Array.from({ length: 3 }).map((_, i) => ({
+    const generatedOrbs = Array.from({ length: 3 }).map((_, i) => ({
       id: i,
       duration: 40 + i * 20,
       radius: 200 + i * 50,
       delay: -i * 10
     }));
-  }, []);
 
-  useEffect(() => setMounted(true), []);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setParticles(generatedParticles);
+    setOrbitingOrbs(generatedOrbs);
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 

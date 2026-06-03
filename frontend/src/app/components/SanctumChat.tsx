@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import IntricateBorder from './IntricateBorder';
 import SacredLamp from './SacredLamp';
@@ -97,7 +97,8 @@ const SanctumChat = () => {
         source_verse: data.source_verse
       }]);
       setActiveMessageIndex(sageMsgIndex);
-    } catch (_err) {
+    } catch (err) {
+      console.error("Sanctum query failed:", err);
       setMessages(prev => [...prev, {
         role: 'sage',
         content: "The connection to the Sanctum has been interrupted. The silence remains unbroken."
@@ -133,25 +134,30 @@ const SanctumChat = () => {
           ref={scrollRef}
           className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-hide"
         >
-          {messages.filter(m => m.role === 'user').map((msg, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                // Find the corresponding sage response
-                const sageIdx = messages.findIndex((m, idx) => idx > messages.indexOf(msg) && m.role === 'sage');
-                if (sageIdx !== -1) setActiveMessageIndex(sageIdx);
-              }}
-              className={`w-full text-left p-6 border transition-all ${
-                activeMessageIndex !== null && messages.indexOf(msg) === activeMessageIndex - 1
-                ? 'border-[#D4AF37]/40 bg-[#D4AF37]/5 text-[#FDFCF0]'
-                : 'border-[#D4AF37]/5 opacity-40 hover:opacity-100 hover:border-[#D4AF37]/20'
-              }`}
-            >
-              <p className="text-sm font-light italic leading-relaxed line-clamp-2">
-                &ldquo;{msg.content}&rdquo;
-              </p>
-            </button>
-          ))}
+          {messages.filter(m => m.role === 'user').map((msg, i) => {
+            const isSelected = activeMessageIndex !== null && messages.indexOf(msg) === activeMessageIndex - 1;
+            return (
+              <button
+                key={i}
+                onClick={() => {
+                  // Find the corresponding sage response
+                  const sageIdx = messages.findIndex((m, idx) => idx > messages.indexOf(msg) && m.role === 'sage');
+                  if (sageIdx !== -1) setActiveMessageIndex(sageIdx);
+                }}
+                aria-label={`View response for: ${msg.content}`}
+                aria-pressed={isSelected}
+                className={`w-full text-left p-6 border transition-all ${
+                  isSelected
+                  ? 'border-[#D4AF37]/40 bg-[#D4AF37]/5 text-[#FDFCF0]'
+                  : 'border-[#D4AF37]/5 opacity-40 hover:opacity-100 hover:border-[#D4AF37]/20'
+                }`}
+              >
+                <p className="text-sm font-light italic leading-relaxed line-clamp-2">
+                  &ldquo;{msg.content}&rdquo;
+                </p>
+              </button>
+            );
+          })}
 
           {loading && (
             <div className="flex flex-col items-center py-12 space-y-4 opacity-30">
@@ -182,7 +188,7 @@ const SanctumChat = () => {
               disabled={loading || !query.trim()}
               className="mt-4 w-full py-4 bg-[#D4AF37]/5 border border-[#D4AF37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#D4AF37]/10 transition-all disabled:opacity-10"
             >
-              Ask the Sage
+              {loading ? 'Communing...' : 'Ask the Sage'}
             </button>
           </form>
 
@@ -203,6 +209,7 @@ const SanctumChat = () => {
       {/* Right Panel: Answer Sanctum */}
       <div
         ref={answerRef}
+        aria-live="polite"
         className="w-full lg:w-2/3 flex flex-col bg-[#050505]/60 backdrop-blur-xl overflow-y-auto scroll-smooth"
       >
         <header className="p-8 border-b border-[#D4AF37]/5 sticky top-0 bg-[#050505]/80 backdrop-blur-md z-10 flex justify-between items-center">
@@ -310,11 +317,14 @@ const SanctumChat = () => {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="entity-modal-title"
               className="max-w-xl w-full bg-[#0d0d0d] border border-[#d4af37]/30 p-10 space-y-8 relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
-              <h3 className="text-4xl font-light tracking-widest uppercase">{selectedEntity.entity}</h3>
+              <h3 id="entity-modal-title" className="text-4xl font-light tracking-widest uppercase">{selectedEntity.entity}</h3>
               <p className="text-xl font-light leading-relaxed opacity-80 text-[#eeeae0]">{selectedEntity.description}</p>
               <button
                 onClick={() => setSelectedEntity(null)}
@@ -364,6 +374,7 @@ const SourceAttribution = ({ meta, onEntityClick, delay }: { meta?: Meta, onEnti
           <button
             key={idx}
             onClick={() => onEntityClick(ent)}
+            aria-label={`View details for ${ent}`}
             className="px-4 py-2 text-[8px] uppercase tracking-[0.2em] border border-[#D4AF37]/10 hover:border-[#D4AF37]/40 transition-all text-[#FDFCF0] opacity-40 hover:opacity-100"
           >
             {ent}
