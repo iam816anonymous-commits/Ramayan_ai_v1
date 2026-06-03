@@ -165,6 +165,64 @@ async def get_timeline():
             return json.load(f)
     return []
 
+@app.get("/api/heroes")
+async def get_heroes():
+    try:
+        entities_path = "backend/knowledge/entities.json"
+        relations_path = "backend/knowledge/relations.json"
+
+        with open(entities_path, 'r') as f:
+            entities_data = json.load(f)
+        with open(relations_path, 'r') as f:
+            relations_data = json.load(f)
+
+        heroes = []
+        for char in entities_data.get("characters", []):
+            # Extract relationships for this character
+            char_relations = set()
+            for rel in relations_data:
+                if rel["source"] == char["name"]:
+                    # Map types to natural labels
+                    type_labels = {
+                        "father_of": f"Father of {rel['target']}",
+                        "mother_of": f"Mother of {rel['target']}",
+                        "brother_of": f"Brother of {rel['target']}",
+                        "spouse_of": f"Spouse of {rel['target']}",
+                        "enemy_of": f"Enemy of {rel['target']}",
+                        "devotee_of": f"Devotee of {rel['target']}",
+                        "ally_of": f"Ally of {rel['target']}"
+                    }
+                    label = type_labels.get(rel["type"], f"{rel['type'].replace('_', ' ').capitalize()} {rel['target']}")
+                    char_relations.add(label)
+                elif rel["target"] == char["name"]:
+                    # Inverse relationship display logic
+                    if rel["type"] == "father_of":
+                        char_relations.add(f"Child of {rel['source']}")
+                    elif rel["type"] == "mother_of":
+                        char_relations.add(f"Child of {rel['source']}")
+                    elif rel["type"] == "spouse_of":
+                        char_relations.add(f"Spouse of {rel['source']}")
+                    elif rel["type"] == "devotee_of":
+                        char_relations.add(f"Lord of {rel['source']}")
+                    elif rel["type"] == "brother_of":
+                        char_relations.add(f"Brother of {rel['source']}")
+                    elif rel["type"] == "enemy_of":
+                        char_relations.add(f"Enemy of {rel['source']}")
+
+            heroes.append({
+                "name": char["name"],
+                "sanskrit": char.get("sanskrit", "श्री"),
+                "role": char.get("significance", "A pivotal figure of the Ramayana."),
+                "virtues": char.get("traits", ["Dharma"]),
+                "significance": char.get("significance"),
+                "relationships": ", ".join(sorted(list(char_relations))) if char_relations else "Ties of destiny are being revealed.",
+                "description": char.get("description")
+            })
+        return heroes
+    except Exception as e:
+        print(f"Hero expansion error: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error during Hero resolution.")
+
 @app.get("/api/knowledge/{entity_name}")
 async def get_entity_knowledge(entity_name: str):
     try:

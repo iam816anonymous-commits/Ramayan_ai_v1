@@ -1,85 +1,79 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import SanctumChat from './components/SanctumChat';
-import Timeline from './components/Timeline';
-import SagePresence from './components/SagePresence';
-
+import React, { useState, useEffect } from 'react';
 import HomeSanctum from './components/HomeSanctum';
+import SacredCourtyard from './components/SacredCourtyard';
+import Timeline from './components/Timeline';
 import CharacterExplorer from './components/CharacterExplorer';
 import ShlokaLibrary from './components/ShlokaLibrary';
+import DharmaGallery from './components/DharmaGallery';
+import SanctumChat from './components/SanctumChat';
 import SupportingSpaces from './components/SupportingSpaces';
 
-type Experience = 'home' | 'inquiry' | 'journey' | 'characters' | 'library' | 'daily' | 'archive' | 'about';
-
 export default function Home() {
-  const [view, setView] = useState<Experience>('home');
+  const [mounted, setMounted] = useState(false);
 
-  const navItems: { id: Experience; label: string }[] = [
-    { id: 'home', label: 'The Temple Gate' },
-    { id: 'inquiry', label: 'Hall of Wisdom' },
-    { id: 'journey', label: 'The Pilgrimage' },
-    { id: 'characters', label: 'Gallery of Icons' },
-    { id: 'library', label: 'Shloka Archive' },
-    { id: 'daily', label: 'Morning Prayer' },
-    { id: 'archive', label: 'Ancient Scrolls' },
-    { id: 'about', label: 'The Inner Sanctum' },
-  ];
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <main className="min-h-screen bg-[#080705] text-[#C9A86A] font-inter selection:bg-[#C9A86A]/20 selection:text-[#F2EAD8] overflow-x-hidden">
-      <SagePresence state={view === 'inquiry' ? 'thinking' : 'idle'} />
+      {/*
+        The Digital Pilgrimage Architecture (V3)
+        Linear Flow: Gate -> Courtyard -> Journey -> Heroes -> Archive -> Gallery -> Inquiry
+      */}
 
-      {/* Sacred Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-4 md:p-6 flex justify-center overflow-x-auto scrollbar-hide">
-        <motion.div
-          className="flex flex-nowrap md:flex-wrap items-center justify-start md:justify-center gap-x-6 md:gap-x-8 gap-y-4 bg-[#11100D]/80 backdrop-blur-2xl px-6 md:px-10 py-4 md:py-5 border border-[#C9A86A]/10 rounded-full shadow-2xl"
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setView(item.id)}
-              className={`text-[9px] uppercase tracking-[0.4em] font-cinzel transition-all relative ${
-                view === item.id ? 'text-[#E6CF9B]' : 'text-[#C9A86A]/40 hover:text-[#C9A86A]/70'
-              }`}
-            >
-              {item.label}
-              {view === item.id && (
-                <motion.div
-                  layoutId="activeNav"
-                  className="absolute -bottom-2 left-0 w-full h-[1px] bg-[#E6CF9B]"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </motion.div>
-      </nav>
+      {/* SECTION 1: THE GATE OF AYODHYA */}
+      <section id="gate" className="relative min-h-screen">
+        <HomeSanctum />
+      </section>
 
-      {/* Experience Router */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={view}
-          initial={{ opacity: 0, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, filter: 'blur(10px)' }}
-          transition={{ duration: 1, ease: "easeInOut" }}
-          className="pt-32 min-h-screen"
-        >
-          {view === 'home' && <HomeSanctum />}
-          {view === 'inquiry' && <SanctumChat />}
-          {view === 'journey' && <Timeline />}
-          {view === 'characters' && <CharacterExplorer />}
-          {view === 'library' && <ShlokaLibrary />}
-          {['daily', 'archive', 'about'].includes(view) && (
-             <SupportingSpaces view={view as 'daily' | 'archive' | 'about'} />
-          )}
-        </motion.div>
-      </AnimatePresence>
+      {/* SECTION 2: THE SACRED COURTYARD */}
+      <section id="courtyard" className="relative">
+        <SacredCourtyard />
+      </section>
+
+      {/* SECTION 3: THE JOURNEY OF THE EPIC (Timeline) */}
+      <section id="journey" className="relative">
+        <Timeline />
+      </section>
+
+      {/* SECTION 4: HALL OF HEROES (Characters) */}
+      <section id="heroes" className="relative">
+        <CharacterExplorer />
+      </section>
+
+      {/* SECTION 5: WISDOM ARCHIVE (Library) */}
+      <section id="archive" className="relative">
+        <ShlokaLibrary />
+      </section>
+
+      {/* SECTION 6: DHARMA GALLERY */}
+      <section id="dharma" className="relative">
+        <DharmaGallery />
+      </section>
+
+      {/* SECTION 7: THE INQUIRY HALL & INNER SANCTUM (Chat) */}
+      <section id="inquiry" className="relative min-h-screen">
+        <SanctumChat />
+      </section>
+
+      {/* SECTION 8: FINAL REFLECTIONS */}
+      <section id="about" className="relative">
+        <SupportingSpaces view="about" />
+      </section>
+
+      {/* Simple Floating Progress Indicator */}
+      <div className="fixed bottom-12 right-12 z-50 flex flex-col items-center gap-4 hidden lg:flex">
+         <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-[#C9A86A]/20 to-[#C9A86A]/40" />
+         <span className="text-[10px] uppercase tracking-[0.4em] font-cinzel text-[#C9A86A]/60 rotate-90 origin-right translate-x-4">
+           The Pilgrimage
+         </span>
+      </div>
     </main>
   );
 }

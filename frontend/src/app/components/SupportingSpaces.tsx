@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import IntricateBorder from './IntricateBorder';
 
 interface Props {
   view: 'daily' | 'archive' | 'about';
@@ -33,45 +32,47 @@ const SupportingSpaces = ({ view }: Props) => {
   const active = content[view];
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] px-10 flex items-center justify-center">
+    <div className="min-h-screen px-10 flex items-center justify-center bg-[#050505] stone-grain py-48">
       <motion.div
         key={view}
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-4xl w-full"
+        className="max-w-6xl w-full border border-[#D4AF37]/10 bg-[#11100D]/40 p-24 md:p-40 text-center space-y-16 relative"
       >
-        <IntricateBorder className="bg-[#11100D]/40 p-20 text-center space-y-12">
-          <div className="space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.8em] text-[#C9A86A] opacity-40 font-cinzel">
-              {active.subtitle}
-            </span>
-            <h2 className="text-5xl md:text-7xl font-cinzel tracking-widest uppercase text-[#F2EAD8]">
-              {active.title}
-            </h2>
-          </div>
+        {/* Decorative Corners */}
+        <div className="absolute top-0 left-0 w-16 h-16 border-t border-l border-[#D4AF37]/20" />
+        <div className="absolute bottom-0 right-0 w-16 h-16 border-b border-r border-[#D4AF37]/20" />
 
-          <div className="w-16 h-[1px] bg-[#C9A86A]/20 mx-auto" />
+        <div className="space-y-6">
+          <span className="text-[11px] uppercase tracking-[1em] text-[#D4AF37] font-cinzel">
+            {active.subtitle}
+          </span>
+          <h2 className="text-5xl md:text-[6rem] font-cinzel tracking-widest uppercase text-[#F2EAD8]">
+            {active.title}
+          </h2>
+        </div>
 
-          <p className="text-2xl font-cormorant italic text-[#B7AA92] leading-relaxed">
-            &ldquo;{active.description}&rdquo;
-          </p>
+        <div className="w-16 h-[1px] bg-[#D4AF37]/20 mx-auto" />
 
-          <div className="pt-8">
-            <span className="text-[9px] uppercase tracking-[0.6em] text-[#C9A86A] opacity-30 font-cinzel">
-              Atmosphere: {active.detail}
-            </span>
-          </div>
+        <p className="text-2xl md:text-4xl font-cormorant italic text-[#B7AA92] leading-relaxed max-w-4xl mx-auto">
+          &ldquo;{active.description}&rdquo;
+        </p>
 
-          <div className="pt-12">
-             <button
-              className="px-10 py-5 border border-[#C9A86A]/10 text-[10px] uppercase tracking-[0.5em] font-cinzel text-[#E6CF9B] hover:bg-[#C9A86A]/5 transition-all"
-              aria-label={`Enter the ${active.title} space`}
-             >
-                Enter Space
-             </button>
-          </div>
-        </IntricateBorder>
+        <div className="pt-10">
+          <span className="text-[10px] uppercase tracking-[0.8em] text-[#D4AF37]/40 font-cinzel">
+            Atmosphere: {active.detail}
+          </span>
+        </div>
+
+        <div className="pt-20">
+           <button
+            className="px-16 py-6 border border-[#D4AF37]/20 text-[11px] uppercase tracking-[0.8em] font-cinzel text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all"
+            aria-label={`Enter the ${active.title} space`}
+           >
+              Enter Space
+           </button>
+        </div>
       </motion.div>
     </div>
   );

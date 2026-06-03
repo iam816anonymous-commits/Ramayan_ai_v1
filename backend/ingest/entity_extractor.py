@@ -1,6 +1,7 @@
 import json
 import os
 from typing import List, Dict, Set
+from functools import lru_cache
 
 class EntityExtractor:
     def __init__(self, knowledge_dir: str = "backend/knowledge"):
@@ -78,7 +79,8 @@ class EntityExtractor:
                     queue.append(new_path)
         return []
 
-    def extract_entities(self, text: str) -> Dict[str, List[str]]:
+    @lru_cache(maxsize=128)
+    def _extract_entities_cached(self, text: str):
         found = {
             "characters": [],
             "locations": [],
@@ -88,11 +90,9 @@ class EntityExtractor:
 
         for category, names in self.canonical_names.items():
             for name in names:
-                # Check canonical
                 if name.lower() in text_lower:
                     found[category].append(name)
                 else:
-                    # Check aliases
                     canonical_key = name.lower()
                     if canonical_key in self.aliases:
                         for alias in self.aliases[canonical_key]:
@@ -100,8 +100,17 @@ class EntityExtractor:
                                 found[category].append(name)
                                 break
 
-        # Remove duplicates
+        # Consistent ordering for hashing
         for cat in found:
-            found[cat] = list(set(found[cat]))
+            found[cat] = sorted(list(set(found[cat])))
 
+        # Return as tuple of tuples for immutability (to be safe with lru_cache if needed,
+        # though here we are returning a dict which is fine for the result of lru_cache)
         return found
+
+    def extract_entities(self, text: str) -> Dict[str, List[str]]:
+        # Dictionary results are fine for lru_cache, but the argument must be hashable (str is fine)
+        # We use a helper to ensure the internal logic is cached
+        res = self._extract_entities_cached(text)
+        # Return a copy to prevent mutation of cached result
+        return {k: list(v) for k, v in res.items()}
