@@ -17,7 +17,7 @@ pip install -r backend/requirements.txt
 
 # Frontend
 cd frontend
-npm install
+pnpm install
 cd ..
 ```
 
@@ -32,7 +32,7 @@ PYTHONPATH=. python3 -m uvicorn backend.app.main:app --port 8000
 Open another terminal in VS Code:
 ```bash
 cd frontend
-npm run dev
+pnpm dev
 ```
 Navigate to `http://localhost:3000` to enter the Sanctum.
 

@@ -156,6 +156,7 @@ const SanctumChat = () => {
                 ? 'border-[#C9A86A]/40 bg-[#C9A86A]/5 text-[#F2EAD8] scale-[1.02]'
                 : 'border-[#C9A86A]/5 opacity-30 hover:opacity-100 hover:border-[#C9A86A]/20'
               }`}
+              aria-label={`Recall revelation for: ${msg.content?.substring(0, 40)}...`}
             >
               <p className="text-base font-cormorant italic leading-relaxed line-clamp-2">
                 &ldquo;{msg.content}&rdquo;
@@ -346,6 +347,7 @@ const SanctumChat = () => {
               <button
                 onClick={() => setSelectedEntity(null)}
                 className="w-full py-4 border border-[#d4af37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#d4af37]/5 transition-colors"
+                aria-label="Close knowledge explorer"
               >
                 Close
               </button>

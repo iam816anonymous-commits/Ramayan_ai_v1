@@ -29,11 +29,12 @@ const CharacterExplorer = () => {
             <button
               key={char.name}
               onClick={() => setActiveChar(char)}
-              className={`w-full text-left p-6 border transition-all duration-700 font-cinzel ${
+              className={`w-full text-left p-6 border transition-all duration-700 font-cinzel stone-grain ${
                 activeChar.name === char.name
-                ? 'border-[#C9A86A]/40 bg-[#C9A86A]/5 text-[#E6CF9B]'
+                ? 'border-[#C9A86A]/40 bg-[#C9A86A]/10 text-[#E6CF9B] divine-glow'
                 : 'border-transparent opacity-30 hover:opacity-100 hover:text-[#E6CF9B]'
               }`}
+              aria-label={`View manuscript for ${char.name}`}
             >
               <span className="text-[10px] uppercase tracking-[0.4em]">{char.name}</span>
             </button>
@@ -52,9 +53,15 @@ const CharacterExplorer = () => {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="h-full"
           >
-            <IntricateBorder className="h-full bg-[#11100D]/40 p-16 relative overflow-hidden group">
+            <IntricateBorder className="h-full bg-[#11100D]/60 p-16 relative overflow-hidden group stone-grain border-[#C9A86A]/20">
               {/* Background Manuscript Texture Effect */}
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/parchment.png')] opacity-[0.03] pointer-events-none" />
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/parchment.png')] opacity-[0.05] pointer-events-none mix-blend-overlay" />
+
+              {/* Decorative Corner Ornaments */}
+              <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-[#C9A86A]/30" />
+              <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-[#C9A86A]/30" />
+              <div className="absolute bottom-4 left-4 w-8 h-8 border-b border-l border-[#C9A86A]/30" />
+              <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-[#C9A86A]/30" />
 
               <div className="relative z-10 space-y-12">
                 <header className="space-y-4">
@@ -86,7 +93,10 @@ const CharacterExplorer = () => {
                 </div>
 
                 <div className="pt-12">
-                   <button className="text-[9px] uppercase tracking-[0.6em] text-[#E6CF9B] border-b border-[#C9A86A]/20 pb-2 hover:border-[#C9A86A] transition-all font-cinzel">
+                   <button
+                    className="text-[9px] uppercase tracking-[0.6em] text-[#E6CF9B] border-b border-[#C9A86A]/20 pb-2 hover:border-[#C9A86A] transition-all font-cinzel"
+                    aria-label={`Explore the Thread of Fate for ${activeChar.name}`}
+                   >
                      Explore Thread of Fate
                    </button>
                 </div>

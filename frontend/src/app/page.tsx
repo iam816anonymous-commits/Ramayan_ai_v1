@@ -17,14 +17,14 @@ export default function Home() {
   const [view, setView] = useState<Experience>('home');
 
   const navItems: { id: Experience; label: string }[] = [
-    { id: 'home', label: 'Home Sanctum' },
-    { id: 'inquiry', label: 'Sacred Inquiry' },
+    { id: 'home', label: 'The Temple Gate' },
+    { id: 'inquiry', label: 'Hall of Wisdom' },
     { id: 'journey', label: 'The Pilgrimage' },
-    { id: 'characters', label: 'Character Hall' },
-    { id: 'library', label: 'Shloka Library' },
-    { id: 'daily', label: 'Daily Wisdom' },
-    { id: 'archive', label: 'Wisdom Archive' },
-    { id: 'about', label: 'The Temple' },
+    { id: 'characters', label: 'Gallery of Icons' },
+    { id: 'library', label: 'Shloka Archive' },
+    { id: 'daily', label: 'Morning Prayer' },
+    { id: 'archive', label: 'Ancient Scrolls' },
+    { id: 'about', label: 'The Inner Sanctum' },
   ];
 
   return (
