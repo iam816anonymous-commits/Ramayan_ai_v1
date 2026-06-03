@@ -66,7 +66,7 @@ class Revelation(BaseModel):
 
 class Meta(BaseModel):
     chunks_used: int
-    kanda: Optional[str]
+    kanda: Optional[str] = "Universal"
     entities: Dict[str, List[str]]
     verses: List[str]
     sources: List[str]
@@ -136,7 +136,26 @@ async def sanctum_query(request: QueryRequest):
     except Exception as e:
         # Internal logging remains detailed
         print(f"Error: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error. The Sage is currently contemplating.")
+        # Thematic error response to maintain immersion
+        return {
+            "answer": "The Sage has entered a deep state of samadhi and cannot be reached at this moment.",
+            "agent": "Sanctum Guard",
+            "intent": "factual",
+            "meta": {
+                "chunks_used": 0,
+                "entities": {"characters": [], "locations": [], "events": []},
+                "verses": [],
+                "sources": [],
+                "grounded": False
+            },
+            "revelation": {
+                "reflection": "The path is momentarily clouded by the mists of the infinite.",
+                "meaning": "A spiritual disturbance has interrupted our communion.",
+                "context": "Even the greatest seekers encounter moments of silence.",
+                "takeaway": "Patience is the first step toward true wisdom. Try again when the winds of fate shift."
+            },
+            "source_verse": "N/A"
+        }
 
 @app.get("/api/timeline")
 async def get_timeline():

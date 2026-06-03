@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from typing import Optional, Dict, List
 
 class EntityResolver:
@@ -9,9 +10,13 @@ class EntityResolver:
         self.aliases = self._load_json("aliases.json", {})
 
         self.canonical_names = set()
+        self.char_profiles = {}
         for category in self.entities:
             for item in self.entities[category]:
-                self.canonical_names.add(item["name"].lower())
+                name_lower = item["name"].lower()
+                self.canonical_names.add(name_lower)
+                if category == "characters":
+                    self.char_profiles[name_lower] = item
 
         self.alias_map = {}
         for canonical, aliases in self.aliases.items():
@@ -31,21 +36,42 @@ class EntityResolver:
             return True
         if name_lower in self.alias_map:
             return True
+
+        # Basic fuzzy matching (substring)
+        for name in self.canonical_names:
+            if name in name_lower or name_lower in name:
+                return True
+
         return False
 
     def normalize_entity(self, entity_name: str) -> str:
         name_lower = entity_name.lower()
+
         # Direct match
-        for category in self.entities:
-            for item in self.entities[category]:
-                if name_lower == item["name"].lower():
-                    return item["name"]
+        if name_lower in self.canonical_names:
+            for category in self.entities:
+                for item in self.entities[category]:
+                    if name_lower == item["name"].lower():
+                        return item["name"]
 
         # Alias match
         if name_lower in self.alias_map:
             return self.alias_map[name_lower]
 
+        # Fuzzy match
+        for name in self.canonical_names:
+            if name in name_lower or name_lower in name:
+                # Return the canonical name
+                for category in self.entities:
+                    for item in self.entities[category]:
+                        if name == item["name"].lower():
+                            return item["name"]
+
         return entity_name
+
+    def get_profile(self, entity_name: str) -> Optional[Dict]:
+        normalized = self.normalize_entity(entity_name).lower()
+        return self.char_profiles.get(normalized)
 
     def validate_entity(self, entity_name: str) -> Dict[str, any]:
         if self.entity_exists(entity_name):
@@ -60,30 +86,29 @@ class EntityResolver:
             }
 
     def extract_potential_entities(self, query: str) -> List[str]:
-        """
-        Heuristic to find potential entities that might not be in our database.
-        Looks for capitalized words or subjects of 'Who is' / 'Tell me about'.
-        """
         import re
         potentials = []
 
-        # Pattern 1: Who is [Name]
-        match = re.search(r"who is ([A-Z][a-z]+)", query)
-        if match:
-            potentials.append(match.group(1))
+        # Patterns
+        patterns = [
+            r"who is ([A-Z][a-z]+)",
+            r"tell me about ([A-Z][a-z]+)",
+            r"where is ([A-Z][a-z]+)",
+            r"what is ([A-Z][a-z]+)"
+        ]
 
-        # Pattern 2: Tell me about [Name]
-        match = re.search(r"tell me about ([A-Z][a-z]+)", query)
-        if match:
-            potentials.append(match.group(1))
+        for pattern in patterns:
+            matches = re.finditer(pattern, query, re.IGNORECASE)
+            for match in matches:
+                potentials.append(match.group(1))
 
-        # Pattern 3: capitalized words that aren't at the start (simple proxy for names)
+        # Capitalized words logic
         words = query.split()
         for i, word in enumerate(words):
-            if i > 0 and word[0].isupper() and word.lower() not in ["the", "a", "an", "in", "on", "at", "to"]:
-                # Clean punctuation
-                clean_word = re.sub(r'[^\w]', '', word)
-                if clean_word:
-                    potentials.append(clean_word)
+            clean_word = re.sub(r'[^\w]', '', word)
+            if not clean_word: continue
+
+            if i > 0 and clean_word[0].isupper() and clean_word.lower() not in ["the", "a", "an", "in", "on", "at", "to", "of", "and"]:
+                potentials.append(clean_word)
 
         return list(set(potentials))

@@ -42,8 +42,8 @@ class ConfidenceScorer:
         confidence = (retrieval_score * 0.3) + (normalized_rerank * 0.4) + (entity_weight * 0.3)
 
         # Intent adjustment
-        if intent == "personal":
-            # Personal agent is more "guided" and less "retrieval-critical"
+        if intent in ["personal", "moral"]:
+            # These agents are more "guided" and less "retrieval-critical"
             confidence += 0.2
 
         return min(round(confidence, 2), 1.0)

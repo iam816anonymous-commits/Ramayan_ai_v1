@@ -132,24 +132,24 @@ const Timeline = ({ activeKanda }: { activeKanda?: string | null }) => {
   }, [activeKanda]);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#D4AF37] font-lora pb-32">
+    <div className="min-h-screen bg-[#080705] text-[#C9A86A] font-inter pb-40">
       {/* Path Selector Panel */}
-      <div className="sticky top-24 z-30 w-full bg-[#050505]/80 backdrop-blur-xl border-b border-[#D4AF37]/5 px-8 py-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-          <div className="space-y-4 text-center md:text-left">
-            <h2 className="text-[10px] tracking-[0.8em] uppercase opacity-40 font-cinzel font-light">Path Selector</h2>
-            <h3 className="text-3xl md:text-5xl font-light tracking-widest uppercase text-[#FDFCF0] font-cinzel">Divine Path</h3>
+      <div className="sticky top-28 z-30 w-full bg-[#080705]/90 backdrop-blur-2xl border-y border-[#C9A86A]/5 px-10 py-16 shadow-2xl">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16">
+          <div className="space-y-6 text-center md:text-left">
+            <h2 className="text-[11px] tracking-[0.8em] uppercase opacity-40 font-cinzel text-[#E6CF9B]">Sacred Path</h2>
+            <h3 className="text-4xl md:text-6xl font-cinzel tracking-[0.2em] uppercase text-[#F2EAD8]">The Pilgrimage</h3>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-6">
             {PATHS.map((path) => (
               <button
                 key={path.id}
                 onClick={() => setSelectedPathId(path.id)}
-                className={`px-8 py-4 border transition-all text-[10px] uppercase tracking-[0.3em] ${
+                className={`px-10 py-5 border transition-all duration-700 text-[10px] uppercase tracking-[0.4em] font-cinzel ${
                   selectedPathId === path.id
-                  ? 'border-[#D4AF37]/60 bg-[#D4AF37]/10 text-[#FDFCF0]'
-                  : 'border-[#D4AF37]/10 opacity-30 hover:opacity-60'
+                  ? 'border-[#C9A86A]/60 bg-[#C9A86A]/10 text-[#E6CF9B] shadow-[0_0_30px_rgba(201,168,106,0.1)]'
+                  : 'border-[#C9A86A]/10 opacity-30 hover:opacity-100 hover:border-[#C9A86A]/30'
                 }`}
                 aria-label={`Select journey path: ${path.name}`}
               >
@@ -162,20 +162,20 @@ const Timeline = ({ activeKanda }: { activeKanda?: string | null }) => {
         <AnimatePresence mode="wait">
           <motion.p
             key={selectedPathId}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            className="max-w-7xl mx-auto mt-8 text-center text-xs tracking-widest italic"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 0.5, y: 0 }}
+            className="max-w-7xl mx-auto mt-10 text-center text-[10px] tracking-[0.6em] italic font-cinzel uppercase"
           >
             {PATHS.find(p => p.id === selectedPathId)?.description}
           </motion.p>
         </AnimatePresence>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative mt-32">
-        {/* Vertical Journey Line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#D4AF37]/0 via-[#D4AF37]/20 to-[#D4AF37]/0 hidden lg:block" />
+      <div className="max-w-7xl mx-auto px-8 relative mt-40">
+        {/* Vertical Journey Line - Divine Silk */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#C9A86A]/30 to-transparent hidden lg:block" />
 
-        <div className="space-y-32">
+        <div className="space-y-48">
           {filteredKandas.map((event, i) => {
             const isActive = activeKanda && (
               event.id.toLowerCase().includes(activeKanda.toLowerCase()) ||
@@ -188,34 +188,42 @@ const Timeline = ({ activeKanda }: { activeKanda?: string | null }) => {
               <motion.div
                 key={event.id}
                 ref={el => { timelineRefs.current[event.id] = el; }}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-150px" }}
+                transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setHoveredKanda(event.id)}
                 onMouseLeave={() => setHoveredKanda(null)}
-                className={`relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24`}
+                className={`relative flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-16 lg:gap-32`}
               >
-                {/* Journey Node */}
-                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 border border-[#D4AF37]/40 rounded-full bg-[#050505] z-10 hidden lg:flex items-center justify-center">
+                {/* Journey Node - Spiritual Focal Point */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-6 h-6 border border-[#C9A86A]/30 rounded-full bg-[#080705] z-10 hidden lg:flex items-center justify-center">
                   <motion.div
-                    animate={{ scale: isActive || hoveredKanda === event.id ? 2 : 1, opacity: isActive || hoveredKanda === event.id ? 1 : 0 }}
-                    className="w-full h-full bg-[#D4AF37] rounded-full blur-[4px]"
+                    animate={{
+                      scale: isActive || hoveredKanda === event.id ? [1, 2, 1] : 1,
+                      opacity: isActive || hoveredKanda === event.id ? [0.4, 1, 0.4] : 0.2
+                    }}
+                    transition={{ repeat: Infinity, duration: 3 }}
+                    className="w-full h-full bg-[#C9A86A] rounded-full blur-[6px]"
                   />
+                  <div className="absolute w-2 h-2 bg-[#E6CF9B] rounded-full" />
                 </div>
 
-                <div className={`w-full lg:w-1/2 ${isEven ? 'lg:text-right' : 'lg:text-left'}`}>
-                  <span className="text-[10px] uppercase tracking-[0.5em] opacity-30 mb-4 block font-light">
+                <div className={`w-full lg:w-1/2 ${isEven ? 'lg:text-right' : 'lg:text-left'} space-y-8`}>
+                  <motion.span
+                    className="text-[11px] uppercase tracking-[0.8em] text-[#C9A86A] opacity-40 font-cinzel"
+                    animate={{ opacity: hoveredKanda === event.id ? 1 : 0.4 }}
+                  >
                     {event.kanda}
-                  </span>
-                  <h3 className={`text-3xl md:text-5xl mb-6 font-light tracking-widest uppercase transition-colors duration-1000 ${
-                    isActive ? 'text-[#FDFCF0]' : 'text-[#D4AF37]/60'
+                  </motion.span>
+                  <h3 className={`text-4xl md:text-6xl font-cinzel tracking-[0.1em] uppercase transition-all duration-1000 ${
+                    isActive ? 'text-[#F2EAD8] text-glow' : 'text-[#C9A86A]/40 group-hover:text-[#C9A86A]/80'
                   }`}>
                     {event.title}
                   </h3>
-                  <div className={`flex flex-wrap gap-2 ${isEven ? 'lg:justify-end' : 'lg:justify-start'}`}>
+                  <div className={`flex flex-wrap gap-3 ${isEven ? 'lg:justify-end' : 'lg:justify-start'}`}>
                     {event.events.map((ev, idx) => (
-                      <span key={idx} className="text-[8px] uppercase tracking-[0.2em] opacity-20 border border-[#D4AF37]/10 px-2 py-1">
+                      <span key={idx} className="text-[9px] uppercase tracking-[0.3em] font-cinzel opacity-25 border border-[#C9A86A]/10 px-3 py-1.5 rounded-full hover:opacity-100 hover:border-[#C9A86A]/40 transition-all duration-500">
                         {ev}
                       </span>
                     ))}
@@ -223,23 +231,25 @@ const Timeline = ({ activeKanda }: { activeKanda?: string | null }) => {
                 </div>
 
                 <div className="w-full lg:w-1/2">
-                  <div className={`p-10 border transition-all duration-1000 bg-[#080808]/20 backdrop-blur-sm ${
+                  <div className={`p-12 border transition-all duration-1000 bg-[#11100D]/40 backdrop-blur-md rounded-lg relative overflow-hidden group ${
                     isActive
-                      ? 'border-[#D4AF37]/40 shadow-[0_0_50px_rgba(212,175,55,0.05)]'
-                      : 'border-[#D4AF37]/5 hover:border-[#D4AF37]/20'
+                      ? 'border-[#C9A86A]/40 shadow-[0_0_100px_rgba(201,168,106,0.05)]'
+                      : 'border-[#C9A86A]/5 hover:border-[#C9A86A]/20'
                   }`}>
-                    <p className="text-lg md:text-xl leading-relaxed font-light text-[#FDFCF0]/80 mb-8">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#C9A86A]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+                    <p className="text-xl md:text-2xl leading-relaxed font-cormorant italic text-[#F2EAD8]/90 mb-12 relative z-10">
                       {event.summary}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-8 pt-8 border-t border-[#D4AF37]/10">
-                      <div className="space-y-3">
-                        <span className="text-[8px] uppercase tracking-[0.4em] opacity-30 block">Core Theme</span>
-                        <span className="text-[10px] uppercase tracking-widest text-[#D4AF37] font-medium">{event.theme}</span>
+                    <div className="grid grid-cols-2 gap-12 pt-10 border-t border-[#C9A86A]/10 relative z-10">
+                      <div className="space-y-4">
+                        <span className="text-[9px] uppercase tracking-[0.6em] text-[#C9A86A] opacity-40 block font-cinzel">Core Theme</span>
+                        <span className="text-[12px] uppercase tracking-[0.3em] text-[#E6CF9B] font-cinzel">{event.theme}</span>
                       </div>
-                      <div className="space-y-3">
-                        <span className="text-[8px] uppercase tracking-[0.4em] opacity-30 block">Sacred Journey</span>
-                        <span className="text-[10px] uppercase tracking-widest text-[#FDFCF0]">{event.journey}</span>
+                      <div className="space-y-4">
+                        <span className="text-[9px] uppercase tracking-[0.6em] text-[#C9A86A] opacity-40 block font-cinzel">Sacred Journey</span>
+                        <span className="text-[12px] uppercase tracking-[0.3em] text-[#F2EAD8] font-cinzel">{event.journey}</span>
                       </div>
                     </div>
                   </div>

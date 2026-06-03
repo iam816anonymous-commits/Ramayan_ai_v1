@@ -40,93 +40,85 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
   }>>([]);
 
   useEffect(() => {
-    const newParticles = Array.from({ length: 40 }).map((_, i) => ({
+    const newParticles = Array.from({ length: 50 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100 + "%",
-      duration: Math.random() * 30 + 20,
+      duration: Math.random() * 40 + 30,
       delay: Math.random() * 20,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.4 + 0.1
+      size: Math.random() * 1.2 + 0.4,
+      opacity: Math.random() * 0.3 + 0.05
     }));
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(newParticles);
     setMounted(true);
   }, []);
 
-  const orbitingOrbs = useMemo(() => {
-    return Array.from({ length: 3 }).map((_, i) => ({
-      id: i,
-      duration: 40 + i * 20,
-      radius: 200 + i * 50,
-      delay: -i * 10
-    }));
-  }, []);
-
+  const rings = useMemo(() => [
+    { id: 1, size: 300, duration: 15, opacity: 0.1 },
+    { id: 2, size: 500, duration: 25, opacity: 0.05 },
+    { id: 3, size: 800, duration: 40, opacity: 0.02 },
+  ], []);
 
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden bg-[#050505]">
+    <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden bg-[#080705]">
+      {/* Background Sacred Geometry */}
       <SacredGeometry />
 
-      {/* Orbiting Wisdom Orbs */}
-      {orbitingOrbs.map((orb) => (
-        <motion.div
-          key={orb.id}
-          className="absolute w-[2px] h-[2px] bg-[#D4AF37] rounded-full"
-          animate={{
-            rotate: 360,
-          }}
-          transition={{
-            duration: orb.duration,
-            repeat: Infinity,
-            ease: "linear",
-            delay: orb.delay
-          }}
-          style={{
-            width: orb.radius * 2,
-            height: orb.radius * 2,
-            border: '1px solid rgba(212, 175, 55, 0.03)',
-            borderRadius: '50%',
-          }}
-        >
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#D4AF37] rounded-full blur-[1px]"
-            style={{ opacity: 0.2 }}
+      {/* Breathing Aura Rings */}
+      <div className="relative flex items-center justify-center">
+        {rings.map((ring) => (
+          <motion.div
+            key={ring.id}
+            className="absolute rounded-full border border-[#C9A86A]"
+            style={{
+              width: ring.size,
+              height: ring.size,
+              opacity: ring.opacity
+            }}
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [ring.opacity, ring.opacity * 2, ring.opacity],
+              rotate: ring.id % 2 === 0 ? 360 : -360
+            }}
+            transition={{
+              duration: state === 'thinking' ? ring.duration / 2 : ring.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
-        </motion.div>
-      ))}
+        ))}
 
-      {/* Central Focal Orb - Layered for Depth */}
-      <div className="relative">
+        {/* Central Divine Presence */}
         <motion.div
+          className="absolute w-64 h-64 rounded-full bg-[#C9A86A] blur-[120px]"
           animate={{
-            scale: state === 'thinking' ? [1, 1.2, 1] : [1, 1.05, 1],
-            opacity: state === 'thinking' ? [0.3, 0.6, 0.3] : [0.2, 0.4, 0.2],
+            scale: state === 'thinking' ? [1, 1.4, 1] : [1, 1.1, 1],
+            opacity: state === 'thinking' ? [0.4, 0.8, 0.4] : [0.2, 0.4, 0.2],
           }}
           transition={{
-            duration: state === 'thinking' ? 3 : 10,
+            duration: state === 'thinking' ? 4 : 8,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[450px] h-[250px] md:h-[450px] rounded-full bg-[#D4AF37] blur-[120px]"
-          style={{ willChange: "transform, opacity" }}
         />
+
+        {/* Soft Core Light */}
         <motion.div
+          className="absolute w-32 h-32 rounded-full bg-[#E6CF9B] blur-[60px]"
           animate={{
-            scale: state === 'thinking' ? [1, 1.1, 1] : [1, 1.03, 1],
-            opacity: [0.1, 0.2, 0.1],
+            opacity: [0.1, 0.3, 0.1],
           }}
           transition={{
-            duration: 15,
+            duration: 5,
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[700px] h-[400px] md:h-[700px] rounded-full bg-gradient-to-tr from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 blur-[80px]"
         />
       </div>
 
-      {/* Floating Wisdom Particles */}
+      {/* Atmospheric Wisdom Particles */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
@@ -134,7 +126,7 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
           animate={{
             y: "-10%",
             opacity: [0, p.opacity, 0],
-            scale: [0.3, 1, 0.3]
+            scale: [0.5, 1, 0.5]
           }}
           transition={{
             duration: p.duration,
@@ -143,7 +135,7 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
             ease: "linear"
           }}
           style={{ width: p.size, height: p.size }}
-          className="absolute bg-[#D4AF37] rounded-full blur-[0.5px]"
+          className="absolute bg-[#E6CF9B] rounded-full blur-[1px]"
         />
       ))}
     </div>
