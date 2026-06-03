@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const IntricateBorder = ({ children, className = "" }: { children: React.ReactNode, className?: string }) => {
   return (

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Copy, Check } from 'lucide-react';
 import IntricateBorder from './IntricateBorder';
 import SacredLamp from './SacredLamp';
 
@@ -53,6 +54,7 @@ const SanctumChat = () => {
   const [loading, setLoading] = useState(false);
   const [activeMessageIndex, setActiveMessageIndex] = useState<number | null>(null);
   const [selectedEntity, setSelectedEntity] = useState<EntityKnowledge | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
@@ -97,7 +99,7 @@ const SanctumChat = () => {
         source_verse: data.source_verse
       }]);
       setActiveMessageIndex(sageMsgIndex);
-    } catch (_err) {
+    } catch {
       setMessages(prev => [...prev, {
         role: 'sage',
         content: "The connection to the Sanctum has been interrupted. The silence remains unbroken."
@@ -114,6 +116,14 @@ const SanctumChat = () => {
       setSelectedEntity(data);
     } catch (err) {
       console.error("Failed to fetch entity knowledge", err);
+    }
+  };
+
+  const handleCopy = () => {
+    if (activeMessage?.source_verse) {
+      navigator.clipboard.writeText(activeMessage.source_verse);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -262,9 +272,18 @@ const SanctumChat = () => {
                         transition={{ delay: REVELATION_TIMINGS.SOURCES, duration: 2 }}
                         className="space-y-8"
                       >
-                        <div className="flex items-center space-x-4">
-                          <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
-                          <h3 className="text-[9px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">Sacred Shloka</h3>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-8 h-[1px] bg-[#D4AF37]/30" />
+                            <h3 className="text-[9px] uppercase tracking-[0.6em] text-[#D4AF37] font-medium opacity-60">Sacred Shloka</h3>
+                          </div>
+                          <button
+                            onClick={handleCopy}
+                            className="p-2 text-[#D4AF37] opacity-40 hover:opacity-100 transition-all focus-visible:ring-1 focus-visible:ring-[#D4AF37]/50 rounded-sm outline-none"
+                            aria-label="Copy shloka to clipboard"
+                          >
+                            {copied ? <Check size={14} /> : <Copy size={14} />}
+                          </button>
                         </div>
                         <IntricateBorder className="bg-[#111]/40 p-10">
                           <p className="text-2xl md:text-3xl font-light text-[#D4AF37] leading-relaxed text-center italic font-serif">

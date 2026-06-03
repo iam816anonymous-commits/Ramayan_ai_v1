@@ -30,8 +30,17 @@ const SacredGeometry = () => (
 const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revealing' | 'speaking' }) => {
   const [mounted, setMounted] = useState(false);
 
-  const particles = useMemo(() => {
-    return Array.from({ length: 40 }).map((_, i) => ({
+  const [particles, setParticles] = useState<Array<{
+    id: number,
+    x: string,
+    duration: number,
+    delay: number,
+    size: number,
+    opacity: number
+  }>>([]);
+
+  useEffect(() => {
+    const newParticles = Array.from({ length: 40 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100 + "%",
       duration: Math.random() * 30 + 20,
@@ -39,6 +48,8 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
       size: Math.random() * 1.5 + 0.5,
       opacity: Math.random() * 0.4 + 0.1
     }));
+    setParticles(newParticles);
+    setMounted(true);
   }, []);
 
   const orbitingOrbs = useMemo(() => {
@@ -50,7 +61,6 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
     }));
   }, []);
 
-  useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
 
