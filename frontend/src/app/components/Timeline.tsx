@@ -151,6 +151,7 @@ const Timeline = ({ activeKanda }: { activeKanda?: string | null }) => {
                   ? 'border-[#D4AF37]/60 bg-[#D4AF37]/10 text-[#FDFCF0]'
                   : 'border-[#D4AF37]/10 opacity-30 hover:opacity-60'
                 }`}
+                aria-label={`Select journey path: ${path.name}`}
               >
                 {path.name}
               </button>

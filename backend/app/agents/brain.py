@@ -25,11 +25,12 @@ class BrainAgent:
         self.moral_agent = MoralAgent()
         self.personal_reasoner = PersonalReasoner()
 
-    async def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
-        return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent)
+    async def retrieve_context(self, query: str, top_k: int = 3, intent: str = "factual", entities: Dict = None) -> List[Dict]:
+        return await anyio.to_thread.run_sync(self._retrieve_context_sync, query, top_k, intent, entities)
 
-    def _retrieve_context_sync(self, query: str, top_k: int = 3, intent: str = "factual") -> List[Dict]:
-        entities = self.entity_extractor.extract_entities(query)
+    def _retrieve_context_sync(self, query: str, top_k: int = 3, intent: str = "factual", entities: Dict = None) -> List[Dict]:
+        if entities is None:
+            entities = self.entity_extractor.extract_entities(query)
 
         # Phase 1: Gatekeeper Hardening
         if intent == "factual":
@@ -96,12 +97,12 @@ class BrainAgent:
 
         return unique_results[:top_k]
 
-    async def synthesize_response(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
-        return await anyio.to_thread.run_sync(self._synthesize_response_sync, query, context, intent)
+    async def synthesize_response(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
+        return await anyio.to_thread.run_sync(self._synthesize_response_sync, query, context, intent, entities)
 
-    def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str) -> Dict[str, Any]:
+    def _synthesize_response_sync(self, query: str, context: List[Dict], intent: str, entities: Dict = None) -> Dict[str, Any]:
         # Phase 6: Confidence Thresholding
-        entities_found = self.entity_extractor.extract_entities(query)
+        entities_found = entities if entities is not None else self.entity_extractor.extract_entities(query)
         confidence = self.confidence_scorer.calculate(context, intent, entities_found)
 
         if intent != "personal" and confidence < 0.45:
@@ -123,7 +124,7 @@ class BrainAgent:
 
         # Phase 1 Rejection Check
         if intent == "factual":
-            entities_in_query = self.entity_extractor.extract_entities(query)
+            entities_in_query = entities_found
             potential_entities = self.entity_resolver.extract_potential_entities(query)
 
             all_to_check = list(set(entities_in_query["characters"] + potential_entities))
@@ -167,7 +168,6 @@ class BrainAgent:
         primary = context[0]
 
         # Aggregate all entities from context if query doesn't yield any
-        entities_found = self.entity_extractor.extract_entities(query)
         if not entities_found["characters"] and not entities_found["locations"]:
             for c in context:
                 ents = c.get("entities", {})

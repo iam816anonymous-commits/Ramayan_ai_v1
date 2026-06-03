@@ -191,6 +191,7 @@ const SanctumChat = () => {
               type="submit"
               disabled={loading || !query.trim()}
               className="mt-4 w-full py-4 bg-[#D4AF37]/5 border border-[#D4AF37]/20 text-[10px] uppercase tracking-[0.4em] hover:bg-[#D4AF37]/10 transition-all disabled:opacity-10"
+              aria-label="Submit query to the Sage"
             >
               Ask the Sage
             </button>
@@ -202,6 +203,7 @@ const SanctumChat = () => {
                 key={i}
                 onClick={() => setQuery(s)}
                 className="text-left text-[9px] uppercase tracking-[0.2em] opacity-30 hover:opacity-60 transition-opacity"
+                aria-label={`Ask suggested query: ${s}`}
               >
                 {s}
               </button>
@@ -384,6 +386,7 @@ const SourceAttribution = ({ meta, onEntityClick, delay }: { meta?: Meta, onEnti
             key={idx}
             onClick={() => onEntityClick(ent)}
             className="px-4 py-2 text-[8px] uppercase tracking-[0.2em] border border-[#D4AF37]/10 hover:border-[#D4AF37]/40 transition-all text-[#FDFCF0] opacity-40 hover:opacity-100"
+            aria-label={`View knowledge for ${ent}`}
           >
             {ent}
           </button>

@@ -75,6 +75,10 @@ async def main():
         {"category": "Personal", "query": "I fear failure", "expected": "answer"},
         # Low Confidence
         {"category": "Confidence", "query": "How many grains of sand are in Lanka?", "expected": "reject"},
+        # Drift: Personal mixed with factual
+        {"category": "Drift", "query": "I am a king like Rama, what should I do?", "expected": "answer"},
+        {"category": "Drift", "query": "Tell me about Hanuman, I need his strength.", "expected": "answer"},
+        {"category": "Drift", "query": "Who is Sita? I feel her pain.", "expected": "answer"},
     ]
 
     # Expand cases to 300+ as requested (Simulation using repetitions and variations)
