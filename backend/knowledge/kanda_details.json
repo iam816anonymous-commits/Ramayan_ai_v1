@@ -2,54 +2,72 @@
   {
     "id": "Bala",
     "kanda": "Bala Kanda",
+    "sanskrit": "बालकाण्ड",
     "title": "The Divine Birth",
     "summary": "Focuses on the childhood of Rama and the early adventures with Sage Vishwamitra.",
     "theme": "Innocence & Lineage",
+    "atmosphere": "Golden Dawn",
+    "color": "from-amber-900/40",
     "events": ["Birth of Rama", "Slaying of Tataka", "Breaking of Shiva's Bow", "Marriage to Sita"],
     "journey": "Ayodhya → Mithila"
   },
   {
     "id": "Ayodhya",
     "kanda": "Ayodhya Kanda",
+    "sanskrit": "अयोध्याकाण्ड",
     "title": "The Great Exile",
     "summary": "Describes the preparations for Rama's coronation and his eventual exile to the forest.",
     "theme": "Duty & Sacrifice",
+    "atmosphere": "Sacred Sorrow",
+    "color": "from-stone-800/60",
     "events": ["Kaikeyi's Boon", "Dasharatha's Grief", "Rama's Departure", "Bharata's Meeting"],
     "journey": "Ayodhya → Chitrakoot"
   },
   {
     "id": "Aranya",
     "kanda": "Aranya Kanda",
+    "sanskrit": "अरण्यकाण्ड",
     "title": "The Forest Dwellers",
     "summary": "Relates the life of Rama in the forest and the abduction of Sita by Ravana.",
     "theme": "Trial & Separation",
+    "atmosphere": "Mystical Forest",
+    "color": "from-emerald-950/50",
     "events": ["Slaying of Khara", "The Golden Deer", "Sita's Abduction", "Meeting Jatayu"],
     "journey": "Chitrakoot → Dandaka Forest"
   },
   {
     "id": "Kishkindha",
     "kanda": "Kishkindha Kanda",
+    "sanskrit": "किष्किन्धाकाण्ड",
     "title": "The Monkey Alliance",
     "summary": "Covers Rama's meeting with Hanuman and the alliance with the monkey king Sugriva.",
     "theme": "Friendship & Valor",
+    "atmosphere": "Mountain Echoes",
+    "color": "from-orange-950/40",
     "events": ["Meeting Hanuman", "Slaying of Vali", "Search for Sita Begins", "Sampati's Vision"],
     "journey": "Dandaka → Kishkindha"
   },
   {
     "id": "Sundara",
     "kanda": "Sundara Kanda",
+    "sanskrit": "सुन्दरकाण्ड",
     "title": "Hanuman's Leap",
     "summary": "The beautiful kanda focusing on Hanuman's journey to Lanka to find Sita.",
     "theme": "Devotion & Hope",
+    "atmosphere": "Devotional Hope",
+    "color": "from-blue-950/50",
     "events": ["Leaping the Ocean", "Finding Sita", "Burning of Lanka", "Return to Rama"],
     "journey": "Kishkindha → Lanka"
   },
   {
     "id": "Yuddha",
     "kanda": "Yuddha Kanda",
+    "sanskrit": "युद्धकाण्ड",
     "title": "The Great War",
     "summary": "Describes the epic battle between Rama's forces and Ravana's army.",
     "theme": "Victory & Dharma",
+    "atmosphere": "Fire & Destiny",
+    "color": "from-red-950/40",
     "events": ["Building the Bridge", "The Great Battle", "Fall of Ravana", "Rama's Coronation"],
     "journey": "Lanka → Ayodhya"
   }
