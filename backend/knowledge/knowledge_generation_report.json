@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "shlokas_processed": 23402,
+  "entities_enriched": 29,
+  "themes_discovered": 5,
+  "output_directory": "backend/knowledge"
+}

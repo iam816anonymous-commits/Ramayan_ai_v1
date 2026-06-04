@@ -1,0 +1,617 @@
+{
+  "characters": [
+    {
+      "name": "Rama",
+      "sanskrit": "राम",
+      "description": "The seventh avatar of Vishnu, the Maryada Purushottama—the Supreme Man who embodies the limits of morality. Prince of Ayodhya, eldest son of Dasharatha, he is the living embodiment of Dharma, whose journey through exile and war serves as the ultimate guide for righteous living.",
+      "traits": [
+        "Dharmic",
+        "Patient",
+        "Resolute",
+        "Compassionate"
+      ],
+      "significance": "His life is the central pillar of the Ramayana, demonstrating how a soul can remain perfectly aligned with truth despite overwhelming adversity.",
+      "mentions_count": 5392,
+      "related_shlokas": [
+        "Bala Kanda_1_1",
+        "Bala Kanda_1_8",
+        "Bala Kanda_1_9",
+        "Bala Kanda_1_13",
+        "Bala Kanda_1_15",
+        "Bala Kanda_1_16",
+        "Bala Kanda_1_17",
+        "Bala Kanda_1_18",
+        "Bala Kanda_1_19",
+        "Bala Kanda_1_20"
+      ]
+    },
+    {
+      "name": "Sita",
+      "sanskrit": "सीता",
+      "description": "The daughter of the Earth, found in a furrow by King Janaka. She is the incarnation of Lakshmi and the embodiment of Shakti, grace, and unwavering devotion. Her strength in the face of captivity in Lanka is the spiritual heart of the epic.",
+      "traits": [
+        "Devout",
+        "Resilient",
+        "Pure",
+        "Wise"
+      ],
+      "significance": "She represents the soul's yearning for the Divine and the quiet strength of virtue that outlasts even the greatest tyranny.",
+      "mentions_count": 2018,
+      "related_shlokas": [
+        "Bala Kanda_1_26",
+        "Bala Kanda_1_27",
+        "Bala Kanda_1_28",
+        "Bala Kanda_1_29",
+        "Bala Kanda_1_52",
+        "Bala Kanda_1_53",
+        "Bala Kanda_1_54",
+        "Bala Kanda_1_55",
+        "Bala Kanda_1_59",
+        "Bala Kanda_1_71"
+      ]
+    },
+    {
+      "name": "Hanuman",
+      "sanskrit": "हनुमान्",
+      "description": "The son of the Wind God (Vayu) and the supreme devotee of Rama. A vanara of infinite strength, wisdom, and humility, he is the bridge between the human and the divine. His leap across the ocean to Lanka symbolizes the power of faith and selfless service.",
+      "traits": [
+        "Selfless",
+        "Infinite Strength",
+        "Vedic Scholar",
+        "Humble"
+      ],
+      "significance": "He is the ideal devotee (Bhakta), showing that true power comes through surrender to the Divine will.",
+      "mentions_count": 1171,
+      "related_shlokas": [
+        "Bala Kanda_1_58",
+        "Bala Kanda_1_59",
+        "Bala Kanda_1_72",
+        "Bala Kanda_1_73",
+        "Bala Kanda_1_74",
+        "Bala Kanda_1_75",
+        "Bala Kanda_1_76",
+        "Bala Kanda_1_77",
+        "Bala Kanda_1_78",
+        "Bala Kanda_1_87"
+      ]
+    },
+    {
+      "name": "Lakshmana",
+      "sanskrit": "लक्ष्मण",
+      "description": "The devoted brother of Rama, born to Queen Sumitra. He is an incarnation of Shesha Naag, the serpent of infinity. He chose fourteen years of sleepless exile to serve Rama and Sita, representing the selfless protection of the Divine path.",
+      "traits": [
+        "Devoted",
+        "Fierce",
+        "Protective",
+        "Ascetic"
+      ],
+      "significance": "His character illustrates the duty of the younger sibling and the fierce guardian of righteousness.",
+      "mentions_count": 1828,
+      "related_shlokas": [
+        "Bala Kanda_1_25",
+        "Bala Kanda_1_28",
+        "Bala Kanda_1_29",
+        "Bala Kanda_1_46",
+        "Bala Kanda_1_52",
+        "Bala Kanda_2_33",
+        "Bala Kanda_2_34",
+        "Bala Kanda_3_3",
+        "Bala Kanda_3_4",
+        "Bala Kanda_3_5"
+      ]
+    },
+    {
+      "name": "Ravana",
+      "sanskrit": "रावण",
+      "description": "The ten-headed King of Lanka, a great scholar and devotee of Shiva who fell through the weight of his own ego (Ahankara). His abduction of Sita triggered the Great War and led to his ultimate redemption through death at Rama's hands.",
+      "traits": [
+        "Brilliant",
+        "Egotistical",
+        "Powerful",
+        "Tragic"
+      ],
+      "significance": "He serves as a cautionary tale: that knowledge and power, when divorced from Dharma, lead only to destruction.",
+      "mentions_count": 1625,
+      "related_shlokas": [
+        "Bala Kanda_1_46",
+        "Bala Kanda_1_49",
+        "Bala Kanda_1_50",
+        "Bala Kanda_1_51",
+        "Bala Kanda_1_53",
+        "Bala Kanda_1_73",
+        "Bala Kanda_1_75",
+        "Bala Kanda_1_76",
+        "Bala Kanda_1_77",
+        "Bala Kanda_1_81"
+      ]
+    },
+    {
+      "name": "Dasharatha",
+      "sanskrit": "दशरथ",
+      "description": "The King of Ayodhya and father of Rama. A noble ruler whose one moment of weakness—a promise made in the past—led to the exile of his beloved son and his own death from grief.",
+      "traits": [
+        "Noble",
+        "Honorable",
+        "Suffering",
+        "Regretful"
+      ],
+      "significance": "He represents the heavy burden of earthly duty and the tragic consequences of binding promises.",
+      "mentions_count": 757,
+      "related_shlokas": [
+        "Bala Kanda_1_19",
+        "Bala Kanda_1_20",
+        "Bala Kanda_1_21",
+        "Bala Kanda_1_22",
+        "Bala Kanda_1_23",
+        "Bala Kanda_1_26",
+        "Bala Kanda_1_27",
+        "Bala Kanda_1_28",
+        "Bala Kanda_1_29",
+        "Bala Kanda_1_32"
+      ]
+    },
+    {
+      "name": "Bharata",
+      "sanskrit": "भरत",
+      "description": "The son of Kaikeyi who refused the throne of Ayodhya out of love for Rama. He ruled the kingdom for fourteen years from Nandigrama, placing Rama's sandals on the throne as a symbol of the true King's authority.",
+      "traits": [
+        "Selfless",
+        "Guilt-ridden",
+        "Righteous",
+        "Ascetic"
+      ],
+      "significance": "He is the exemplar of sibling love and the refusal to profit from another's misfortune.",
+      "mentions_count": 722,
+      "related_shlokas": [
+        "Bala Kanda_1_21",
+        "Bala Kanda_1_22",
+        "Bala Kanda_1_33",
+        "Bala Kanda_1_34",
+        "Bala Kanda_1_35",
+        "Bala Kanda_1_37",
+        "Bala Kanda_1_38",
+        "Bala Kanda_1_39",
+        "Bala Kanda_1_40",
+        "Bala Kanda_1_87"
+      ]
+    },
+    {
+      "name": "Shatrughna",
+      "sanskrit": "शत्रुघ्न",
+      "description": "The youngest brother of Rama and the twin of Lakshmana. He represents the silent elimination of inner enemies (Shatru) and the unwavering support of the righteous kingdom.",
+      "traits": [
+        "Silent",
+        "Victorious",
+        "Devoted",
+        "Efficient"
+      ],
+      "significance": "His name means 'Slayer of Enemies,' yet his greatest victory was the quiet fulfillment of duty in the shadow of his brothers.",
+      "mentions_count": 16,
+      "related_shlokas": [
+        "Yuddha Kanda_118_23",
+        "Yuddha Kanda_127_1",
+        "Yuddha Kanda_130_1",
+        "Yuddha Kanda_130_5",
+        "Yuddha Kanda_130_10",
+        "Yuddha Kanda_130_11",
+        "Yuddha Kanda_130_47",
+        "Yuddha Kanda_131_13",
+        "Yuddha Kanda_131_16",
+        "Yuddha Kanda_131_19"
+      ]
+    },
+    {
+      "name": "Sugriva",
+      "sanskrit": "सुग्रीव",
+      "description": "The exiled Vanara King of Kishkindha who formed a sacred alliance with Rama. With the help of Rama, he regained his kingdom from his brother Vali and dedicated his entire army to the search for Sita.",
+      "traits": [
+        "Allied",
+        "Grateful",
+        "Regal",
+        "Determined"
+      ],
+      "significance": "His story highlights the importance of choosing the right allies and the sanctity of a promise made before the fire.",
+      "mentions_count": 972,
+      "related_shlokas": [
+        "Bala Kanda_1_58",
+        "Bala Kanda_1_59",
+        "Bala Kanda_1_60",
+        "Bala Kanda_1_61",
+        "Bala Kanda_1_62",
+        "Bala Kanda_1_63",
+        "Bala Kanda_1_64",
+        "Bala Kanda_1_66",
+        "Bala Kanda_1_67",
+        "Bala Kanda_1_68"
+      ]
+    },
+    {
+      "name": "Vibhishana",
+      "sanskrit": "विभीषण",
+      "description": "The younger brother of Ravana who chose the path of Dharma over family loyalty. He sought refuge at Rama's feet and was crowned the King of Lanka after Ravana's fall.",
+      "traits": [
+        "Righteous",
+        "Courageous",
+        "Seeker",
+        "Loyal to Truth"
+      ],
+      "significance": "He demonstrates that one's true home is wherever Dharma resides, regardless of birth or blood.",
+      "mentions_count": 32,
+      "related_shlokas": [
+        "Bala Kanda_1_85",
+        "Bala Kanda_3_35",
+        "Bala Kanda_3_36",
+        "Sundara Kanda_6_18",
+        "Sundara Kanda_27_31",
+        "Sundara Kanda_27_32",
+        "Sundara Kanda_27_33",
+        "Sundara Kanda_52_1",
+        "Sundara Kanda_52_2",
+        "Sundara Kanda_52_3"
+      ]
+    },
+    {
+      "name": "Jatayu",
+      "sanskrit": "जटायु",
+      "description": "The ancient vulture king and friend of Dasharatha. He fought Ravana valiantly to save Sita, sacrificing his wings and life. He died in Rama's lap, attaining a state even great sages envy.",
+      "traits": [
+        "Valiant",
+        "Sacrificial",
+        "Ancient",
+        "Loyal"
+      ],
+      "significance": "His sacrifice shows that even the smallest act of courage in the service of the Divine is immortalized.",
+      "mentions_count": 107,
+      "related_shlokas": [
+        "Bala Kanda_1_52",
+        "Bala Kanda_1_53",
+        "Bala Kanda_1_54",
+        "Bala Kanda_1_55",
+        "Bala Kanda_3_19",
+        "Bala Kanda_3_21",
+        "Aranya Kanda_14_1",
+        "Aranya Kanda_14_32",
+        "Aranya Kanda_14_34",
+        "Aranya Kanda_14_35"
+      ]
+    },
+    {
+      "name": "Sampati",
+      "sanskrit": "सम्पाति",
+      "description": "The elder brother of Jatayu, a massive vulture who lost his wings while protecting his brother from the sun's heat. His wings regrew when he helped the Vanaras by confirming Sita's presence in Lanka.",
+      "traits": [
+        "Far-sighted",
+        "Protective",
+        "Enduring",
+        "Redeemed"
+      ],
+      "significance": "He represents the power of truthful speech and the restoration of one's strength through service to the Divine.",
+      "mentions_count": 37,
+      "related_shlokas": [
+        "Bala Kanda_3_26",
+        "Aranya Kanda_14_32",
+        "Kishkindha Kanda_33_9",
+        "Kishkindha Kanda_33_10",
+        "Kishkindha Kanda_33_11",
+        "Kishkindha Kanda_33_12",
+        "Kishkindha Kanda_56_1",
+        "Kishkindha Kanda_56_2",
+        "Kishkindha Kanda_56_3",
+        "Kishkindha Kanda_56_4"
+      ]
+    },
+    {
+      "name": "Angada",
+      "sanskrit": "अङ्गद",
+      "description": "The son of Vali and Tara, and the crown prince of Kishkindha. A warrior of immense strength and diplomacy who served as Rama's envoy to Ravana's court.",
+      "traits": [
+        "Diplomatic",
+        "Strong",
+        "Loyal",
+        "Brave"
+      ],
+      "significance": "His choice to serve Rama despite Rama having killed his father is a profound lesson in transcending personal grief for the sake of Dharma.",
+      "mentions_count": 364,
+      "related_shlokas": [
+        "Kishkindha Kanda_15_15",
+        "Kishkindha Kanda_15_16",
+        "Kishkindha Kanda_16_9",
+        "Kishkindha Kanda_18_1",
+        "Kishkindha Kanda_18_51",
+        "Kishkindha Kanda_18_54",
+        "Kishkindha Kanda_18_55",
+        "Kishkindha Kanda_18_66",
+        "Kishkindha Kanda_19_5",
+        "Kishkindha Kanda_19_11"
+      ]
+    },
+    {
+      "name": "Ruma",
+      "sanskrit": "रूमा",
+      "description": "The wife of Sugriva, who was forcibly taken by Vali. Her plight was the primary reason for the conflict between the royal brothers of Kishkindha.",
+      "traits": [
+        "Patient",
+        "Suffering",
+        "Virtuous"
+      ],
+      "significance": "She represents the innocent victims of unrighteousness whose restoration is a key goal of the Dharmic hero.",
+      "mentions_count": 14,
+      "related_shlokas": [
+        "Kishkindha Kanda_18_19",
+        "Kishkindha Kanda_20_20",
+        "Kishkindha Kanda_31_36",
+        "Kishkindha Kanda_31_37",
+        "Kishkindha Kanda_34_4",
+        "Kishkindha Kanda_34_6",
+        "Kishkindha Kanda_35_5",
+        "Kishkindha Kanda_35_13",
+        "Kishkindha Kanda_39_16",
+        "Kishkindha Kanda_39_31"
+      ]
+    },
+    {
+      "name": "Kaikeyi",
+      "sanskrit": "कैकेयी",
+      "description": "The youngest queen of Dasharatha and mother of Bharata. Influenced by her maid Manthara, she demanded Rama's exile, triggering the entire epic journey.",
+      "traits": [
+        "Strong-willed",
+        "Influenced",
+        "Regretful",
+        "Complex"
+      ],
+      "significance": "She is the catalyst of the Divine plan, showing how even a momentary lapse in judgment can change the course of history.",
+      "mentions_count": 377,
+      "related_shlokas": [
+        "Bala Kanda_1_21",
+        "Bala Kanda_1_22",
+        "Bala Kanda_1_24",
+        "Bala Kanda_3_12",
+        "Bala Kanda_16_27",
+        "Bala Kanda_16_28",
+        "Bala Kanda_16_29",
+        "Bala Kanda_18_12",
+        "Bala Kanda_18_20",
+        "Bala Kanda_18_21"
+      ]
+    },
+    {
+      "name": "Vasistha",
+      "sanskrit": "वसिष्ठ",
+      "description": "The Kula Guru (family preceptor) of the Ikshvaku dynasty. One of the Saptarishis, he is the master of spiritual knowledge and the guide who ensured the spiritual foundation of Ayodhya.",
+      "traits": [
+        "Wise",
+        "Serene",
+        "Knowledgeable",
+        "Steady"
+      ],
+      "significance": "He represents the eternal wisdom of the Vedas that guides even the greatest of kings.",
+      "mentions_count": 134,
+      "related_shlokas": [
+        "Bala Kanda_8_5",
+        "Bala Kanda_8_6",
+        "Bala Kanda_12_4",
+        "Bala Kanda_12_5",
+        "Bala Kanda_13_16",
+        "Bala Kanda_13_17",
+        "Bala Kanda_14_18",
+        "Bala Kanda_14_49",
+        "Bala Kanda_18_3",
+        "Bala Kanda_18_46"
+      ]
+    },
+    {
+      "name": "Kabandha",
+      "sanskrit": "कबन्ध",
+      "description": "A Gandharva named Vishvavasu who was cursed to be a headless demon. He was liberated by Rama and Lakshmana, after which he provided the crucial advice to seek Sugriva's alliance.",
+      "traits": [
+        "Liberated",
+        "Informative",
+        "Transformed"
+      ],
+      "significance": "His story illustrates the power of the Divine to liberate souls from the most terrible of curses.",
+      "mentions_count": 27,
+      "related_shlokas": [
+        "Bala Kanda_1_54",
+        "Bala Kanda_1_55",
+        "Bala Kanda_1_56",
+        "Bala Kanda_3_22",
+        "Aranya Kanda_69_1",
+        "Aranya Kanda_69_33",
+        "Aranya Kanda_69_34",
+        "Aranya Kanda_69_36",
+        "Aranya Kanda_69_42",
+        "Aranya Kanda_69_46"
+      ]
+    },
+    {
+      "name": "Valmiki",
+      "sanskrit": "वाल्मीकि",
+      "description": "The Adi Kavi (First Poet) and author of the Ramayana. Once a bandit named Ratnakara, he was transformed by the mantra of Rama and eventually provided shelter to the exiled Sita.",
+      "traits": [
+        "Transformed",
+        "Poetic",
+        "Sage",
+        "Compassionate"
+      ],
+      "significance": "He represents the power of transformation and the preservation of the Divine story for all generations.",
+      "mentions_count": 456,
+      "related_shlokas": [
+        "Bala Kanda_1_1",
+        "Bala Kanda_1_6",
+        "Bala Kanda_1_7",
+        "Bala Kanda_1_100",
+        "Bala Kanda_2_1",
+        "Bala Kanda_2_2",
+        "Bala Kanda_2_3",
+        "Bala Kanda_2_4",
+        "Bala Kanda_2_7",
+        "Bala Kanda_2_8"
+      ]
+    },
+    {
+      "name": "Mandodari",
+      "sanskrit": "मन्दोदरी",
+      "description": "The Queen of Lanka and the wife of Ravana. A woman of immense wisdom, beauty, and righteousness who repeatedly counseled her husband to return Sita and follow the path of Dharma.",
+      "traits": [
+        "Wise",
+        "Righteous",
+        "Grieved",
+        "Dharmic"
+      ],
+      "significance": "She represents the voice of conscience within the fortress of ego, proving that one can remain devoted to Truth even in the most unrighteous of environments.",
+      "mentions_count": 18,
+      "related_shlokas": [
+        "Sundara Kanda_10_1",
+        "Sundara Kanda_10_2",
+        "Sundara Kanda_10_51",
+        "Sundara Kanda_10_52",
+        "Sundara Kanda_11_1",
+        "Sundara Kanda_58_75",
+        "Sundara Kanda_58_123",
+        "Sundara Kanda_58_124",
+        "Yuddha Kanda_7_9",
+        "Yuddha Kanda_90_43"
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "name": "Ayodhya",
+      "sanskrit": "अयोध्या",
+      "description": "The 'Unconquerable' city on the banks of the Sarayu. Capital of the Ikshvaku dynasty, it represents the ideal kingdom (Ram Rajya) where peace and prosperity flourish under the rule of Dharma.",
+      "mentions_count": 322,
+      "related_shlokas": [
+        "Bala Kanda_1_39",
+        "Bala Kanda_1_40",
+        "Bala Kanda_1_86",
+        "Bala Kanda_3_14",
+        "Bala Kanda_3_37",
+        "Bala Kanda_5_1",
+        "Bala Kanda_5_6",
+        "Bala Kanda_5_7",
+        "Bala Kanda_5_9",
+        "Bala Kanda_5_18"
+      ]
+    },
+    {
+      "name": "Lanka",
+      "sanskrit": "लङ्का",
+      "description": "The golden city of the Rakshasas, built by Vishwakarma. A place of immense wealth and power, it became a fortress of ego under Ravana, only to be purified by the fires of Hanuman and the arrows of Rama.",
+      "mentions_count": 542,
+      "related_shlokas": [
+        "Bala Kanda_1_73",
+        "Bala Kanda_1_76",
+        "Bala Kanda_1_77",
+        "Bala Kanda_1_81",
+        "Bala Kanda_1_85",
+        "Bala Kanda_3_28",
+        "Bala Kanda_3_32",
+        "Bala Kanda_3_34",
+        "Bala Kanda_3_36",
+        "Aranya Kanda_31_1"
+      ]
+    },
+    {
+      "name": "Chitrakuta",
+      "sanskrit": "चित्रकूट",
+      "description": "The 'Hill of Many Wonders' where Rama, Sita, and Lakshmana spent the early part of their exile. A place of serene beauty and spiritual vibration.",
+      "mentions_count": 70,
+      "related_shlokas": [
+        "Bala Kanda_1_30",
+        "Bala Kanda_1_31",
+        "Bala Kanda_1_32",
+        "Bala Kanda_1_39",
+        "Bala Kanda_1_40",
+        "Bala Kanda_3_15",
+        "Ayodhya Kanda_54_1",
+        "Ayodhya Kanda_54_28",
+        "Ayodhya Kanda_54_29",
+        "Ayodhya Kanda_54_30"
+      ]
+    },
+    {
+      "name": "Panchavati",
+      "sanskrit": "पञ्चवटी",
+      "description": "The forest of five banyan trees on the banks of the Godavari. It was from here that Sita was abducted, marking the transition from peaceful exile to the path of war.",
+      "mentions_count": 13,
+      "related_shlokas": [
+        "Bala Kanda_3_19",
+        "Aranya Kanda_13_1",
+        "Aranya Kanda_13_13",
+        "Aranya Kanda_13_18",
+        "Aranya Kanda_13_19",
+        "Aranya Kanda_13_24",
+        "Aranya Kanda_13_26",
+        "Aranya Kanda_13_27",
+        "Aranya Kanda_14_1",
+        "Aranya Kanda_14_35"
+      ]
+    },
+    {
+      "name": "Kishkindha",
+      "sanskrit": "किष्किन्धा",
+      "description": "The kingdom of the Vanaras, located in a valley of caves. A wild, vibrant land where the alliance that would save Sita was forged.",
+      "mentions_count": 69,
+      "related_shlokas": [
+        "Bala Kanda_1_67",
+        "Bala Kanda_1_68",
+        "Kishkindha Kanda_9_1",
+        "Kishkindha Kanda_9_5",
+        "Kishkindha Kanda_9_19",
+        "Kishkindha Kanda_9_20",
+        "Kishkindha Kanda_10_4",
+        "Kishkindha Kanda_10_5",
+        "Kishkindha Kanda_11_21",
+        "Kishkindha Kanda_11_24"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Putrakameshti Yagna",
+      "sanskrit": "पुत्रकामेष्टि यज्ञ",
+      "description": "The sacred fire ritual performed by King Dasharatha to beget sons, leading to the birth of Rama and his brothers.",
+      "mentions_count": 0,
+      "related_shlokas": []
+    },
+    {
+      "name": "Sita Swayamvara",
+      "sanskrit": "सीता स्वयंवर",
+      "description": "The contest in Mithila where Rama lifted and broke the celestial bow of Shiva (Pinaka), winning the hand of Sita.",
+      "mentions_count": 0,
+      "related_shlokas": []
+    },
+    {
+      "name": "The Exile",
+      "sanskrit": "वनवास",
+      "description": "The fourteen-year journey into the Dandaka forest, triggered by Kaikeyi's boons, which served as the crucible for Rama's divine mission.",
+      "mentions_count": 57,
+      "related_shlokas": [
+        "Bala Kanda_1_21",
+        "Bala Kanda_1_22",
+        "Ayodhya Kanda_38_10",
+        "Ayodhya Kanda_51_25",
+        "Ayodhya Kanda_52_91",
+        "Ayodhya Kanda_64_79",
+        "Ayodhya Kanda_68_8",
+        "Ayodhya Kanda_75_22",
+        "Ayodhya Kanda_75_23",
+        "Ayodhya Kanda_75_24"
+      ]
+    },
+    {
+      "name": "Hanuman's Leap",
+      "sanskrit": "हनुमत्प्लुति",
+      "description": "The miraculous flight across the ocean to Lanka, symbolizing the triumph of spirit over physical limitations.",
+      "mentions_count": 0,
+      "related_shlokas": []
+    },
+    {
+      "name": "Ramayana War",
+      "sanskrit": "रामायण युद्ध",
+      "description": "The cosmic battle between the forces of Rama and Ravana, ending in the victory of Dharma and the liberation of Sita.",
+      "mentions_count": 0,
+      "related_shlokas": []
+    }
+  ]
+}

@@ -9,6 +9,7 @@ import ShlokaLibrary from './components/ShlokaLibrary';
 import DharmaGallery from './components/DharmaGallery';
 import SanctumChat from './components/SanctumChat';
 import SupportingSpaces from './components/SupportingSpaces';
+import DailyWisdom from './components/DailyWisdom';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -62,7 +63,12 @@ export default function Home() {
         <SanctumChat />
       </section>
 
-      {/* SECTION 8: FINAL REFLECTIONS */}
+      {/* SECTION 8: DAILY WISDOM */}
+      <section id="wisdom" className="relative">
+        <DailyWisdom />
+      </section>
+
+      {/* SECTION 9: FINAL REFLECTIONS */}
       <section id="about" className="relative">
         <SupportingSpaces view="about" />
       </section>

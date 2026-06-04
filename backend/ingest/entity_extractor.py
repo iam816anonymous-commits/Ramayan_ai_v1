@@ -6,7 +6,11 @@ from functools import lru_cache
 class EntityExtractor:
     def __init__(self, knowledge_dir: str = "backend/knowledge"):
         self.knowledge_dir = knowledge_dir
-        self.entities = self._load_json("entities.json", {"characters": [], "locations": [], "events": []})
+        # Prioritize generated knowledge if available
+        if os.path.exists(os.path.join(knowledge_dir, "generated_entities.json")):
+            self.entities = self._load_json("generated_entities.json", {"characters": [], "locations": [], "events": []})
+        else:
+            self.entities = self._load_json("entities.json", {"characters": [], "locations": [], "events": []})
         self.relations = self._load_json("relations.json", [])
         self.aliases = self._load_json("aliases.json", {})
 
@@ -20,7 +24,7 @@ class EntityExtractor:
     def _load_json(self, filename: str, default: any) -> any:
         path = os.path.join(self.knowledge_dir, filename)
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding="utf-8") as f:
                 return json.load(f)
         return default
 

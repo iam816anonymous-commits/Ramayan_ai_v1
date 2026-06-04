@@ -41,7 +41,7 @@ OBSERVABILITY_LOG = os.path.join(LOG_DIR, "observability.jsonl")
 
 def log_query(data: Dict[str, Any]):
     os.makedirs(LOG_DIR, exist_ok=True)
-    with open(OBSERVABILITY_LOG, "a") as f:
+    with open(OBSERVABILITY_LOG, "a", encoding="utf-8") as f:
         f.write(json.dumps(data) + "\n")
 
 @app.on_event("startup")
@@ -161,7 +161,7 @@ async def sanctum_query(request: QueryRequest):
 async def get_timeline():
     path = "backend/knowledge/kanda_details.json"
     if os.path.exists(path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding="utf-8") as f:
             return json.load(f)
     return []
 
@@ -171,9 +171,9 @@ async def get_heroes():
         entities_path = "backend/knowledge/entities.json"
         relations_path = "backend/knowledge/relations.json"
 
-        with open(entities_path, 'r') as f:
+        with open(entities_path, 'r', encoding="utf-8") as f:
             entities_data = json.load(f)
-        with open(relations_path, 'r') as f:
+        with open(relations_path, 'r', encoding="utf-8") as f:
             relations_data = json.load(f)
 
         heroes = []

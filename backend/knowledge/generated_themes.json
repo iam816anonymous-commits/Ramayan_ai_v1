@@ -1,0 +1,117 @@
+[
+  {
+    "name": "Dharma",
+    "description": "The theme of Dharma as explored in the Ramayana.",
+    "shlokas": [
+      "Bala Kanda_1_1",
+      "Bala Kanda_1_2",
+      "Bala Kanda_1_5",
+      "Bala Kanda_1_13",
+      "Bala Kanda_1_16",
+      "Bala Kanda_1_17",
+      "Bala Kanda_1_19",
+      "Bala Kanda_1_20",
+      "Bala Kanda_1_23",
+      "Bala Kanda_1_26",
+      "Bala Kanda_1_27",
+      "Bala Kanda_1_28",
+      "Bala Kanda_1_29",
+      "Bala Kanda_1_35",
+      "Bala Kanda_1_90",
+      "Bala Kanda_2_1",
+      "Bala Kanda_2_13",
+      "Bala Kanda_2_14",
+      "Bala Kanda_2_22",
+      "Bala Kanda_2_32"
+    ]
+  },
+  {
+    "name": "Yoga",
+    "description": "The theme of Yoga as explored in the Ramayana.",
+    "shlokas": [
+      "Bala Kanda_1_1",
+      "Bala Kanda_1_43",
+      "Bala Kanda_1_44",
+      "Bala Kanda_1_45",
+      "Bala Kanda_1_56",
+      "Bala Kanda_2_22",
+      "Bala Kanda_2_26",
+      "Bala Kanda_2_31",
+      "Bala Kanda_2_43",
+      "Bala Kanda_3_6",
+      "Bala Kanda_4_4",
+      "Bala Kanda_4_12",
+      "Bala Kanda_4_13",
+      "Bala Kanda_4_14",
+      "Bala Kanda_4_19",
+      "Bala Kanda_4_30",
+      "Bala Kanda_10_8",
+      "Bala Kanda_10_9",
+      "Bala Kanda_10_16",
+      "Bala Kanda_10_17"
+    ]
+  },
+  {
+    "name": "Shakti",
+    "description": "The theme of Shakti as explored in the Ramayana.",
+    "shlokas": [
+      "Bala Kanda_1_11",
+      "Bala Kanda_1_50",
+      "Bala Kanda_1_59",
+      "Bala Kanda_1_65",
+      "Bala Kanda_1_71",
+      "Bala Kanda_1_87",
+      "Bala Kanda_1_90",
+      "Bala Kanda_2_1",
+      "Bala Kanda_3_2",
+      "Bala Kanda_3_3",
+      "Bala Kanda_3_4",
+      "Bala Kanda_3_6",
+      "Bala Kanda_3_7",
+      "Bala Kanda_3_8",
+      "Bala Kanda_3_25",
+      "Bala Kanda_3_37",
+      "Bala Kanda_5_20",
+      "Bala Kanda_5_21",
+      "Bala Kanda_5_22",
+      "Bala Kanda_6_1"
+    ]
+  },
+  {
+    "name": "Bhakti",
+    "description": "The theme of Bhakti as explored in the Ramayana.",
+    "shlokas": [
+      "Bala Kanda_1_34",
+      "Bala Kanda_1_35",
+      "Bala Kanda_1_38",
+      "Bala Kanda_1_57",
+      "Bala Kanda_1_99",
+      "Bala Kanda_2_1",
+      "Bala Kanda_2_2",
+      "Bala Kanda_2_25",
+      "Bala Kanda_2_26",
+      "Bala Kanda_5_23",
+      "Bala Kanda_6_16",
+      "Bala Kanda_6_17",
+      "Bala Kanda_6_18",
+      "Bala Kanda_9_6",
+      "Bala Kanda_10_30",
+      "Bala Kanda_11_30",
+      "Bala Kanda_13_1",
+      "Bala Kanda_13_2",
+      "Bala Kanda_14_5",
+      "Bala Kanda_14_31"
+    ]
+  },
+  {
+    "name": "Vairagya",
+    "description": "The theme of Vairagya as explored in the Ramayana.",
+    "shlokas": [
+      "Ayodhya Kanda_12_30",
+      "Ayodhya Kanda_12_33",
+      "Aranya Kanda_58_8",
+      "Aranya Kanda_58_11",
+      "Sundara Kanda_26_42"
+    ]
+  }
+]
