@@ -12,6 +12,7 @@ from .kanda_loader import KandaLoader
 from .txt_loader import TXTLoader
 from .metadata_builder import MetadataBuilder
 from .knowledge_builder import KnowledgeBuilder
+from .knowledge_generator import KnowledgeGenerator
 
 class IngestionPipeline:
     def __init__(self, collection_name="ramayana_v1", client=None):
@@ -53,6 +54,11 @@ class IngestionPipeline:
             json.dump(state, f, indent=2)
 
     def run_ingestion(self, force=False):
+        # Post-ingestion: Execute Knowledge Generation Pipeline (Check always, it handles hashing)
+        print("Executing Knowledge Generation Pipeline...")
+        generator = KnowledgeGenerator()
+        generator.generate(force=force)
+
         # 1. Check if collection exists and verify via state file
         try:
             state = self._get_state()

@@ -6,6 +6,7 @@ from backend.app.agents.orchestrator import Orchestrator
 from backend.app.agents.brain import BrainAgent
 from backend.app.agents.sage import SageAgent
 from backend.app.cache import cache_instance
+from backend.app.wisdom import DailyWisdomEngine
 from backend.ingest.pipeline import IngestionPipeline
 from backend.ingest.entity_extractor import EntityExtractor
 from dotenv import load_dotenv
@@ -34,6 +35,7 @@ orchestrator = Orchestrator()
 brain = None
 sage = SageAgent()
 entity_extractor = EntityExtractor()
+wisdom_engine = DailyWisdomEngine()
 
 # Observability log file
 LOG_DIR = "backend/logs"
@@ -157,8 +159,17 @@ async def sanctum_query(request: QueryRequest):
             "source_verse": "N/A"
         }
 
+@app.get("/api/wisdom")
+async def get_daily_wisdom():
+    wisdom = wisdom_engine.get_daily_wisdom()
+    if not wisdom:
+        raise HTTPException(status_code=404, detail="Wisdom not found.")
+    return wisdom
+
 @app.get("/api/timeline")
 async def get_timeline():
+    # Prioritize generated kanda details if we decide to generate them,
+    # for now we stick to seeds but the pattern is established.
     path = "backend/knowledge/kanda_details.json"
     if os.path.exists(path):
         with open(path, 'r') as f:
@@ -168,16 +179,28 @@ async def get_timeline():
 @app.get("/api/heroes")
 async def get_heroes():
     try:
-        entities_path = "backend/knowledge/entities.json"
-        relations_path = "backend/knowledge/relations.json"
+        # Prioritize generated knowledge
+        entities_path = "backend/generated/generated_entities.json"
+        if not os.path.exists(entities_path):
+            entities_path = "backend/knowledge/entities.json"
+
+        relations_path = "backend/generated/generated_relations.json"
+        if not os.path.exists(relations_path):
+            relations_path = "backend/knowledge/relations.json"
 
         with open(entities_path, 'r') as f:
             entities_data = json.load(f)
+            # Handle both formats: list (generated) or dict (legacy/seed)
+            if isinstance(entities_data, dict):
+                characters = entities_data.get("characters", [])
+            else:
+                characters = entities_data
+
         with open(relations_path, 'r') as f:
             relations_data = json.load(f)
 
         heroes = []
-        for char in entities_data.get("characters", []):
+        for char in characters:
             # Extract relationships for this character
             char_relations = set()
             for rel in relations_data:
@@ -231,11 +254,26 @@ async def get_entity_knowledge(entity_name: str):
 
         # Find description if available
         description = "A sacred entity in the Ramayana."
-        for cat in entity_extractor.entities:
-            for ent in entity_extractor.entities[cat]:
-                if ent["name"] == canonical:
-                    description = ent.get("description", description)
-                    break
+
+        # Prioritize generated entities
+        entities_path = "backend/generated/generated_entities.json"
+        entities_list = []
+        if os.path.exists(entities_path):
+             with open(entities_path, "r", encoding="utf-8") as f:
+                 entities_list = json.load(f)
+
+        # Fallback to seed entities
+        if not entities_list:
+            seed_entities_path = "backend/knowledge/entities.json"
+            if os.path.exists(seed_entities_path):
+                with open(seed_entities_path, "r", encoding="utf-8") as f:
+                    seed_data = json.load(f)
+                    entities_list = seed_data.get("characters", []) + seed_data.get("locations", []) + seed_data.get("events", [])
+
+        for ent in entities_list:
+            if ent["name"] == canonical:
+                description = ent.get("description", description)
+                break
 
         return {
             "entity": canonical,
