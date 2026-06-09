@@ -1,0 +1,127 @@
+[
+  {
+    "source": "Rama",
+    "type": "spouse_of",
+    "target": "Sita"
+  },
+  {
+    "source": "Sita",
+    "type": "spouse_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Dasharatha",
+    "type": "father_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Dasharatha",
+    "type": "father_of",
+    "target": "Lakshmana"
+  },
+  {
+    "source": "Dasharatha",
+    "type": "father_of",
+    "target": "Bharata"
+  },
+  {
+    "source": "Dasharatha",
+    "type": "father_of",
+    "target": "Shatrughna"
+  },
+  {
+    "source": "Kausalya",
+    "type": "mother_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Sumitra",
+    "type": "mother_of",
+    "target": "Lakshmana"
+  },
+  {
+    "source": "Sumitra",
+    "type": "mother_of",
+    "target": "Shatrughna"
+  },
+  {
+    "source": "Kaikeyi",
+    "type": "mother_of",
+    "target": "Bharata"
+  },
+  {
+    "source": "Janaka",
+    "type": "father_of",
+    "target": "Sita"
+  },
+  {
+    "source": "Vali",
+    "type": "brother_of",
+    "target": "Sugriva"
+  },
+  {
+    "source": "Sugriva",
+    "type": "brother_of",
+    "target": "Vali"
+  },
+  {
+    "source": "Ravana",
+    "type": "brother_of",
+    "target": "Vibhishana"
+  },
+  {
+    "source": "Ravana",
+    "type": "brother_of",
+    "target": "Kumbhakarna"
+  },
+  {
+    "source": "Hanuman",
+    "type": "devotee_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Sugriva",
+    "type": "ally_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Lakshmana",
+    "type": "brother_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Vali",
+    "type": "father_of",
+    "target": "Angada"
+  },
+  {
+    "source": "Tara",
+    "type": "mother_of",
+    "target": "Angada"
+  },
+  {
+    "source": "Sampati",
+    "type": "brother_of",
+    "target": "Jatayu"
+  },
+  {
+    "source": "Jatayu",
+    "type": "brother_of",
+    "target": "Sampati"
+  },
+  {
+    "source": "Ravana",
+    "type": "enemy_of",
+    "target": "Rama"
+  },
+  {
+    "source": "Rama",
+    "type": "enemy_of",
+    "target": "Ravana"
+  },
+  {
+    "source": "Sugriva",
+    "type": "spouse_of",
+    "target": "Ruma"
+  }
+]

@@ -64,6 +64,7 @@ class KnowledgeGenerator:
         for filepath in source_files:
             file_hash = self._calculate_file_hash(filepath)
             new_hashes[filepath] = file_hash
+            self.stats["files_processed"] += 1
             if self.current_hashes.get(filepath) != file_hash:
                 changed = True
 
@@ -79,7 +80,8 @@ class KnowledgeGenerator:
         return changed or not os.path.exists(self.report_file)
 
     def generate(self, force: bool = False):
-        if not force and not self.should_regenerate():
+        regenerate_needed = self.should_regenerate()
+        if not force and not regenerate_needed:
             print("Knowledge sources unchanged. Skipping generation.")
             return
 

@@ -2,6 +2,7 @@
 
 import React, { useMemo, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import SacredSpace3D from './SacredSpace3D';
 
 const SacredGeometry = () => (
   <motion.svg
@@ -63,7 +64,10 @@ const SagePresence = ({ state = 'idle' }: { state?: 'idle' | 'thinking' | 'revea
 
   return (
     <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden bg-[#080705]">
-      {/* Background Sacred Geometry */}
+      {/* Background 3D Sacred Space */}
+      <SacredSpace3D />
+
+      {/* Background Sacred Geometry Overlay */}
       <SacredGeometry />
 
       {/* Breathing Aura Rings */}
