@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Ayodhya",
+    "sanskrit": "अयोध्या",
+    "description": "The 'Unconquerable' city on the banks of the Sarayu. Capital of the Ikshvaku dynasty, it represents the ideal kingdom (Ram Rajya) where peace and prosperity flourish under the rule of Dharma."
+  },
+  {
+    "name": "Lanka",
+    "sanskrit": "लङ्का",
+    "description": "The golden city of the Rakshasas, built by Vishwakarma. A place of immense wealth and power, it became a fortress of ego under Ravana, only to be purified by the fires of Hanuman and the arrows of Rama."
+  },
+  {
+    "name": "Chitrakuta",
+    "sanskrit": "चित्रकूट",
+    "description": "The 'Hill of Many Wonders' where Rama, Sita, and Lakshmana spent the early part of their exile. A place of serene beauty and spiritual vibration."
+  },
+  {
+    "name": "Panchavati",
+    "sanskrit": "पञ्चवटी",
+    "description": "The forest of five banyan trees on the banks of the Godavari. It was from here that Sita was abducted, marking the transition from peaceful exile to the path of war."
+  },
+  {
+    "name": "Kishkindha",
+    "sanskrit": "किष्किन्धा",
+    "description": "The kingdom of the Vanaras, located in a valley of caves. A wild, vibrant land where the alliance that would save Sita was forged."
+  }
+]

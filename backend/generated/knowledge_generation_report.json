@@ -1,0 +1,22 @@
+{
+  "start_time": 1781032136.252783,
+  "files_processed": 16,
+  "generated_artifacts": [
+    "generated_entities.json",
+    "generated_locations.json",
+    "generated_events.json",
+    "generated_relations.json",
+    "generated_themes.json",
+    "generated_shlokas.json",
+    "generated_daily_wisdom.json"
+  ],
+  "total_characters": 19,
+  "total_locations": 5,
+  "total_events": 5,
+  "total_relations": 25,
+  "total_themes": 17,
+  "total_shlokas": 60339,
+  "end_time": 1781032140.0014026,
+  "duration": 3.748619556427002,
+  "timestamp": "Tue Jun  9 19:08:59 2026"
+}

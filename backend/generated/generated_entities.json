@@ -1,0 +1,228 @@
+[
+  {
+    "name": "Rama",
+    "sanskrit": "राम",
+    "description": "The seventh avatar of Vishnu, the Maryada Purushottama—the Supreme Man who embodies the limits of morality. Prince of Ayodhya, eldest son of Dasharatha, he is the living embodiment of Dharma, whose journey through exile and war serves as the ultimate guide for righteous living.",
+    "traits": [
+      "Dharmic",
+      "Patient",
+      "Resolute",
+      "Compassionate"
+    ],
+    "significance": "His life is the central pillar of the Ramayana, demonstrating how a soul can remain perfectly aligned with truth despite overwhelming adversity."
+  },
+  {
+    "name": "Sita",
+    "sanskrit": "सीता",
+    "description": "The daughter of the Earth, found in a furrow by King Janaka. She is the incarnation of Lakshmi and the embodiment of Shakti, grace, and unwavering devotion. Her strength in the face of captivity in Lanka is the spiritual heart of the epic.",
+    "traits": [
+      "Devout",
+      "Resilient",
+      "Pure",
+      "Wise"
+    ],
+    "significance": "She represents the soul's yearning for the Divine and the quiet strength of virtue that outlasts even the greatest tyranny."
+  },
+  {
+    "name": "Hanuman",
+    "sanskrit": "हनुमान्",
+    "description": "The son of the Wind God (Vayu) and the supreme devotee of Rama. A vanara of infinite strength, wisdom, and humility, he is the bridge between the human and the divine. His leap across the ocean to Lanka symbolizes the power of faith and selfless service.",
+    "traits": [
+      "Selfless",
+      "Infinite Strength",
+      "Vedic Scholar",
+      "Humble"
+    ],
+    "significance": "He is the ideal devotee (Bhakta), showing that true power comes through surrender to the Divine will."
+  },
+  {
+    "name": "Lakshmana",
+    "sanskrit": "लक्ष्मण",
+    "description": "The devoted brother of Rama, born to Queen Sumitra. He is an incarnation of Shesha Naag, the serpent of infinity. He chose fourteen years of sleepless exile to serve Rama and Sita, representing the selfless protection of the Divine path.",
+    "traits": [
+      "Devoted",
+      "Fierce",
+      "Protective",
+      "Ascetic"
+    ],
+    "significance": "His character illustrates the duty of the younger sibling and the fierce guardian of righteousness."
+  },
+  {
+    "name": "Ravana",
+    "sanskrit": "रावण",
+    "description": "The ten-headed King of Lanka, a great scholar and devotee of Shiva who fell through the weight of his own ego (Ahankara). His abduction of Sita triggered the Great War and led to his ultimate redemption through death at Rama's hands.",
+    "traits": [
+      "Brilliant",
+      "Egotistical",
+      "Powerful",
+      "Tragic"
+    ],
+    "significance": "He serves as a cautionary tale: that knowledge and power, when divorced from Dharma, lead only to destruction."
+  },
+  {
+    "name": "Dasharatha",
+    "sanskrit": "दशरथ",
+    "description": "The King of Ayodhya and father of Rama. A noble ruler whose one moment of weakness—a promise made in the past—led to the exile of his beloved son and his own death from grief.",
+    "traits": [
+      "Noble",
+      "Honorable",
+      "Suffering",
+      "Regretful"
+    ],
+    "significance": "He represents the heavy burden of earthly duty and the tragic consequences of binding promises."
+  },
+  {
+    "name": "Bharata",
+    "sanskrit": "भरत",
+    "description": "The son of Kaikeyi who refused the throne of Ayodhya out of love for Rama. He ruled the kingdom for fourteen years from Nandigrama, placing Rama's sandals on the throne as a symbol of the true King's authority.",
+    "traits": [
+      "Selfless",
+      "Guilt-ridden",
+      "Righteous",
+      "Ascetic"
+    ],
+    "significance": "He is the exemplar of sibling love and the refusal to profit from another's misfortune."
+  },
+  {
+    "name": "Shatrughna",
+    "sanskrit": "शत्रुघ्न",
+    "description": "The youngest brother of Rama and the twin of Lakshmana. He represents the silent elimination of inner enemies (Shatru) and the unwavering support of the righteous kingdom.",
+    "traits": [
+      "Silent",
+      "Victorious",
+      "Devoted",
+      "Efficient"
+    ],
+    "significance": "His name means 'Slayer of Enemies,' yet his greatest victory was the quiet fulfillment of duty in the shadow of his brothers."
+  },
+  {
+    "name": "Sugriva",
+    "sanskrit": "सुग्रीव",
+    "description": "The exiled Vanara King of Kishkindha who formed a sacred alliance with Rama. With the help of Rama, he regained his kingdom from his brother Vali and dedicated his entire army to the search for Sita.",
+    "traits": [
+      "Allied",
+      "Grateful",
+      "Regal",
+      "Determined"
+    ],
+    "significance": "His story highlights the importance of choosing the right allies and the sanctity of a promise made before the fire."
+  },
+  {
+    "name": "Vibhishana",
+    "sanskrit": "विभीषण",
+    "description": "The younger brother of Ravana who chose the path of Dharma over family loyalty. He sought refuge at Rama's feet and was crowned the King of Lanka after Ravana's fall.",
+    "traits": [
+      "Righteous",
+      "Courageous",
+      "Seeker",
+      "Loyal to Truth"
+    ],
+    "significance": "He demonstrates that one's true home is wherever Dharma resides, regardless of birth or blood."
+  },
+  {
+    "name": "Jatayu",
+    "sanskrit": "जटायु",
+    "description": "The ancient vulture king and friend of Dasharatha. He fought Ravana valiantly to save Sita, sacrificing his wings and life. He died in Rama's lap, attaining a state even great sages envy.",
+    "traits": [
+      "Valiant",
+      "Sacrificial",
+      "Ancient",
+      "Loyal"
+    ],
+    "significance": "His sacrifice shows that even the smallest act of courage in the service of the Divine is immortalized."
+  },
+  {
+    "name": "Sampati",
+    "sanskrit": "सम्पाति",
+    "description": "The elder brother of Jatayu, a massive vulture who lost his wings while protecting his brother from the sun's heat. His wings regrew when he helped the Vanaras by confirming Sita's presence in Lanka.",
+    "traits": [
+      "Far-sighted",
+      "Protective",
+      "Enduring",
+      "Redeemed"
+    ],
+    "significance": "He represents the power of truthful speech and the restoration of one's strength through service to the Divine."
+  },
+  {
+    "name": "Angada",
+    "sanskrit": "अङ्गद",
+    "description": "The son of Vali and Tara, and the crown prince of Kishkindha. A warrior of immense strength and diplomacy who served as Rama's envoy to Ravana's court.",
+    "traits": [
+      "Diplomatic",
+      "Strong",
+      "Loyal",
+      "Brave"
+    ],
+    "significance": "His choice to serve Rama despite Rama having killed his father is a profound lesson in transcending personal grief for the sake of Dharma."
+  },
+  {
+    "name": "Ruma",
+    "sanskrit": "रूमा",
+    "description": "The wife of Sugriva, who was forcibly taken by Vali. Her plight was the primary reason for the conflict between the royal brothers of Kishkindha.",
+    "traits": [
+      "Patient",
+      "Suffering",
+      "Virtuous"
+    ],
+    "significance": "She represents the innocent victims of unrighteousness whose restoration is a key goal of the Dharmic hero."
+  },
+  {
+    "name": "Kaikeyi",
+    "sanskrit": "कैकेयी",
+    "description": "The youngest queen of Dasharatha and mother of Bharata. Influenced by her maid Manthara, she demanded Rama's exile, triggering the entire epic journey.",
+    "traits": [
+      "Strong-willed",
+      "Influenced",
+      "Regretful",
+      "Complex"
+    ],
+    "significance": "She is the catalyst of the Divine plan, showing how even a momentary lapse in judgment can change the course of history."
+  },
+  {
+    "name": "Vasistha",
+    "sanskrit": "वसिष्ठ",
+    "description": "The Kula Guru (family preceptor) of the Ikshvaku dynasty. One of the Saptarishis, he is the master of spiritual knowledge and the guide who ensured the spiritual foundation of Ayodhya.",
+    "traits": [
+      "Wise",
+      "Serene",
+      "Knowledgeable",
+      "Steady"
+    ],
+    "significance": "He represents the eternal wisdom of the Vedas that guides even the greatest of kings."
+  },
+  {
+    "name": "Kabandha",
+    "sanskrit": "कबन्ध",
+    "description": "A Gandharva named Vishvavasu who was cursed to be a headless demon. He was liberated by Rama and Lakshmana, after which he provided the crucial advice to seek Sugriva's alliance.",
+    "traits": [
+      "Liberated",
+      "Informative",
+      "Transformed"
+    ],
+    "significance": "His story illustrates the power of the Divine to liberate souls from the most terrible of curses."
+  },
+  {
+    "name": "Valmiki",
+    "sanskrit": "वाल्मीकि",
+    "description": "The Adi Kavi (First Poet) and author of the Ramayana. Once a bandit named Ratnakara, he was transformed by the mantra of Rama and eventually provided shelter to the exiled Sita.",
+    "traits": [
+      "Transformed",
+      "Poetic",
+      "Sage",
+      "Compassionate"
+    ],
+    "significance": "He represents the power of transformation and the preservation of the Divine story for all generations."
+  },
+  {
+    "name": "Mandodari",
+    "sanskrit": "मन्दोदरी",
+    "description": "The Queen of Lanka and the wife of Ravana. A woman of immense wisdom, beauty, and righteousness who repeatedly counseled her husband to return Sita and follow the path of Dharma.",
+    "traits": [
+      "Wise",
+      "Righteous",
+      "Grieved",
+      "Dharmic"
+    ],
+    "significance": "She represents the voice of conscience within the fortress of ego, proving that one can remain devoted to Truth even in the most unrighteous of environments."
+  }
+]

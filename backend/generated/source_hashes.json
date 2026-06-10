@@ -1,0 +1,18 @@
+{
+  "backend/data/ramayana_shloka_dataset.csv": "aa4ec8d8e4c90c5406c231384174f2a6814649d7098112a8f69c8cfc2c7ade0b",
+  "backend/data/AranyaKanda.json": "2018839108940100453a115f4f9f0ca6ad19b1631b337ee4221b49b48c9b5621",
+  "backend/data/YuddhaKanda.json": "87192c46f9c39579d61cbc4b571630df48ccf462d169d4f41ae03e7626d7ca2d",
+  "backend/data/AyodhyaKanda.json": "9b1cadfb4a2295c6cb4efccd83404ad49b0c97ec5ddb1d45f26c5c1f0b0d6e3e",
+  "backend/data/KishkindhaKanda.json": "42f63bb9058369231e27a64ec0ba2bde3de40fedeef0e89ac0721ae93c021c1c",
+  "backend/data/SundaraKanda.json": "2f3ac76f29304ff9827ed1bee1ed475fdd71ac700bd51d78bf1e77a655ce2150",
+  "backend/data/ramayan.txt": "123f55d9341c0762584f7a81f2a1f2c44d9fea0e70d0c10ae21ac59af34a8912",
+  "backend/data/Valmiki_Ramayan_Shlokas.json": "a3ad55310283ab9df2bc7127083a3e94025af0270fcf6b666300e23e13c48082",
+  "backend/data/BalaKanda.json": "4b9befa9c3e086263968f52f529f63440f54c90cf3d79f3a4ea21ad98f02b7bf",
+  "backend/knowledge/dharma_lessons.json": "d801aaf67615d1664a4886c2650ccfd1f4f24cfdf057444fdcccb023ccb9b183",
+  "backend/knowledge/persona.json": "da399b6b641c5c1bcce9cf1dc398f1e766ec50a1e04f591d1c34a313ad9f0034",
+  "backend/knowledge/personal_themes.json": "c67c5c6d41543f6435ccaa9450670a552156844f89a6a2891e03e986bf5c7783",
+  "backend/knowledge/entities.json": "8baafc2539f81d637bd0d969411107befc8e1afbd788a3b93c111d283e396fd7",
+  "backend/knowledge/aliases.json": "a55b8875b4a22413c9a34eb60d496073b77b7235a6bba42b5977198c206fc0f9",
+  "backend/knowledge/kanda_details.json": "182465d24b06ce056d16e1ae5597211fa628e9a147a5743ed2a44b2b6f2f82b9",
+  "backend/knowledge/relations.json": "58300f4ba5a3127719b1779b1132f78c6013d0a6c9f2d6faa30fee82f3e51a3e"
+}
