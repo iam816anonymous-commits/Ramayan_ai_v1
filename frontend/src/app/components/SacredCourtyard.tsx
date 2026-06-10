@@ -46,20 +46,20 @@ const SacredCourtyard = () => {
     }
   ];
 
-  if (!mounted) return <section className="min-h-screen bg-[#080705]" />;
+  if (!mounted) return <section className="min-h-screen bg-[#0F0D0B]" />;
 
   return (
-    <section className="relative min-h-screen py-48 flex flex-col items-center justify-center bg-[#080705] overflow-hidden stone-grain">
+    <section className="relative min-h-screen py-48 flex flex-col items-center justify-center bg-[#0F0D0B] overflow-hidden stone-grain">
       {/* Sacred Light - Light Shafts from above */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-1/3 w-[30vw] h-full bg-gradient-to-b from-[#D4AF37]/5 via-transparent to-transparent -rotate-12 blur-3xl opacity-40" />
-        <div className="absolute top-0 right-1/4 w-[20vw] h-full bg-gradient-to-b from-[#D4AF37]/5 via-transparent to-transparent rotate-6 blur-3xl opacity-30" />
+        <div className="absolute top-0 left-1/3 w-[30vw] h-full bg-gradient-to-b from-[#FF9933]/5 via-transparent to-transparent -rotate-12 blur-3xl opacity-40" />
+        <div className="absolute top-0 right-1/4 w-[20vw] h-full bg-gradient-to-b from-[#FF9933]/5 via-transparent to-transparent rotate-6 blur-3xl opacity-30" />
       </div>
 
       {/* Architectural Silhouettes - Pillars */}
       <div className="absolute inset-0 z-0 opacity-10 flex justify-between px-20 pointer-events-none">
-         <div className="w-1 bg-gradient-to-b from-transparent via-[#D4AF37]/40 to-transparent h-full" />
-         <div className="w-1 bg-gradient-to-b from-transparent via-[#D4AF37]/40 to-transparent h-full" />
+         <div className="w-1 bg-gradient-to-b from-transparent via-[#FF9933]/40 to-transparent h-full" />
+         <div className="w-1 bg-gradient-to-b from-transparent via-[#FF9933]/40 to-transparent h-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-10 relative z-10 w-full">
@@ -67,7 +67,7 @@ const SacredCourtyard = () => {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.4 }}
-            className="text-[12px] uppercase tracking-[1em] text-[#D4AF37] font-cinzel block"
+            className="text-[12px] uppercase tracking-[1em] text-[#FF9933] font-cinzel block"
           >
             Philosophy of the Path
           </motion.div>
@@ -75,11 +75,11 @@ const SacredCourtyard = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 2 }}
-            className="text-5xl md:text-8xl font-cinzel tracking-widest uppercase text-[#F2EAD8]"
+            className="text-5xl md:text-8xl font-cinzel tracking-widest uppercase text-[#FAF9F6] text-glow"
           >
             The Sacred Courtyard
           </motion.h2>
-          <div className="w-24 h-[1px] bg-[#D4AF37]/20 mx-auto mt-12" />
+          <div className="w-24 h-[1px] bg-[#FF9933]/20 mx-auto mt-12" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-24 md:gap-32">
@@ -91,29 +91,29 @@ const SacredCourtyard = () => {
               transition={{ delay: idx * 0.3, duration: 2 }}
               className="relative flex flex-col items-center text-center space-y-10 group"
             >
-              <div className="absolute -top-16 text-9xl font-serif text-[#D4AF37]/5 select-none pointer-events-none group-hover:text-[#D4AF37]/10 transition-colors duration-1000">
+              <div className="absolute -top-16 text-9xl font-serif text-[#FF9933]/5 select-none pointer-events-none group-hover:text-[#FF9933]/10 transition-colors duration-1000">
                 {pillar.sanskrit}
               </div>
 
               <div className="relative space-y-6">
-                <h3 className="text-4xl font-cinzel tracking-[0.5em] uppercase text-[#D4AF37]">
+                <h3 className="text-4xl font-cinzel tracking-[0.5em] uppercase text-[#FF9933]">
                   {pillar.title}
                 </h3>
                 <div className="flex justify-center">
-                  <div className="w-8 h-[1px] bg-[#D4AF37]/40 group-hover:w-24 transition-all duration-1000" />
+                  <div className="w-8 h-[1px] bg-[#FF9933]/40 group-hover:w-24 transition-all duration-1000" />
                 </div>
               </div>
 
-              <p className="text-xl md:text-2xl font-cormorant italic text-[#B7AA92] leading-relaxed max-w-sm">
+              <p className="text-xl md:text-2xl font-cormorant italic text-[#D9B99B] leading-relaxed max-w-sm">
                 {pillar.description}
               </p>
 
               <div className="pt-10 w-full">
-                <div className="h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+                <div className="h-[1px] bg-gradient-to-r from-transparent via-[#FF9933]/10 to-transparent" />
                 <div className="mt-1 flex justify-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-[#D4AF37]/20" />
-                  <div className="w-1 h-1 rounded-full bg-[#D4AF37]/20" />
-                  <div className="w-1 h-1 rounded-full bg-[#D4AF37]/20" />
+                  <div className="w-1 h-1 rounded-full bg-[#FF9933]/20" />
+                  <div className="w-1 h-1 rounded-full bg-[#FF9933]/20" />
+                  <div className="w-1 h-1 rounded-full bg-[#FF9933]/20" />
                 </div>
               </div>
             </motion.div>
@@ -132,7 +132,7 @@ const SacredCourtyard = () => {
               opacity: [0, 0.2, 0]
             }}
             transition={{ duration: p.duration, repeat: Infinity }}
-            className="absolute w-1 h-1 bg-[#D4AF37] rounded-full blur-[1px]"
+            className="absolute w-1 h-1 bg-[#FFBF00] rounded-full blur-[1px]"
             style={{ left: p.left, top: p.top }}
           />
         ))}

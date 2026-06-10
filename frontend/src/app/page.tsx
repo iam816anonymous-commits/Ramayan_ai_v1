@@ -21,7 +21,7 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className="min-h-screen bg-[#080705] text-[#C9A86A] font-inter selection:bg-[#C9A86A]/20 selection:text-[#F2EAD8] overflow-x-hidden">
+    <main className="min-h-screen bg-[#0F0D0B] text-[#D9B99B] font-inter selection:bg-[#FF9933]/20 selection:text-[#FAF9F6] overflow-x-hidden stone-grain">
       {/*
         The Digital Pilgrimage Architecture (V3)
         Linear Flow: Gate -> Courtyard -> Journey -> Heroes -> Archive -> Gallery -> Inquiry
@@ -69,8 +69,8 @@ export default function Home() {
 
       {/* Simple Floating Progress Indicator */}
       <div className="fixed bottom-12 right-12 z-50 flex flex-col items-center gap-4 hidden lg:flex">
-         <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-[#C9A86A]/20 to-[#C9A86A]/40" />
-         <span className="text-[10px] uppercase tracking-[0.4em] font-cinzel text-[#C9A86A]/60 rotate-90 origin-right translate-x-4">
+         <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-[#FF9933]/20 to-[#FF9933]/40" />
+         <span className="text-[10px] uppercase tracking-[0.4em] font-cinzel text-[#FF9933]/60 rotate-90 origin-right translate-x-4">
            The Pilgrimage
          </span>
       </div>

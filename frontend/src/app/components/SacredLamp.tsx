@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const SacredLamp = () => (
   <div className="relative w-12 h-16 flex items-center justify-center">
     {/* Lamp Body (Diya) */}
-    <div className="absolute bottom-0 w-8 h-4 bg-[#D4AF37]/20 border border-[#D4AF37]/30 rounded-full" />
+    <div className="absolute bottom-0 w-8 h-4 bg-[#FF9933]/20 border border-[#FF9933]/30 rounded-full" />
 
     {/* The Flame */}
     <motion.div
@@ -20,7 +20,7 @@ const SacredLamp = () => (
         repeat: Infinity,
         ease: "easeInOut"
       }}
-      className="absolute bottom-4 w-3 h-8 bg-gradient-to-t from-orange-500 via-[#D4AF37] to-white rounded-full blur-[2px]"
+      className="absolute bottom-4 w-3 h-8 bg-gradient-to-t from-orange-600 via-[#FF9933] to-[#FAF9F6] rounded-full blur-[2px]"
     />
 
     {/* Inner Core */}
